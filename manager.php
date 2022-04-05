@@ -140,7 +140,7 @@ function getCommentList(){
 function getComment(int $id_comment){
 
     $db=dbconnect();
-    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comments WHERE id=$id_comment ;";
+    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id=$id_comment ;";
     $result=$db->query($sql);
     $un_commentaire_sous_forme_de_tableau=$result->fetch(PDO::FETCH_ASSOC);
 
@@ -215,7 +215,7 @@ function insertPost(Post $post): bool
 function insertComment(Comment $comment): bool
 {
     $db = dbconnect();
-    $sql =" INSERT INTO `comments` (`content`, `creation_date`, `id_post`,`id_user`)
+    $sql =" INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
               VALUES (:content ,:creation_date, :id_post, :id_user);";
 
     $result_prepare=$db->prepare($sql);
@@ -236,13 +236,14 @@ function insertComment(Comment $comment): bool
 
 
 
-function UpdateUser(User $user,$id) :bool
+function updateUser(User $user) :bool
 {
     $db = dbconnect();
     $sql = "UPDATE`user` SET (name=`$user->name`, first_name=`$user->first_name`, nickname=`user->nickname`, email=`user->email`,password=`user->password` )
-                WHERE id=$id);";
+                WHERE id=$user->$id_user);";
 
     $result=$db->exec($sql);
+    $result=$user->id_user;
 
     if(!$result){
         var_dump($result->errorInfo());
@@ -254,15 +255,40 @@ function UpdateUser(User $user,$id) :bool
 
 
 
-
-
 function deletUser(User $user): bool
 {
     $db = dbconnect();
     $sql="DELETE FROM `user` WHERE id=$user->id_user";
-
+    $result=$user->id_user;
     $result=$db->exec($sql);
-    
+    if(!$result){
+
+        die('ERROR');
+    }
+
+    return $result;
+}
+
+function deletPost(Post $post): bool
+{
+    $db = dbconnect();
+    $sql="DELETE FROM `post` WHERE id=$post->id_post";
+    $result=$post->id_post;
+    $result=$db->exec($sql);
+    if(!$result){
+
+        die('ERROR');
+    }
+
+    return $result;
+}
+
+function deletComment(Comment $comment): bool
+{
+    $db = dbconnect();
+    $sql="DELETE FROM `comment` WHERE id=$comment->id_comment";
+    $result=$comment->id_comment;
+    $result=$db->exec($sql);
     if(!$result){
 
         die('ERROR');

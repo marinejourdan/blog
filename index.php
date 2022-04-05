@@ -6,7 +6,7 @@ include_once('./Classe/User.php');
 include_once('./Classe/Comment.php');
 
 
-$user = New User;
-$user->id_user= 1;
+$comment = New Comment;
+$comment->id_comment= 3;
 
-var_dump(deletUser($user));
+var_dump(deletComment($comment));
