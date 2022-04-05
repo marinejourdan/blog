@@ -60,23 +60,15 @@ function getPostList(): array
 function getUserList(): array {
 
     $db = dbconnect();
-    $sql ="SELECT * FROM user;";
+    $sql ="SELECT id FROM user;";
     $result=$db->query($sql);
     $tous_les_users=$result->fetchAll(PDO::FETCH_ASSOC);
 
     $users_object_list = array();
 
     foreach($tous_les_users as $un_user_sous_forme_de_tableau){
-
-        $user=New User;
-
-        $user->id_user = $un_user_sous_forme_de_tableau ['id'];
-        $user->name = $un_user_sous_forme_de_tableau ['name'];
-        $user->first_name = $un_user_sous_forme_de_tableau ['first_name'];
-        $user->nickname = $un_user_sous_forme_de_tableau ['nickname'];
-        $user->email = $un_user_sous_forme_de_tableau ['email'];
-        $user->password = $un_user_sous_forme_de_tableau ['password'];
-
+        $id_user=$un_user_sous_forme_de_tableau['id'];
+        $user=getUser($id_user);
         $user_object_list[] = $user;
     }
 
@@ -106,7 +98,7 @@ function getUser(int $id_user): User
 function getCommentList(){
 
     $db=dbconnect();
-    $sql ="SELECT * FROM comments ;";
+    $sql ="SELECT * FROM comment;";
     $result=$db->query($sql);
     $tous_les_commentaires=$result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -239,20 +231,20 @@ function insertComment(Comment $comment): bool
 function updateUser(User $user) :bool
 {
     $db = dbconnect();
-    $sql = "UPDATE`user` SET (name=`$user->name`, first_name=`$user->first_name`, nickname=`user->nickname`, email=`user->email`,password=`user->password` )
-                WHERE id=$user->$id_user);";
-
-    $result=$db->exec($sql);
+    $sql = "UPDATE user SET name='$user->name', first_name='$user->first_name', nickname='$user->nickname', email='$user->email',password='$user->password'
+                WHERE id=$user->id_user;";
+                var_dump($sql);
     $result=$user->id_user;
+    $result=$db->exec($sql);
+
 
     if(!$result){
-        var_dump($result->errorInfo());
         die('ERROR');
     }
     return $result;
 }
 
-
+// function updatePost(Post $post) :bool
 
 
 function deletUser(User $user): bool

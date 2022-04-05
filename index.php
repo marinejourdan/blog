@@ -6,7 +6,12 @@ include_once('./Classe/User.php');
 include_once('./Classe/Comment.php');
 
 
-$comment = New Comment;
-$comment->id_comment= 3;
+$id_user=3;
+$user=getUser($id_user);
+var_dump($user);
 
-var_dump(deletComment($comment));
+$user->name='bob';
+var_dump($user);
+
+$resultat=updateUser($user);
+var_dump($resultat);
