@@ -10,7 +10,6 @@ function dbconnect(){
 // Extract all post from DB and return array of Post
 function getPostList(): array
 {
-
     $db = dbconnect();//nouvel objet PDO
     $sql ="SELECT * FROM post;";//texte
     $result=$db->query($sql);//renvoi un objet PDO Statement
@@ -22,7 +21,6 @@ function getPostList(): array
         $id_du_post = $un_post_sous_forme_de_tableau ['id'];
         $post = getPost($id_du_post);
         $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
-
     }
 
     return $post_object_list;
@@ -233,7 +231,6 @@ function updateUser(User $user) :bool
     $db = dbconnect();
     $sql = "UPDATE user SET name='$user->name', first_name='$user->first_name', nickname='$user->nickname', email='$user->email',password='$user->password'
                 WHERE id=$user->id_user;";
-                var_dump($sql);
     $result=$user->id_user;
     $result=$db->exec($sql);
 
@@ -244,7 +241,37 @@ function updateUser(User $user) :bool
     return $result;
 }
 
-// function updatePost(Post $post) :bool
+
+
+function updatePost(Post $post) :bool
+{
+    $db = dbconnect();
+    $sql = "UPDATE post SET title='$post->title', header='$post->header', content='$post->content'
+                WHERE id=$post->id_post;";
+    $result=$post->id_post;
+    $result=$db->exec($sql);
+
+
+    if(!$result){
+        die('ERROR');
+    }
+    return $result;
+}
+
+// function updateComment(Post $post) :bool
+// {
+//     $db = dbconnect();
+//     $sql = "UPDATE comment SET content='$comment->content', header='$post->header', content='$post->content'
+//                 WHERE id=$post->id_post;";
+//     $result=$post->id_post;
+//     $result=$db->exec($sql);
+
+    //
+    // if(!$result){
+    //     die('ERROR');
+    // }
+    // return $result;
+    //
 
 
 function deletUser(User $user): bool

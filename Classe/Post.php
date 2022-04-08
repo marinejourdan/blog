@@ -2,14 +2,14 @@
 
 class Post{
 
-    public $id = NULL;
-    public $title = NULL;
-    public $header = NULL;
-    public $content = NULL;
-    public $updated = NULL;
-    public $id_user = NULL;
-    public $comment_list =NULL;
-    public $nickname_user= NULL;
+    public  $id = NULL;
+    public  $title = NULL;
+    public  $header = NULL;
+    public  $content = NULL;
+    public  $updated = NULL;
+    public  $id_user = NULL;
+    public  $comment_list =NULL;
+    public  $nickname_user= NULL;
         //encapsulation: choisir la visibilité de ses membres (public, private...)
         //attributs ou caractéristiques<
 
