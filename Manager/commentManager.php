@@ -62,7 +62,25 @@ function getComment(int $id_comment){
     return $comment;
 }
 
+function getCommentFromPost(int $id_post){
+$db=dbconnect();
 
+$sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id=$id_post ;";
+$result_prepare=$db->query($sql);
+
+$comment=New Comment;
+
+$result_prepare=$db->prepare($sql);
+$result_prepare->bindValue(':content', $comment->content);
+$result_prepare->bindValue(':creation_date',$comment->creation_date);
+$result_prepare->bindValue(':id_post', $comment->id);
+$result_prepare->bindValue(':id_user', $comment->id_user);
+$result=$result_prepare->execute();
+
+$comment_object_list[] = $comment;
+
+return $comment;
+}
 
 function insertComment(Comment $comment): bool
 {

@@ -6,7 +6,7 @@ function getPostList(): array
 {
 
     $db = dbconnect();//nouvel objet PDO
-    $sql ="SELECT * FROM post;";//texte
+    $sql ="SELECT * FROM post ORDER BY id DESC;";//texte
     $result=$db->query($sql);//renvoi un objet PDO Statement
     $tous_les_posts=$result->fetchAll(PDO::FETCH_ASSOC);//renvoi un tableau
     $post_object_list = array();
@@ -103,4 +103,24 @@ function deletPost(Post $post): bool
     }
 
     return $result;
+}
+
+function getCommentFromPost(int $id_post){
+$db=dbconnect();
+
+$sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id=$id_post ;";
+$result_prepare=$db->query($sql);
+
+$comment=New Comment;
+
+$result_prepare=$db->prepare($sql);
+$result_prepare->bindValue(':content', $comment->content);
+$result_prepare->bindValue(':creation_date',$comment->creation_date);
+$result_prepare->bindValue(':id_post', $comment->id);
+$result_prepare->bindValue(':id_user', $comment->id_user);
+$result=$result_prepare->execute();
+
+$comment_object_list[] = $comment;
+
+return $comment;
 }

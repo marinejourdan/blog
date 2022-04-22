@@ -1,0 +1,47 @@
+h1{
+color:#2b3937;
+}
+
+.bg-primary{
+    background-color: #E9967A !important ;
+}
+
+.bg-secondary{
+    background-color: #E9967A !important ;
+}
+
+.masthead{
+padding-bottom:6px;
+padding-top:150px;
+}
+.container{
+    display:flex;
+    flex-direction:row;
+
+}
+.masthead .masthead-heading{
+    margin-top: 80px;
+}
+
+
+.masthead .masthead-avatar{
+    width:100%;
+    margin-top: 0px;
+}
+
+
+.body{
+    text-align: left;
+    color: black;
+    background-color:#cococo ;
+
+}
+
+.body,li{
+    list-style-type: none;
+    text-align:center !important;
+}
+
+.footer{
+    background-color: #E9967A !important ;
+}

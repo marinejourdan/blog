@@ -11,7 +11,7 @@ function dbconnect(){
 function getPostList(): array
 {
     $db = dbconnect();//nouvel objet PDO
-    $sql ="SELECT * FROM post;";//texte
+    $sql ="SELECT * FROM post ORDER BY id DESC;";//texte
     $result=$db->query($sql);//renvoi un objet PDO Statement
     $tous_les_posts=$result->fetchAll(PDO::FETCH_ASSOC);//renvoi un tableau
     $post_object_list = array();
@@ -314,4 +314,24 @@ function deletComment(Comment $comment): bool
     }
 
     return $result;
+}
+
+
+function getCommentsFromPost(int $id_post): array
+{
+
+    $db=dbconnect();
+    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
+    $result=$db->query($sql);
+    $comment_list=$result->fetchAll(PDO::FETCH_ASSOC);
+
+    $comment_object_list = array();
+
+    foreach($comment_list as $row){
+
+        $comment=getComment($row['id']);
+
+        $comment_object_list[] = $comment;
+    }
+    return $comment_object_list;
 }
