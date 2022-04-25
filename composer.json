@@ -1,0 +1,19 @@
+{
+    "name": "mjourdan/blog",
+    "type": "project",
+    "authors": [
+        {
+            "name": "mjourdan",
+            "email": "marine.misser@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\Controller\\": "controller/",
+            "App\\Entity\\": "entity/",
+            "App\\Manager\\": "manager/"
+        }
+    }
+
+}
