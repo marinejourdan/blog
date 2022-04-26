@@ -1,6 +1,10 @@
 <?php
 namespace App\Manager;
 
+use App\Entity\Post;
+use App\Manager\UserManager;
+
+
 class PostManager extends BaseManager{
 
     // Extract all post from DB and return array of Post
@@ -9,13 +13,14 @@ class PostManager extends BaseManager{
         $db=$this->dbconnect();//nouvel objet PDO
         $sql ="SELECT * FROM post ORDER BY id DESC;";//texte
         $result=$db->query($sql);//renvoi un objet PDO Statement
-        $tous_les_posts=$result->fetchAll(PDO::FETCH_ASSOC);//renvoi un tableau
+        $tous_les_posts=$result->fetchAll(\PDO::FETCH_ASSOC);//renvoi un tableau
         $post_object_list = array();
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
 
             $id_du_post = $un_post_sous_forme_de_tableau ['id'];
-            $post = getPost($id_du_post);
+            $postManager = New PostManager;
+            $post=$postManager->getPost($id_du_post);
             $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
         }
 
@@ -32,9 +37,9 @@ class PostManager extends BaseManager{
            // Execute la requète (query)
            $result=$db->query($sql);
            // On met la résultat dans une variable
-           $tableau_post=$result->fetch(PDO::FETCH_ASSOC);//renvoi un tableau
+           $tableau_post=$result->fetch(\PDO::FETCH_ASSOC);//renvoi un tableau
            //passer le tableau en objet: créer un nouvel objet, on donne des valeurs aux propriétés
-           $post=New App\Entity\Post;
+           $post=New Post;
     //
            $post->id = $tableau_post['id'];
            $post->title = $tableau_post['title'];
@@ -44,7 +49,7 @@ class PostManager extends BaseManager{
            $post->id_user= $tableau_post['id_user'];
 
 
-           $UserManager= New UserManager;
+           $userManager= New UserManager;
            $user=$userManager->getUser($post->id_user);
            $nickname_user = $user->nickname;
            $post->nickname_user= $nickname_user;
@@ -109,25 +114,5 @@ class PostManager extends BaseManager{
        }
 
        return $result;
-    }
-
-
-    public function getCommentsFromPost(int $id_post): array
-    {
-
-    $db=$this->dbconnect();
-    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
-    $result=$db->query($sql);
-    $comment_list=$result->fetchAll(PDO::FETCH_ASSOC);
-
-    $comment_object_list = array();
-
-    foreach($comment_list as $row){
-
-       $comment=getComment($row['id']);
-
-       $comment_object_list[] = $comment;
-    }
-    return $comment_object_list;
     }
 }

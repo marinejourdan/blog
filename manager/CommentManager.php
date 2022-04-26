@@ -1,6 +1,8 @@
 <?php
 namespace App\Manager;
 
+use App\Entity\Comment;
+
 class CommentManager extends BaseManager{
 
 
@@ -9,7 +11,7 @@ class CommentManager extends BaseManager{
         $db=$this->dbconnect();
         $sql ="SELECT * FROM comment;";
         $result=$db->query($sql);
-        $tous_les_commentaires=$result->fetchAll(PDO::FETCH_ASSOC);
+        $tous_les_commentaires=$result->fetchAll(\PDO::FETCH_ASSOC);
 
         $comment_object_list = array();
 
@@ -28,15 +30,15 @@ class CommentManager extends BaseManager{
         $db=$this->dbconnect();
         $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id=$id_comment ;";
         $result=$db->query($sql);
-        $un_commentaire_sous_forme_de_tableau=$result->fetch(PDO::FETCH_ASSOC);
+        $tableau_commentaire=$result->fetch(\PDO::FETCH_ASSOC);
 
         $comment=New Comment;
 
-        $comment->id_comment = $un_commentaire_sous_forme_de_tableau ['id'];
-        $comment->content = $un_commentaire_sous_forme_de_tableau ['content'];
-        $comment->creation_date= $un_commentaire_sous_forme_de_tableau ['creation_date'];
-        $comment->id_user = $un_commentaire_sous_forme_de_tableau['id_user'];
-        $comment->id_post = $un_commentaire_sous_forme_de_tableau['id_post'];
+        $comment->id_comment = $tableau_commentaire ['id'];
+        $comment->content = $tableau_commentaire ['content'];
+        $comment->creation_date= $tableau_commentaire ['creation_date'];
+        $comment->id_user = $tableau_commentaire['id_user'];
+        $comment->id_post = $tableau_commentaire['id_post'];
 
         $userManager = New UserManager();
         $user=$userManager->getUser($comment->id_user);
@@ -107,5 +109,23 @@ class CommentManager extends BaseManager{
 
         return $result;
 
+    }
+    public function getCommentsFromPost(int $id_post): array
+    {
+
+    $db=$this->dbconnect();
+    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
+    $result=$db->query($sql);
+    $comment_list=$result->fetchAll(\PDO::FETCH_ASSOC);
+
+    $comment_object_list = array();
+
+    foreach($comment_list as $row){
+
+       $comment=getComment($row['id']);
+
+       $comment_object_list[] = $comment;
+    }
+    return $comment_object_list;
     }
 }

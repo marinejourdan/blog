@@ -1,45 +1,45 @@
 <?php
+use App\Controller\HomeController;
+use App\Controller\PostController;
+use App\Controller\UserController;
 require 'vendor/autoload.php';
-include_once('./manager/manager.php');
+
 
 //var_dump($_GET);
 
 // ROUTER
 if (count($_GET)==0){
-    include_once('./controller/homeController.php');
-    displayHome();
+    HomeController::displayHome();
 }else{
     $controller=$_GET['controller'];
     $action=$_GET['action'];
 
     if ($controller == 'post'){
-        include_once('./controller/postController.php');
         if ($action == 'displayList'){
-            displayList();
+            PostController::displayList();
         }elseif($action == 'displayOne'){
-            displayOne();
+            PostController::displayOne();
         }elseif($action == 'doComment'){
-            doComment();
+            PostController::doComment();
         }
     }
     if ($controller == 'home'){
-        include_once('./controller/homeController.php');
         if ($action == 'displayHome'){
-            displayHome();
+            HomeController::displayHome();
         }elseif($action == 'doSendEmail'){
-            doSendEmail();
+            HomeController::doSendEmail();
         }
     }
     if ($controller == 'user'){
         include_once('./controller/userController.php');
         if ($action == 'displayLogin'){
-            displayLogin();
+            UserController::displayLogin();
         }elseif($action == 'displayRegister'){
-            displayRegister();
+            UserController::displayRegister();
         }elseif($action == 'doLogin'){
-            doRegister();
+            UserController::doRegister();
         }elseif($action == 'doRegister'){
-            doRegister();
+            UserController::doRegister();
         }
 
     }

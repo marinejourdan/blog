@@ -1,6 +1,7 @@
 <?php
 namespace App\Manager;
 
+use App\Entity\User;
 class UserManager extends BaseManager{
 
 
@@ -9,7 +10,7 @@ class UserManager extends BaseManager{
         $db=$this->dbconnect();
         $sql ="SELECT id FROM user;";
         $result=$db->query($sql);
-        $tous_les_users=$result->fetchAll(PDO::FETCH_ASSOC);
+        $tous_les_users=$result->fetchAll(\PDO::FETCH_ASSOC);
 
         $users_object_list = array();
 
@@ -27,7 +28,7 @@ class UserManager extends BaseManager{
         $db=$this->dbconnect();
         $sql ="SELECT id, name, first_name, nickname, email FROM user WHERE id=$id_user ;";
         $result=$db->query($sql);
-        $tableau_user=$result->fetch(PDO::FETCH_ASSOC);
+        $tableau_user=$result->fetch(\PDO::FETCH_ASSOC);
 
         $user=New User();
 

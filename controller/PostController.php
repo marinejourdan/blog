@@ -1,14 +1,18 @@
 <?php
 namespace App\Controller;
 
+use App\Manager\PostManager;
+use App\Manager\CommentManager;
+
 class PostController{
 
     // index.php?controller=post&action=displayList
-    function displayList(){
+    public function displayList(){
 
         // On définit des variable, ici un pauvre titre mais
         // pour displayPost il faudra récupérer l'object post
-        $postList=getPostList();
+        $postManager= New PostManager;
+        $postList=$postManager->getPostList();
         // On inclut le template qui correspond à la function (equivalent de echo ;)
         // dedans on peut faire des foreach et echo des variable définie au-dessus
         // On récupère tt ce qui est dans la mémoire tampon et on le colle dans une variable
@@ -22,10 +26,13 @@ class PostController{
     }
 
     // index.php?controller=post&action=displayOne
-    function displayOne(){
+    public function displayOne(){
         $id_post = $_GET['id']; // A ne pas oublier qd tu vas générer l'
-        $post=getPost($id_post);
-        $commentList= getCommentsFromPost($id_post);
+        $PostManager= New PostManager;
+        $post=$PostManager->getPost($id_post);
+
+        $commentManager= New CommentManager;
+        $commentList=$commentManager->getCommentsFromPost($id_post);
         ob_start();
         include_once ("./view/displayOne.html.php");
         $content=ob_get_clean();
@@ -38,7 +45,7 @@ class PostController{
     }
 
     // index.php?controller=post&action=doComment
-    function doComment(){
+    public function doComment(){
         $id_post = $_GET['id']; // A ne pas oublier qd tu vas générer l'URL
         die('youhou2');
     }
