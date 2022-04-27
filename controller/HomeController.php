@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-
-
 class HomeController{
 
-    public static function displayHome(){
+    public function displayHome(){
         // Démarrage de la mémoire tampon :
         // (tt ce qui est echo ou HTML en dehors des balise php est "retenu")
         ob_start();
@@ -26,7 +24,7 @@ class HomeController{
     }
 
 
-    public static function doSendEmail(){
+    public function doSendEmail(){
 
         if (!isset($_POST['name'])){
             die("$ post name absent");

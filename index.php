@@ -2,49 +2,108 @@
 use App\Controller\HomeController;
 use App\Controller\PostController;
 use App\Controller\UserController;
+use App\Manager\CommentManager;
+use App\Manager\PostManager;
+
+
 require 'vendor/autoload.php';
 
-
-//var_dump($_GET);
-
-// ROUTER
-if (count($_GET)==0){
-    HomeController::displayHome();
-}else{
+$controller='home';
+if (isset($_GET['controller'])){
     $controller=$_GET['controller'];
-    $action=$_GET['action'];
-
-    if ($controller == 'post'){
-        if ($action == 'displayList'){
-            PostController::displayList();
-        }elseif($action == 'displayOne'){
-            PostController::displayOne();
-        }elseif($action == 'doComment'){
-            PostController::doComment();
-        }
-    }
-    if ($controller == 'home'){
-        if ($action == 'displayHome'){
-            HomeController::displayHome();
-        }elseif($action == 'doSendEmail'){
-            HomeController::doSendEmail();
-        }
-    }
-    if ($controller == 'user'){
-        include_once('./controller/userController.php');
-        if ($action == 'displayLogin'){
-            UserController::displayLogin();
-        }elseif($action == 'displayRegister'){
-            UserController::displayRegister();
-        }elseif($action == 'doLogin'){
-            UserController::doRegister();
-        }elseif($action == 'doRegister'){
-            UserController::doRegister();
-        }
-
-    }
 }
 
-// Laisse ça commenté en verra tt à la fin car les variables $content ne sont pas
-// pour l'instant accessibles ici (pas de return)
-// include_once('./view/layout.html.php');
+$action='displayHome';
+if (isset($_GET['action'])){
+    $action=$_GET['action'];
+}
+
+switch($controller){
+
+    case 'home':
+
+        $homeController = new HomeController();
+
+        if ($action == 'displayHome'){
+            $homeController->displayHome();
+        }elseif ($action == 'doSendEmail'){
+            $homeController->doSendEmail();
+        }
+
+        break;
+
+    case'post':
+
+        $postManager= new PostManager;
+        $commentManager= new CommentManager;
+        $postController = new PostController($postManager, $commentManager);
+
+        if ($action == 'displayList'){
+            $postController->displayList();
+        }elseif ($action == 'displayOne'){
+            $postController->displayOne();
+        }elseif ($action == 'doComment'){
+            $postController->doComment();
+        }
+
+        break;
+
+    case 'user':
+
+        $userController=new UserController();
+
+        if ($action == 'displayLogin'){
+            $userController->displayLogin();
+        }elseif ($action == 'displayRegister'){
+            $userController->displayRegister();
+        }elseif ($action == 'doLogin'){
+            $userController->doRegister();
+        }elseif ($action == 'doRegister'){
+            $userController->doRegister();
+        }
+
+        break;
+
+}
+
+// // ROUTER
+// if (count($_GET)==0){
+//     $homeController->displayHome();
+// }else{
+//     $controller=$_GET['controller'];
+//     $action=$_GET['action'];
+//
+//     if ($controller == 'post'){
+//     $postController=new PostController($postManager,$commentManager);
+//         if ($action == 'displayList'){
+//             $postController->displayList();
+//         }elseif($action == 'displayOne'){
+//             $postController->displayOne();
+//         }elseif($action == 'doComment'){
+//             $postController->doComment();
+//         }
+//     }
+//
+//
+//
+//     if ($controller == 'home'){
+//         if ($action == 'displayHome'){
+//             $homeController->displayHome();
+//         }elseif($action == 'doSendEmail'){
+//             $homeController->doSendEmail();
+//         }
+//     }
+//     if ($controller == 'user'){
+//     $userController=new UserController();
+//         if ($action == 'displayLogin'){
+//             $userController->displayLogin();
+//         }elseif($action == 'displayRegister'){
+//             $userController->displayRegister();
+//         }elseif($action == 'doLogin'){
+//             $userController->doRegister();
+//         }elseif($action == 'doRegister'){
+//             $userController->doRegister();
+//         }
+//
+//     }
+// }

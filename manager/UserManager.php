@@ -5,23 +5,33 @@ use App\Entity\User;
 class UserManager extends BaseManager{
 
 
+    private function createUserFromDatabase($tableau_user){
+        $user=New User();
+        $user->id_user = $tableau_user ['id'];
+        $user->name = $tableau_user ['name'];
+        $user->first_name = $tableau_user ['first_name'];
+        $user->nickname = $tableau_user ['nickname'];
+        $user->email = $tableau_user ['email'];
+        return $user;
+    }
+
     public function getUserList(): array {
 
         $db=$this->dbconnect();
-        $sql ="SELECT id FROM user;";
+        $sql ="SELECT id, name, first_name, nickname, email FROM user;";
         $result=$db->query($sql);
         $tous_les_users=$result->fetchAll(\PDO::FETCH_ASSOC);
 
         $users_object_list = array();
 
         foreach($tous_les_users as $un_user_sous_forme_de_tableau){
-            $id_user=$un_user_sous_forme_de_tableau['id'];
-            $user=getUser($id_user);
+            $user=$this-> createUserFromDatabase( $un_user_sous_forme_de_tableau);
             $user_object_list[] = $user;
         }
 
     return $user_object_list;
     }
+
 
     public function getUser(int $id_user): User
     {
@@ -30,13 +40,8 @@ class UserManager extends BaseManager{
         $result=$db->query($sql);
         $tableau_user=$result->fetch(\PDO::FETCH_ASSOC);
 
-        $user=New User();
+        $user=$this-> createUserFromDatabase($tableau_user);
 
-        $user->id_user = $tableau_user ['id'];
-        $user->name = $tableau_user ['name'];
-        $user->first_name = $tableau_user ['first_name'];
-        $user->nickname = $tableau_user ['nickname'];
-        $user->email = $tableau_user ['email'];
         //$user->password = $tableau_user['password'];
 
 
