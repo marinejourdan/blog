@@ -1,7 +1,16 @@
 <?php
 namespace App\Controller;
 
+use App\Manager\UserManager;
+use App\Manager\PostManager;
+
 class UserController{
+
+    private $userManager;
+
+   public function __construct(UserManager $userManager){
+       $this->userManager=$userManager;
+   }
 
     // index.php?controller=user&action=displayLogin
     function displayLogin(){
@@ -23,6 +32,7 @@ class UserController{
 
     // index.php?controller=user&action=doLogin
     function doLogin(){
+
         session_start();
         $errors = array();
 

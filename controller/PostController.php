@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Manager\PostManager;
+
 use App\Manager\CommentManager;
 
 class PostController{
@@ -15,6 +15,7 @@ class PostController{
         $this->postManager=$postManager;
         $this->commentManager=$commentManager;
     }
+
 
     public function displayList(){
 

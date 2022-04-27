@@ -18,7 +18,6 @@ class PostManager extends BaseManager{
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
 
-            $id_du_post = $un_post_sous_forme_de_tableau ['id'];
             $postManager = New PostManager;
             $post=$postManager->getPost($id_du_post);
             $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
@@ -27,6 +26,21 @@ class PostManager extends BaseManager{
         return $post_object_list;
     }
 
+    public function lastPosts(int $last=3): array
+    {
+        $db=$this->dbconnect();
+        $sql ="SELECT * FROM post ORDER BY updated DESC LIMIT ".$last.";";
+        $result=$db->query($sql);//renvoi un objet PDO Statement
+        $tous_les_posts=$result->fetchAll(\PDO::FETCH_ASSOC);//renvoi un tableau
+        $post_object_list = array();
+
+        foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
+            $id_du_post=$un_post_sous_forme_de_tableau['id'];
+            $post=$this->getPost($id_du_post);
+            $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
+        }
+        return $post_object_list;
+    }
 
     public function getPost(int $id_post): Post
     {

@@ -4,7 +4,7 @@ use App\Controller\PostController;
 use App\Controller\UserController;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
-
+use App\Manager\UserManager;
 
 require 'vendor/autoload.php';
 
@@ -21,8 +21,9 @@ if (isset($_GET['action'])){
 switch($controller){
 
     case 'home':
-
-        $homeController = new HomeController();
+        $postManager= new PostManager();
+        $homeController = new HomeController($postManager);
+        $commentManager= new CommentManager;
 
         if ($action == 'displayHome'){
             $homeController->displayHome();
@@ -49,21 +50,20 @@ switch($controller){
         break;
 
     case 'user':
-
-        $userController=new UserController();
+        $userManager= new UserManager();
+        $userController=new UserController($userManager);
 
         if ($action == 'displayLogin'){
             $userController->displayLogin();
         }elseif ($action == 'displayRegister'){
             $userController->displayRegister();
         }elseif ($action == 'doLogin'){
-            $userController->doRegister();
+            $userController->dologin();
         }elseif ($action == 'doRegister'){
             $userController->doRegister();
         }
 
         break;
-
 }
 
 // // ROUTER
