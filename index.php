@@ -2,6 +2,8 @@
 use App\Controller\HomeController;
 use App\Controller\PostController;
 use App\Controller\UserController;
+use App\Controller\CommentController;
+
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
@@ -38,16 +40,24 @@ switch($controller){
         $postManager= new PostManager;
         $commentManager= new CommentManager;
         $postController = new PostController($postManager, $commentManager);
-
         if ($action == 'displayList'){
             $postController->displayList();
         }elseif ($action == 'displayOne'){
             $postController->displayOne();
-        }elseif ($action == 'doComment'){
-            $postController->doComment();
         }
 
         break;
+
+    case'comment':
+
+        $commentManager= new CommentManager;
+        $commentController = new commentController($commentManager);
+        if ($action == 'doComment'){
+            $commentController->doComment();
+        }
+
+        break;
+
 
     case 'user':
         $userManager= new UserManager();

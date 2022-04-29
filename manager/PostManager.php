@@ -17,9 +17,8 @@ class PostManager extends BaseManager{
         $post_object_list = array();
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
-
-            $postManager = New PostManager;
-            $post=$postManager->getPost($id_du_post);
+            $id_du_post=$un_post_sous_forme_de_tableau['id'];
+            $post=$this->getPost($id_du_post);
             $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
         }
 

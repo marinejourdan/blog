@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-
 use App\Manager\CommentManager;
+use App\Manager\PostManager;
 
 class PostController{
 

@@ -57,7 +57,7 @@ class CommentManager extends BaseManager{
 
 
 
-    public function insertComment(Comment $comment): bool
+    public function insertComment($comment): bool
     {
         $db=$this->dbconnect();
         $sql =" INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
@@ -66,7 +66,7 @@ class CommentManager extends BaseManager{
         $result_prepare=$db->prepare($sql);
         $result_prepare->bindValue(':content', $comment->content);
         $result_prepare->bindValue(':creation_date',$comment->creation_date);
-        $result_prepare->bindValue(':id_post', $comment->id_post);
+        $result_prepare->bindValue(':id_post', $comment->id_post);;
         $result_prepare->bindValue(':id_user', $comment->id_user);
 
         $result=$result_prepare->execute();
@@ -113,19 +113,19 @@ class CommentManager extends BaseManager{
     public function getCommentsFromPost(int $id_post): array
     {
 
-    $db=$this->dbconnect();
-    $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
-    $result=$db->query($sql);
-    $comment_list=$result->fetchAll(\PDO::FETCH_ASSOC);
+        $db=$this->dbconnect();
+        $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
+        $result=$db->query($sql);
+        $comment_list=$result->fetchAll(\PDO::FETCH_ASSOC);
 
-    $comment_object_list = array();
+        $comment_object_list = array();
 
-    foreach($comment_list as $row){
+        foreach($comment_list as $row){
 
-       $comment=getComment($row['id']);
+           $comment=$this->getComment($row['id']);
 
-       $comment_object_list[] = $comment;
-    }
-    return $comment_object_list;
+           $comment_object_list[] = $comment;
+        }
+        return $comment_object_list;
     }
 }
