@@ -10,6 +10,7 @@ use App\Manager\UserManager;
 
 require 'vendor/autoload.php';
 
+
 $controller='home';
 if (isset($_GET['controller'])){
     $controller=$_GET['controller'];

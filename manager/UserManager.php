@@ -101,4 +101,22 @@ class UserManager extends BaseManager{
 
         return $result;
     }
+
+    public function findUserByEmail(string $email): ?User
+    {
+        $db=$this->dbconnect();
+
+        $sql= "SELECT id FROM user WHERE email=:email LIMIT 1;";
+        $result_prepare=$db->prepare($sql);
+        $result_prepare ->bindValue (':email',$email);
+        $result_prepare->execute();
+        $user_row=$result_prepare->fetch(\PDO::FETCH_ASSOC);
+
+        $user = null;
+        if (!empty($user_row)){
+            $user=$this->getUser($user_row['id']);
+        }
+        return $user;
+    }
+
 }

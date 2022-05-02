@@ -1,22 +1,31 @@
 <?php
 namespace App\Controller;
 
+use App\Manager\BaseManager;
 use App\Manager\UserManager;
 use App\Manager\PostManager;
+use App\Entity\User;
 
 class UserController{
 
     private $userManager;
 
-   public function __construct(UserManager $userManager){
+
+    public function __construct(UserManager $userManager){
        $this->userManager=$userManager;
    }
 
     // index.php?controller=user&action=displayLogin
     function displayLogin(){
-
-        die('youhou');
+        ob_start();
+        include_once ("./view/displayLogin.html.php");;
+        $content=ob_get_clean();
+        // Tt revient à la normal à partir d'ici
+        // On "affiche" la structure html complète qui se charge de faire un echo $content
+        // pour placer le contenu au bon endroit dans le html ;)
+        include_once("./layout.html.php");
     }
+
 
     // index.php?controller=user&action=displayRegister
     function displayRegister(){
@@ -33,44 +42,57 @@ class UserController{
     // index.php?controller=user&action=doLogin
     function doLogin(){
 
-        session_start();
         $errors = array();
 
         if(count($_POST)>0){
 
-            $email=$_POST['email'];
-            $password=$_POST['password'];
-
-            if (empty($email)){
+            if (!isset($_POST['email'])){
                 $errors['email'] =  'merci de renseigner un mail';
+                echo $errors['email'];
+                die();
+            }
+            $email=$_POST['email'];
+
+            if ($email === '') {
+                $errors['email'] =  'merci de renseigner un mail';
+                echo $errors['email'];
+                die();
             }
 
-            if(empty($password)){
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = "L'adresse email '$email' n'est pas valide.";
+                echo $errors['email'];
+                die();
+            }
+
+            if(!isset($_POST['password'])){
                 $errors['password'] =  'merci de renseigner un mot de passe';
+                echo $errors['password'];
+                die();
+            }
+            $password=$_POST['password'];
+            if ($password === '') {
+                $errors['password'] =  'merci de renseigner un mot de passe';
+                echo $errors['password'];
+                die();
             }
 
-            if(empty($errors)){
+            $user = $this->userManager->findUserByEmail($email);
 
-                $db = dbconnect();
-                $sql= "SELECT id, password FROM user WHERE email=:email LIMIT 1;";
-                $result_prepare=$db->prepare($sql);
-                $result_prepare ->bindValue (':email',$email);
-                $result_prepare->execute();
-                $user=$result_prepare->fetch(PDO::FETCH_ASSOC);
-
-                if (empty($user)){
-                    $errors['user'] ='ce compte existe pas';
-                }else{
-                    if($password !== $user['password']){
-                        $errors['user'] = 'ce compte existe pas ';
-                    }
-
-                }
-
+            if ($user==null){
+                $errors['email']='ce compte est inexistant';
+                echo $errors['email'];
+                die();
+            }elseif($user->password==$password){
+                $errors['password']='ce compte est inexistant';
+                echo $errors['password'];
+                die();
+            }else{
+                header('location: index.php?controller=home&action=displayHome');
             }
-            $_SESSION['connexion_errors']=$errors;
-            header('Location: /Controller/userController.php');
-            exit();
+
+            //$_SESSION['connexion_errors']=$errors;
+
         }
     }
 }

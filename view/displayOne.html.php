@@ -22,7 +22,7 @@
     	<p>Commentaire<br /><textarea name="content"></textarea></p>
     	<p><input type="submit" class="button-blue left" value="Poster mon commentaire" /></p>
         <input type="hidden" name="date" value="<?php echo date('Y-m-d H:i:s'); ?>" />
-    	<p class="red right">Votre adresse e-mail n'est pas publiée lorsque vous ajoutez un commentaire.<br />Tous les champs sont obligatoires pour soumettre votre commentaire.</p>
+    	<p class="red right">Votre adresse e-mail n'est pas publiée lorsque vous ajoutez un commentaire.</p>
     </form>
 
 </div>

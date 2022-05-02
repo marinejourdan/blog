@@ -13,7 +13,6 @@ private $commentManager;
        $this->commentManager=$commentManager;
     }
 
-
     public function doComment(){
 
 
@@ -38,10 +37,7 @@ private $commentManager;
                 $result=$this->commentManager->insertComment($comment);
             }
         }
-
-
-        header('Location: ./index.php?controller=post&action=displayOne&result='.$result.'&id='.$_POST['id_post']);
-
-
+        header('Location:./index.php?controller=post&action=displayOne&result='.$result.'&id='.$_POST['id_post']);
+        exit();
     }
 }
