@@ -10,26 +10,28 @@ use App\Entity\Comment;
 class CommentController{
 
 private $commentManager;
+private $userManager;
 
-    public function __construct(CommentManager $commentManager){
+    public function __construct(CommentManager $commentManager, UserManager $userManager){
        $this->commentManager=$commentManager;
+       $this->userManager=$userManager;
     }
 
     public function doComment(){
 
 
         if (!isset ($_SESSION['email'])){
-            header('location: index.php?controller=user&action=displayLogin');
+            header('Location: index.php?controller=user&action=displayLogin');
+            exit();
         }else{
-            $userManager= new UserManager;
-            $user = $userManager->findUserByEmail($_SESSION['email']);
+            $user = $this->$userManager->findUserByEmail($_SESSION['email']);
         }
 
         if(count($_POST)>0){
 
             $content=$_POST['content'];
             $id_post=$_POST['id_post'];
-            $id_user=$user->id;
+            $id_user=$user->id_user;
 
             if (empty($content)){
                 echo 'merci de renseigner un contenu';
@@ -45,7 +47,7 @@ private $commentManager;
                 $result=$this->commentManager->insertComment($comment);
             }
         }
-        header('Location:./index.php?controller=post&action=displayOne&result='.$result.'&id='.$_POST['id_post']);
+        header('Location:./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
         exit();
     }
 }

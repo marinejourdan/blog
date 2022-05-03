@@ -112,8 +112,8 @@ class UserManager extends BaseManager{
         $result_prepare->execute();
         $user_row=$result_prepare->fetch(\PDO::FETCH_ASSOC);
 
+        $user=null;
         if (!empty($user_row)){
-            $user=new User;
             $user=$this->getUser($user_row['id']);
         }
         return $user;

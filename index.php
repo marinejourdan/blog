@@ -28,7 +28,8 @@ switch($controller){
     case 'home':
         $postManager= new PostManager();
         $homeController = new HomeController($postManager);
-        $commentManager= new CommentManager;
+        $userManager= new UserManager();
+        $commentManager= new CommentManager($postManager, $userManager);
 
         if ($action == 'displayHome'){
             $homeController->displayHome();
@@ -40,7 +41,8 @@ switch($controller){
     case'post':
 
         $postManager= new PostManager;
-        $commentManager= new CommentManager;
+        $userManager= new UserManager();
+        $commentManager= new CommentManager($postManager, $userManager);
         $postController = new PostController($postManager, $commentManager);
         if ($action == 'displayList'){
             $postController->displayList();
@@ -51,9 +53,10 @@ switch($controller){
         break;
 
     case'comment':
-
+        $postManager= new PostManager;
+        $userManager= new UserManager;
         $commentManager= new CommentManager;
-        $commentController = new commentController($commentManager);
+        $commentController = new commentController($postManager,$commentManager,$userManager);
         if ($action == 'doComment'){
             $commentController->doComment();
         }

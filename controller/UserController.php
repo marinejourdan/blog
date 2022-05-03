@@ -90,7 +90,7 @@ class UserController{
             }else{
                 $_SESSION['email']=$user->email;
                 header('location: index.php?controller=home&action=displayHome');
-
+                exit();
             }
 
             //$_SESSION['connexion_errors']=$errors;
@@ -103,12 +103,14 @@ class UserController{
         if(isset($_SESSION['email'])){
         session_destroy();
         header('location: index.php?controller=user&action=displayLogin');
+        exit();
         }
     }
 
     function accessAdmin(){
-        if(isset($_SESSION['email'])){
-        header('location: index.php?controller=user&action=accessAdmin');
+        if(!isset($_SESSION['email'])){
+        header('location: index.php?controller=user&action=displayLogin');
+        exit();
         }
     }
 }

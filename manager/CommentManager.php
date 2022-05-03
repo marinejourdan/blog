@@ -2,9 +2,19 @@
 namespace App\Manager;
 
 use App\Entity\Comment;
+use App\Manager\PostManager;
+use App\Manager\UserManager;
+
 
 class CommentManager extends BaseManager{
 
+    private $postManager;
+    private $userManager;
+
+    public function __construct(PostManager $postManager, UserManager $userManager){
+       $this->userManager=$userManager;
+       $this->postManager=$postManager;
+   }
 
     public function getCommentList(){
 
@@ -16,11 +26,8 @@ class CommentManager extends BaseManager{
         $comment_object_list = array();
 
         foreach ($tous_les_commentaires as $un_commentaire_sous_forme_de_tableau){
-
-            $comment=$this->getComment($un_commentaire_sous_forme_de_tableau ['id']);
-
+            $comment=$this->getComment($comment->id_comment);
             $comment_object_list[] = $comment;
-
         }
         return $comment_object_list;
     }
@@ -28,26 +35,32 @@ class CommentManager extends BaseManager{
     public function getComment(int $id_comment){
 
         $db=$this->dbconnect();
-        $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id=$id_comment ;";
-        $result=$db->query($sql);
-        $tableau_commentaire=$result->fetch(\PDO::FETCH_ASSOC);
+
+        $sql ="SELECT id, content, creation_date, id_post, id_user FROM comment WHERE id=:id_comment;";
+        $statement=$db->prepare($sql);
+        $statement->bindValue(':id_comment', $id_comment);
+        $statement->execute();
+        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        if(!$result){
+          var_dump($result_prepare->errorInfo());
+          die('ERROR');
+        }
 
         $comment=New Comment;
+        $comment->id=$result['id'];
+        $comment->content=$result['content'];
+        $comment->creation_date=$result['creation_date'];
+        $comment->id_post=$result['id_post'];
+        $comment->id_user=$result['id_user'];
 
-        $comment->id_comment = $tableau_commentaire ['id'];
-        $comment->content = $tableau_commentaire ['content'];
-        $comment->creation_date= $tableau_commentaire ['creation_date'];
-        $comment->id_user = $tableau_commentaire['id_user'];
-        $comment->id_post = $tableau_commentaire['id_post'];
+        $user=$this->userManager->getUser($comment->id_user);
 
-        $userManager = New UserManager();
-        $user=$userManager->getUser($comment->id_user);
 
         $nickname_user = $user->nickname;
         $comment->nickname_user= $nickname_user;
 
-        $PostManager = New PostManager();
-        $post=$PostManager->getPost($comment->id_post);
+        $post=$this->postManager->getPost($comment->id_post);
         $comment->post = $post;
 
         $comment_object_list[] = $comment;
@@ -119,7 +132,7 @@ class CommentManager extends BaseManager{
         $comment_list=$result->fetchAll(\PDO::FETCH_ASSOC);
 
         $comment_object_list = array();
-
+        //var_dump($comment_list);
         foreach($comment_list as $row){
 
            $comment=$this->getComment($row['id']);

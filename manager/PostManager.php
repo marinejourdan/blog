@@ -47,19 +47,24 @@ class PostManager extends BaseManager{
            $db=$this->dbconnect();
            //génére une requète SQL
            $sql ="SELECT id, title, header, content, updated , id_user FROM post WHERE id=$id_post ;";
-           // Execute la requète (query)
-           $result=$db->query($sql);
-           // On met la résultat dans une variable
-           $tableau_post=$result->fetch(\PDO::FETCH_ASSOC);//renvoi un tableau
+           $statement=$db->prepare($sql);
+           $statement->bindValue(':id_post', $id_post);
+           $statement->execute();
+           $result = $statement->fetch(\PDO::FETCH_ASSOC);
+          //renvoi un tableau
+            //}catch(\Throwable $e){
+            //var_dump ($db->errorInfo());
+            //}
+
            //passer le tableau en objet: créer un nouvel objet, on donne des valeurs aux propriétés
            $post=New Post;
 
-           $post->id = $tableau_post['id'];
-           $post->title = $tableau_post['title'];
-           $post->header = $tableau_post ['header'];
-           $post->content = $tableau_post ['content'];
-           $post->updated = $tableau_post ['updated'];
-           $post->id_user= $tableau_post['id_user'];
+           $post->id = $result['id'];
+           $post->title = $result['title'];
+           $post->header = $result ['header'];
+           $post->content = $result ['content'];
+           $post->updated = $result ['updated'];
+           $post->id_user= $result['id_user'];
 
 
            $userManager= New UserManager;
@@ -118,7 +123,7 @@ class PostManager extends BaseManager{
     public function deletPost(Post $post): bool
     {
         $db=$this->dbconnect();
-        $sql="DELETE FROM `post` WHERE id=$post->id_post";
+        $sql="DELETE FROM post WHERE id=$post->id_post";
         $result=$post->id_post;
         $result=$db->exec($sql);
         if(!$result){
