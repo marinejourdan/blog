@@ -34,14 +34,14 @@ class PostManager extends BaseManager{
         $post_object_list = array();
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
-            $id_du_post=$un_post_sous_forme_de_tableau['id'];
-            $post=$this->getPost($id_du_post);
+            $id_post=$un_post_sous_forme_de_tableau['id'];
+            $post=$this->getPost($id_post);
             $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
         }
         return $post_object_list;
     }
 
-    public function getPost(int $id_post): Post
+    public function getPost($id_post): Post
     {
            // connexion à la bdd
            $db=$this->dbconnect();
@@ -53,7 +53,7 @@ class PostManager extends BaseManager{
            $tableau_post=$result->fetch(\PDO::FETCH_ASSOC);//renvoi un tableau
            //passer le tableau en objet: créer un nouvel objet, on donne des valeurs aux propriétés
            $post=New Post;
-    //
+
            $post->id = $tableau_post['id'];
            $post->title = $tableau_post['title'];
            $post->header = $tableau_post ['header'];

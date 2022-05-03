@@ -88,11 +88,27 @@ class UserController{
                 echo $errors['password'];
                 die();
             }else{
+                $_SESSION['email']=$user->email;
                 header('location: index.php?controller=home&action=displayHome');
+
             }
 
             //$_SESSION['connexion_errors']=$errors;
 
+        }
+    }
+
+    function doLogout(){
+
+        if(isset($_SESSION['email'])){
+        session_destroy();
+        header('location: index.php?controller=user&action=displayLogin');
+        }
+    }
+
+    function accessAdmin(){
+        if(isset($_SESSION['email'])){
+        header('location: index.php?controller=user&action=accessAdmin');
         }
     }
 }

@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
+use App\Manager\UserManager;
 use App\Entity\Comment;
+
 
 class CommentController{
 
@@ -16,12 +18,18 @@ private $commentManager;
     public function doComment(){
 
 
-        if(count($_POST)>0){
+        if (!isset ($_SESSION['email'])){
+            header('location: index.php?controller=user&action=displayLogin');
+        }else{
+            $userManager= new UserManager;
+            $user = $userManager->findUserByEmail($_SESSION['email']);
+        }
 
+        if(count($_POST)>0){
 
             $content=$_POST['content'];
             $id_post=$_POST['id_post'];
-            $id_user=1;
+            $id_user=$user->id;
 
             if (empty($content)){
                 echo 'merci de renseigner un contenu';

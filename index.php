@@ -10,6 +10,8 @@ use App\Manager\UserManager;
 
 require 'vendor/autoload.php';
 
+session_start();
+
 
 $controller='home';
 if (isset($_GET['controller'])){
@@ -33,7 +35,6 @@ switch($controller){
         }elseif ($action == 'doSendEmail'){
             $homeController->doSendEmail();
         }
-
         break;
 
     case'post':
@@ -72,8 +73,11 @@ switch($controller){
             $userController->dologin();
         }elseif ($action == 'doRegister'){
             $userController->doRegister();
+        }elseif ($action == 'doLogout'){
+            $userController->dologout();
+        }elseif ($action == 'accessAdmin'){
+            $userController->accessAdmin();
         }
-
         break;
 }
 
