@@ -18,7 +18,7 @@ class UserController{
     // index.php?controller=user&action=displayLogin
     function displayLogin(){
         ob_start();
-        include_once ("./view/displayLogin.html.php");;
+        include_once ("./view/displayLogin.html.php");
         $content=ob_get_clean();
         // Tt revient à la normal à partir d'ici
         // On "affiche" la structure html complète qui se charge de faire un echo $content
@@ -46,54 +46,53 @@ class UserController{
 
         if(count($_POST)>0){
 
-            if (!isset($_POST['email'])){
-                $errors['email'] =  'merci de renseigner un mail';
-                echo $errors['email'];
-                die();
+            if (
+                !isset($_POST['email']) ||
+                $_POST['email'] == ''
+            ){
+                $errors[] =  'merci de renseigner un mail';
             }
             $email=$_POST['email'];
 
-            if ($email === '') {
-                $errors['email'] =  'merci de renseigner un mail';
-                echo $errors['email'];
-                die();
-            }
-
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors['email'] = "L'adresse email '$email' n'est pas valide.";
-                echo $errors['email'];
-                die();
+                $errors[] = "L'adresse email '$email' n'est pas valide.";
+            }else{
+                $_SESSION['last_email']=$email;
             }
 
-            if(!isset($_POST['password'])){
-                $errors['password'] =  'merci de renseigner un mot de passe';
-                echo $errors['password'];
-                die();
+            if (
+                !isset($_POST['password']) ||
+                $_POST['password'] == ''
+            ){
+                $errors[] =  'merci de renseigner un mot de passe';
             }
             $password=$_POST['password'];
-            if ($password === '') {
-                $errors['password'] =  'merci de renseigner un mot de passe';
-                echo $errors['password'];
-                die();
+
+            if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                header('location: index.php?controller=user&action=displayLogin');
+                exit();
             }
 
             $user = $this->userManager->findUserByEmail($email);
 
-            if ($user==null){
-                $errors['email']='ce compte est inexistant';
-                echo $errors['email'];
-                die();
-            }elseif($user->password==$password){
-                $errors['password']='ce compte est inexistant';
-                echo $errors['password'];
-                die();
-            }else{
-                $_SESSION['email']=$user->email;
-                header('location: index.php?controller=home&action=displayHome');
+            if(
+                $user==null ||
+                $user->password!=$password
+            ){
+                $errors[]='ce compte est inexistant';
+
+            }
+
+            if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                header('location: index.php?controller=user&action=displayLogin');
                 exit();
             }
 
-            //$_SESSION['connexion_errors']=$errors;
+            $_SESSION['email']=$user->email;
+            header('location: index.php?controller=user&action=displayHome');
+            exit();
 
         }
     }
@@ -112,5 +111,20 @@ class UserController{
         header('location: index.php?controller=user&action=displayLogin');
         exit();
         }
+        $email=($_SESSION['email']);
+        $user = $this->userManager->findUserByEmail($email);
+        var_dump($user);
+
+        if($user->access==0){
+        header('location: index.php?controller=user&action=displayAdmin');
+        exit();
+
+        }else{
+        echo 'vous navez pas accès à cette page';
+        }
+    }
+
+    function displayAdmin(){
+    include_once("./view/displayAdmin.html.php");
     }
 }

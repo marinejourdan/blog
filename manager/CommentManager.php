@@ -76,16 +76,16 @@ class CommentManager extends BaseManager{
         $sql =" INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
                   VALUES (:content ,:creation_date, :id_post, :id_user);";
 
-        $result_prepare=$db->prepare($sql);
-        $result_prepare->bindValue(':content', $comment->content);
-        $result_prepare->bindValue(':creation_date',$comment->creation_date);
-        $result_prepare->bindValue(':id_post', $comment->id_post);;
-        $result_prepare->bindValue(':id_user', $comment->id_user);
+        $statement=$db->prepare($sql);
+        $statement->bindValue(':content', $comment->content);
+        $statement->bindValue(':creation_date',$comment->creation_date);
+        $statement->bindValue(':id_post', $comment->id_post);;
+        $statement->bindValue(':id_user', $comment->id_user);
 
-        $result=$result_prepare->execute();
+        $result=$statement->execute();
 
         if(!$result){
-          var_dump($result_prepare->errorInfo());
+          var_dump($statement->errorInfo());
           die('ERROR');
         }
 

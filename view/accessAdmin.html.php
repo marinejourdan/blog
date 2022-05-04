@@ -1,1 +1,2 @@
-<?php die('prout'); ?>
+<?php
+echo 'bienvenue sur mon admin'; ?>

@@ -35,6 +35,8 @@ switch($controller){
             $homeController->displayHome();
         }elseif ($action == 'doSendEmail'){
             $homeController->doSendEmail();
+        }else{
+            die('404 not found');
         }
         break;
 
@@ -48,6 +50,8 @@ switch($controller){
             $postController->displayList();
         }elseif ($action == 'displayOne'){
             $postController->displayOne();
+        }else{
+            die('404 not found');
         }
 
         break;
@@ -55,10 +59,12 @@ switch($controller){
     case'comment':
         $postManager= new PostManager;
         $userManager= new UserManager;
-        $commentManager= new CommentManager;
+        $commentManager= new CommentManager($postManager, $userManager);
         $commentController = new commentController($postManager,$commentManager,$userManager);
         if ($action == 'doComment'){
             $commentController->doComment();
+        }else{
+            die('404 not found');
         }
 
         break;
@@ -80,8 +86,16 @@ switch($controller){
             $userController->dologout();
         }elseif ($action == 'accessAdmin'){
             $userController->accessAdmin();
+        }elseif ($action == 'displayAdmin'){
+            $userController->displayAdmin();
+        }else{
+            die('404 not found');
         }
         break;
+
+    default:
+        die('404 not found');
+
 }
 
 // // ROUTER

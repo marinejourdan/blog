@@ -84,17 +84,17 @@ class PostManager extends BaseManager{
         $sql =" INSERT INTO `post` (`title`, `header`, `content`, `updated`,`id_user`)
                  VALUES (:title ,:header, :content,:updated, :id_user);";
 
-        $result_prepare=$db->prepare($sql);
-        $result_prepare->bindValue(':title', $post->title);
-        $result_prepare->bindValue(':header', $post->header);
-        $result_prepare->bindValue(':content',$post->content);
-        $result_prepare->bindValue(':updated', $post->updated);
-        $result_prepare->bindValue(':id_user', $post->id_user);
+        $statement=$db->prepare($sql);
+        $statement->bindValue(':title', $post->title);
+        $statement->bindValue(':header', $post->header);
+        $statement->bindValue(':content',$post->content);
+        $statement->bindValue(':updated', $post->updated);
+        $statement->bindValue(':id_user', $post->id_user);
 
-        $result=$result_prepare->execute();
+        $result=$statement->execute();
 
         if(!$result){
-         var_dump($result_prepare->errorInfo());
+         var_dump($statement->errorInfo());
          die('ERROR');
         }
 
