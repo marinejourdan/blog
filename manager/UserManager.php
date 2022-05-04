@@ -12,6 +12,7 @@ class UserManager extends BaseManager{
         $user->first_name = $tableau_user ['first_name'];
         $user->nickname = $tableau_user ['nickname'];
         $user->email = $tableau_user ['email'];
+        $user->password = $tableau_user ['password'];
         $user->access = $tableau_user ['access'];
         return $user;
     }
@@ -37,7 +38,7 @@ class UserManager extends BaseManager{
     public function getUser(int $id_user): User
     {
         $db=$this->dbconnect();
-        $sql ="SELECT id, name, first_name, nickname, email ,access FROM user WHERE id=$id_user ;";
+        $sql ="SELECT id, name, first_name, nickname, email, password, access FROM user WHERE id=$id_user ;";
         $result=$db->query($sql);
         $tableau_user=$result->fetch(\PDO::FETCH_ASSOC);
 

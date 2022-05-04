@@ -3,6 +3,7 @@ use App\Controller\HomeController;
 use App\Controller\PostController;
 use App\Controller\UserController;
 use App\Controller\CommentController;
+use App\Controller\AdminController;
 
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
@@ -86,15 +87,36 @@ switch($controller){
             $userController->dologout();
         }elseif ($action == 'accessAdmin'){
             $userController->accessAdmin();
-        }elseif ($action == 'displayAdmin'){
-            $userController->displayAdmin();
         }else{
             die('404 not found');
         }
         break;
 
+    case 'admin':
+        $adminController=New AdminController;
+
+        if ($action == 'displayAdminHome'){
+            $adminController->displayAdminHome();
+        }if ($action == 'displayAdminList'){
+            $adminController->displayAdminList();
+        }if ($action == 'displayAdminCreate'){
+            $adminController->displayAdminCreate();
+        }if ($action == 'doAdminCreate'){
+            $adminController->doAdminCreate();
+        }if ($action == 'displayAdminUpdate'){
+            $adminController->displayAdminUpdate();
+        }if ($action == 'doAdminUpdate'){
+            $adminController->doAdminUpdate();
+        }if ($action == 'doAdminDelete'){
+            $adminController->doAdminDelete();
+        }
+        break;
+
+
     default:
         die('404 not found');
+
+
 
 }
 

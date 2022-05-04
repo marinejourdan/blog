@@ -91,7 +91,7 @@ class UserController{
             }
 
             $_SESSION['email']=$user->email;
-            header('location: index.php?controller=user&action=displayHome');
+            header('location: index.php?controller=admin&action=displayAdminHome');
             exit();
 
         }
@@ -116,15 +116,12 @@ class UserController{
         var_dump($user);
 
         if($user->access==0){
-        header('location: index.php?controller=user&action=displayAdmin');
-        exit();
-
+            header('location: index.php?controller=user&action=displayAdminHome');
+            exit();
         }else{
-        echo 'vous navez pas accès à cette page';
+            echo 'vous navez pas accès à cette page';
         }
     }
 
-    function displayAdmin(){
-    include_once("./view/displayAdmin.html.php");
-    }
+    
 }
