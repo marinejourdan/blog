@@ -93,7 +93,11 @@ switch($controller){
         break;
 
     case 'admin':
-        $adminController=New AdminController;
+
+        $userManager=new UserManager();
+        $postManager= new PostManager;
+        $commentManager= new CommentManager($postManager, $userManager);
+        $adminController=New AdminController($userManager, $postManager, $commentManager);
 
         if ($action == 'displayAdminHome'){
             $adminController->displayAdminHome();
@@ -107,6 +111,8 @@ switch($controller){
             $adminController->displayAdminUpdate();
         }if ($action == 'doAdminUpdate'){
             $adminController->doAdminUpdate();
+        }if ($action == 'displayAdminDelete'){
+            $adminController->displayAdminDelete();
         }if ($action == 'doAdminDelete'){
             $adminController->doAdminDelete();
         }

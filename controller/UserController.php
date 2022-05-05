@@ -70,7 +70,7 @@ class UserController{
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-                header('location: index.php?controller=user&action=displayLogin');
+                header('location: index.php?controller=admin&action=displayLogin');
                 exit();
             }
 
@@ -91,7 +91,7 @@ class UserController{
             }
 
             $_SESSION['email']=$user->email;
-            header('location: index.php?controller=admin&action=displayAdminHome');
+            header('location: index.php?controller=admin&action=displayAdminList');
             exit();
 
         }
@@ -116,12 +116,12 @@ class UserController{
         var_dump($user);
 
         if($user->access==0){
-            header('location: index.php?controller=user&action=displayAdminHome');
+            header('location: index.php?controller=admin&action=displayAdminHome');
             exit();
         }else{
             echo 'vous navez pas accès à cette page';
         }
     }
 
-    
+
 }

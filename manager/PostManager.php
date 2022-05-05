@@ -51,6 +51,7 @@ class PostManager extends BaseManager{
            $statement->bindValue(':id_post', $id_post);
            $statement->execute();
            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+
           //renvoi un tableau
             //}catch(\Throwable $e){
             //var_dump ($db->errorInfo());
