@@ -3,7 +3,7 @@ namespace App\Entity;
 
 class User{
 
-    public $id_user = NULL;
+    public $id = NULL;
     public $name = NULL;
     public $first_name = NULL;
     public $nickname = NULL;

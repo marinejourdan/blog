@@ -81,6 +81,7 @@ class PostManager extends BaseManager{
 
     public function insertPost(Post $post): bool
     {
+        var_dump($post);
         $db=$this->dbconnect();
         $sql =" INSERT INTO `post` (`title`, `header`, `content`, `updated`,`id_user`)
                  VALUES (:title ,:header, :content,:updated, :id_user);";
@@ -107,13 +108,21 @@ class PostManager extends BaseManager{
     public function updatePost(Post $post) :bool
     {
        $db=$this->dbconnect();
-       $sql = "UPDATE post SET title='$post->title', header='$post->header', content='$post->content'
-                   WHERE id=$post->id_post;";
-       $result=$post->id_post;
-       $result=$db->exec($sql);
+       $sql = "UPDATE post SET title=:title, header=:header, content=:content, updated= :updated, id_user= :id_user
+                   WHERE id=:id";
 
+       $statement=$db->prepare($sql);
+       $statement->bindValue(':id', $post->id);
+       $statement->bindValue(':title', $post->title);
+       $statement->bindValue(':header', $post->header);
+       $statement->bindValue(':content',$post->content);
+       $statement->bindValue(':updated', $post->updated);
+       $statement->bindValue(':id_user', $post->id_user);
+
+       $result=$statement->execute();
 
        if(!$result){
+            var_dump($statement->errorInfo());
            die('ERROR');
        }
        return $result;
@@ -121,10 +130,10 @@ class PostManager extends BaseManager{
 
 
 
-    public function deletPost(Post $post): bool
+    public function deletePost(Post $post): bool
     {
         $db=$this->dbconnect();
-        $sql="DELETE FROM post WHERE id=$post->id_post";
+        $sql="DELETE FROM post WHERE id=$post->id";
         $result=$post->id_post;
         $result=$db->exec($sql);
         if(!$result){

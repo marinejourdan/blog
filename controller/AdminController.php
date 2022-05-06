@@ -49,6 +49,58 @@ class AdminController
     }
 
 
+
+
+
+    function displayAdminUpdate(){
+        $id=$_GET['id'];
+        $post=$this->postManager->getPost($id);
+
+        ob_start();
+        include_once ("./view/displayAdminUpdate.html.php");
+        $content=ob_get_clean();
+        include_once("./layoutAdmin.html.php");
+
+    }
+
+
+    function doAdminUpdate(){
+
+        if(count($_POST)>0){
+            $email=$_SESSION['email'];
+            $title=$_POST['title'];
+            $header=$_POST['header'];
+            $content=$_POST['content'];
+
+            if (
+                empty($title) ||
+                empty($header)||
+                empty($content)
+            ){
+                echo 'merci de renseigner un contenu';
+                die();
+            }else{
+                $post=new Post;
+                $post->title=$title;
+                $post->header=$header;
+                $post->content=$content;
+                $post->updated=date('Y-m-d H:i:s');
+                $user=$this->userManager->findUserByEmail($email);
+
+                if (!$user instanceof User){
+                    die('nous n avons pas trouvé le user');
+                }
+
+                $post->id_user=$user->id;
+                $result=$this->postManager->updatePost($post);
+            }
+
+        }
+        header('Location:./index.php?controller=admin&action=displayAdminList');
+        exit();
+    }
+
+
     function displayAdminCreate(){
         ob_start();
         include_once("./view/displayAdminCreate.html.php");
@@ -58,60 +110,54 @@ class AdminController
     }
 
 
-    function displayAdminUpdate(){
-        $id_post = $_GET['id']; // A ne pas oublier qd tu vas générer l'
-        $post=$this->postManager->getPost($id_post);
-
-        ob_start();
-        include_once ("./view/displayAdminUpdate.html.php");
-        $content=ob_get_clean();
-        // Tt revient à la normal à partir d'ici
-        // On "affiche" la structure html complète qui se charge de faire un echo $content
-        // pour placer le contenu au bon endroit dans le html ;)
-        include_once("./layoutAdmin.html.php");
-
-    }
-
     function doAdminCreate(){
 
 
         if(count($_POST)>0){
+            $email=$_SESSION['email'];
+
 
             $title=$_POST['title'];
             $header=$_POST['header'];
             $content=$_POST['content'];
-            $email=$_SESSION['email'];
 
-            if (empty($content)){
+
+            if (
+                empty($title) ||
+                empty($header)||
+                empty($content)
+            ){
                 echo 'merci de renseigner un contenu';
-                die('youhou');
+                die();
             }else{
+
 
                 $post=new Post;
                 $post->title=$title;
                 $post->header=$header;
                 $post->content=$content;
                 $post->updated=date('Y-m-d H:i:s');
-                $post->id_user=1;
+                $user=$this->userManager->findUserByEmail($email);
+
+                if (!$user instanceof User){
+                    die('nous n avons pas trouvé le user');
+                }
+
+                $post->id_user=$user->id;
                 $result=$this->postManager->insertPost($post);
             }
+
         }
         header('Location:./index.php?controller=admin&action=displayAdminList');
         exit();
     }
 
 
-    function doAdminUpdate(){
-        $post=New Post;
-        $_POST['id']=$post->id;
-        $this->postManager->updatePost($post);
-        header('location: index.php?controller=admin&action=displayAdminHome');
-        exit();
-    }
-    function displayAdminDelete(){
-        
-        ob_start();
 
+    function displayAdminDelete(){
+
+        ob_start();
+        $id=$_GET['id'];
         include_once("./view/displayAdminDelete.html.php");
 
 
@@ -122,10 +168,9 @@ class AdminController
 
 
     function doAdminDelete(){
-        $id=$_POST['id'];
-        $post=New Post;
-        $id=$post->id;
-        $this->postManager->deletPost($post);
+        $id=$_POST['id_post'];
+        $post=$this->postManager->getPost($id);
+        $this->postManager->deletePost($post);
         header('location: index.php?controller=admin&action=displayAdminList');
         exit();
 

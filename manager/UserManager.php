@@ -7,7 +7,7 @@ class UserManager extends BaseManager{
 
     private function createUserFromDatabase($tableau_user){
         $user=New User();
-        $user->id_user = $tableau_user ['id'];
+        $user->id = $tableau_user ['id'];
         $user->name = $tableau_user ['name'];
         $user->first_name = $tableau_user ['first_name'];
         $user->nickname = $tableau_user ['nickname'];

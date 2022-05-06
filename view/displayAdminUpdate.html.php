@@ -1,23 +1,14 @@
-<form>
-    <tr>
-        <th>titre</th>
-        <th>chapo</th>
-        <th>content</th>
-    </tr>
 
 
-    </tr>
-    <tr><label>title<br /></label><input type="textarea" name="content" value="<?php echo $post->title ?>" size="250"  placeholder="<?php echo $post->id ?>" <tr/>
-    </tr>
-    <tr><label>header<br /></label><input type="textarea" name="content" value="<?php echo $post->header ?>" size="250"  placeholder="<?php echo $post->id ?>" <tr/>
-    </tr>
-    <tr><label>content<br /></label><input type="textarea" name="content" value="<?php echo $post->content ?>" size="250"  placeholder="<?php echo $post->id ?>" <tr/>
-    </tr>
-    <tr><label>updated<br /></label><input type="textarea" name="content" value="<?php echo $post->updated ?>" size="250"  placeholder="<?php echo $post->id ?>" <tr/>
-    </tr>
-    <tr><label>nickname<br /></label><input type="textarea" name="content" value="<?php echo $post->nickname_user ?>" size="250"  placeholder="<?php echo $post->id ?>" <tr/>
-    </tr>
+    <form method="post" action="./index.php?controller=admin&action=doAdminUpdate">
+        <input type="hidden" name="id_post" value="<?php echo $id;?>" />
 
+        <tr><label>title<br /></label><input type="textarea" name="title" value="<?php echo $post->title ?>" size="250"> <tr/>
+        </tr>
+        <tr><label>header<br /></label><input type="textarea" name="header" value="<?php echo $post->header ?>" size="250"> <tr/>
+        </tr>
+        <tr><label>content<br /></label><input type="textarea" name="content" value="<?php echo $post->content ?>" size="250"> <tr/>
+        </tr>
+        <p><input type="submit" class="button-blue left" value="Mise à jour de l'article" /></p>
 
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-</form>
+    </form>
