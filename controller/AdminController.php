@@ -7,7 +7,7 @@ use App\Manager\UserManager;
 use App\Entity\Post;
 use App\Entity\User;
 
-class AdminController
+class AdminController  extends BaseController
 {
     private $userManager;
     private $postManager;
@@ -148,8 +148,7 @@ class AdminController
             }
 
         }
-        header('Location:./index.php?controller=admin&action=displayAdminList');
-        exit();
+        $this->redirect('./index.php?controller=admin&action=displayAdminList');
     }
 
 
@@ -171,8 +170,6 @@ class AdminController
         $id=$_POST['id_post'];
         $post=$this->postManager->getPost($id);
         $this->postManager->deletePost($post);
-        header('location: index.php?controller=admin&action=displayAdminList');
-        exit();
-
+        $this->redirect('./index.php?controller=admin&action=displayAdminList');
     }
 }

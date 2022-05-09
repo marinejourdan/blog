@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
 
-class PostController{
+class PostController extends BaseController{
 
      private $postManager;
 

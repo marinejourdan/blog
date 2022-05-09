@@ -7,7 +7,7 @@ use App\Manager\UserManager;
 use App\Entity\Comment;
 
 
-class CommentController{
+class CommentController extends BaseController {
 
 private $commentManager;
 private $userManager;
@@ -21,8 +21,7 @@ private $userManager;
 
 
         if (!isset ($_SESSION['email'])){
-            header('Location: index.php?controller=user&action=displayLogin');
-            exit();
+            $this->redirect('./index.php?controller=user&action=displayLogin');
         }else{
             $user = $this->$userManager->findUserByEmail($_SESSION['email']);
         }
@@ -47,7 +46,6 @@ private $userManager;
                 $result=$this->commentManager->insertComment($comment);
             }
         }
-        header('Location:./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
-        exit();
+        $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
     }
 }

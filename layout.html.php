@@ -197,11 +197,10 @@
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
-                    <h4 class="text-uppercase mb-4">About Freelancer</h4>
+                    <h4 class="text-uppercase mb-4">acces admin </h4>
                     <p class="lead mb-0">
-                        Freelance is a free to use, MIT licensed Bootstrap theme created by
-                        <a href="http://startbootstrap.com">Start Bootstrap</a>
-                        .
+                        Acces à l'admin réservé aux administrateurs du site
+                        <a href="./index.php?controller=user&action=accessAdmin">Accès admin</a>
                     </p>
                 </div>
             </div>

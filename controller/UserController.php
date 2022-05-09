@@ -6,7 +6,7 @@ use App\Manager\UserManager;
 use App\Manager\PostManager;
 use App\Entity\User;
 
-class UserController{
+class UserController extends BaseController{
 
     private $userManager;
 
@@ -70,8 +70,8 @@ class UserController{
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-                header('location: index.php?controller=admin&action=displayLogin');
-                exit();
+
+                $this->redirect('location: index.php?controller=admin&action=displayLogin');
             }
 
             $user = $this->userManager->findUserByEmail($email);
@@ -86,14 +86,11 @@ class UserController{
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-                header('location: index.php?controller=user&action=displayLogin');
-                exit();
+                $this->redirect('index.php?controller=admin&action=displayLogin');
             }
 
             $_SESSION['email']=$user->email;
-            header('location: index.php?controller=admin&action=displayAdminList');
-            exit();
-
+            $this->redirect('index.php?controller=admin&action=displayAdminList');
         }
     }
 
@@ -101,23 +98,20 @@ class UserController{
 
         if(isset($_SESSION['email'])){
         session_destroy();
-        header('location: index.php?controller=user&action=displayLogin');
-        exit();
+        $this->redirect('index.php?controller=admin&action=displayLogin');
         }
     }
 
     function accessAdmin(){
         if(!isset($_SESSION['email'])){
-        header('location: index.php?controller=user&action=displayLogin');
-        exit();
+        $this->redirect('index.php?controller=admin&action=displayLogin');
         }
         $email=($_SESSION['email']);
         $user = $this->userManager->findUserByEmail($email);
         var_dump($user);
 
         if($user->access==0){
-            header('location: index.php?controller=admin&action=displayAdminHome');
-            exit();
+            $this->redirect('index.php?controller=admin&action=displayAdminHome');
         }else{
             echo 'vous navez pas accès à cette page';
         }

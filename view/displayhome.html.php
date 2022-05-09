@@ -1,5 +1,6 @@
 
-<h1> Mes articles</h1>
+<h1> Mes derniers articles</h1>
+
 <div class="row">
     <?php foreach($lastPosts as $post){ ?>
         <div class="col-sm-4">

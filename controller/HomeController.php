@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Manager\PostManager;
 
-class HomeController{
+class HomeController extends BaseController{
 
     private $postManager;
 

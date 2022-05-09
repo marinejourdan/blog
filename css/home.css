@@ -1,3 +1,5 @@
+
+
 h1{
 color:#2b3937;
 }
@@ -17,8 +19,8 @@ padding-top:150px;
 .container{
     display:flex;
     flex-direction:row;
-
 }
+
 .masthead .masthead-heading{
     margin-top: 80px;
 }
@@ -45,6 +47,17 @@ padding-top:150px;
 h2{
     font-size: 5rem !important;
 }
+
 .footer{
+    background-color: #E9967A !important ;
+}
+
+h4{
+color:#2b3937!important ;
+}
+
+
+.btn-primary{
+
     background-color: #E9967A !important ;
 }
