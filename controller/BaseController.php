@@ -1,5 +1,5 @@
 <?php
-namespace App\Manager;
+namespace App\Controller;
 
 class BaseController{
 
@@ -7,6 +7,5 @@ class BaseController{
     function redirect(string $url){
         header('Location:'.$url);
         exit();
-
     }
 }

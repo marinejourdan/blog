@@ -3,7 +3,11 @@ use App\Controller\HomeController;
 use App\Controller\PostController;
 use App\Controller\UserController;
 use App\Controller\CommentController;
+use App\Controller\PostAdminController;
+use App\Controller\UserAdminController;
+use App\Controller\CommentAdminController;
 use App\Controller\AdminController;
+use App\Controller\BaseController;
 
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
@@ -47,6 +51,7 @@ switch($controller){
         $userManager= new UserManager();
         $commentManager= new CommentManager($postManager, $userManager);
         $postController = new PostController($postManager, $commentManager);
+
         if ($action == 'displayList'){
             $postController->displayList();
         }elseif ($action == 'displayOne'){
@@ -61,7 +66,7 @@ switch($controller){
         $postManager= new PostManager;
         $userManager= new UserManager;
         $commentManager= new CommentManager($postManager, $userManager);
-        $commentController = new commentController($postManager,$commentManager,$userManager);
+        $commentController = new commentController($commentManager,$userManager, $postManager);
         if ($action == 'doComment'){
             $commentController->doComment();
         }else{
@@ -94,35 +99,51 @@ switch($controller){
 
     case 'admin':
 
+        $entity=null;
+        if (isset($_GET['entity'])){
+            $entity=$_GET['entity'];
+        }
+
+        $adminController=new AdminController();
         $userManager=new UserManager();
         $postManager= new PostManager;
         $commentManager= new CommentManager($postManager, $userManager);
-        $adminController=New AdminController($userManager, $postManager, $commentManager);
+        $postAdminController=New PostAdminController($userManager, $postManager, $commentManager);
+        $userAdminController=New UserAdminController($userManager, $postManager, $commentManager);
+        $commentAdminController=New commentAdminController($userManager, $postManager, $commentManager);
+
+
+        $controller=$adminController;
+        if ($entity=='post'){
+            $controller=$postAdminController;
+        }elseif ($entity=='user'){
+            $controller=$userAdminController;
+        }elseif ($entity=='comment'){
+            $controller=$commentAdminController;
+        }
 
         if ($action == 'displayAdminHome'){
-            $adminController->displayAdminHome();
-        }if ($action == 'displayAdminList'){
-            $adminController->displayAdminList();
-        }if ($action == 'displayAdminCreate'){
-            $adminController->displayAdminCreate();
-        }if ($action == 'doAdminCreate'){
-            $adminController->doAdminCreate();
-        }if ($action == 'displayAdminUpdate'){
-            $adminController->displayAdminUpdate();
-        }if ($action == 'doAdminUpdate'){
-            $adminController->doAdminUpdate();
-        }if ($action == 'displayAdminDelete'){
-            $adminController->displayAdminDelete();
-        }if ($action == 'doAdminDelete'){
-            $adminController->doAdminDelete();
+            $controller->displayAdminHome();
+        }elseif($action == 'displayAdminList'){
+            $controller->displayAdminList();
+        }elseif($action == 'displayAdminCreate'){
+            $controller->displayAdminCreate();
+        }elseif($action == 'doAdminCreate'){
+            $controller->doAdminCreate();
+        }elseif($action == 'displayAdminUpdate'){
+            $controller->displayAdminUpdate();
+        }elseif($action == 'doAdminUpdate'){
+            $controller->doAdminUpdate();
+        }elseif($action == 'displayAdminDelete'){
+            $controller->displayAdminDelete();
+        }elseif($action == 'doAdminDelete'){
+            $controller->doAdminDelete();
         }
-        break;
 
+        break;
 
     default:
         die('404 not found');
-
-
 
 }
 

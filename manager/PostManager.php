@@ -7,13 +7,13 @@ use App\Manager\UserManager;
 
 class PostManager extends BaseManager{
 
-    // Extract all post from DB and return array of Post
+
     public function getPostList(): array
     {
-        $db=$this->dbconnect();//nouvel objet PDO
-        $sql ="SELECT * FROM post ORDER BY id DESC;";//texte
-        $result=$db->query($sql);//renvoi un objet PDO Statement
-        $tous_les_posts=$result->fetchAll(\PDO::FETCH_ASSOC);//renvoi un tableau
+        $db=$this->dbconnect();
+        $sql ="SELECT * FROM post ORDER BY id DESC;";
+        $result=$db->query($sql);
+        $tous_les_posts=$result->fetchAll(\PDO::FETCH_ASSOC);
         $post_object_list = array();
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
@@ -41,23 +41,19 @@ class PostManager extends BaseManager{
         return $post_object_list;
     }
 
+
+
     public function getPost($id_post): Post
     {
-           // connexion à la bdd
+
            $db=$this->dbconnect();
-           //génére une requète SQL
-           $sql ="SELECT id, title, header, content, updated , id_user FROM post WHERE id=$id_post ;";
+           $sql ='SELECT id, title, header, content, updated , id_user FROM post WHERE id=:id_post ;';
            $statement=$db->prepare($sql);
            $statement->bindValue(':id_post', $id_post);
            $statement->execute();
            $result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-          //renvoi un tableau
-            //}catch(\Throwable $e){
-            //var_dump ($db->errorInfo());
-            //}
 
-           //passer le tableau en objet: créer un nouvel objet, on donne des valeurs aux propriétés
            $post=New Post;
 
            $post->id = $result['id'];
@@ -68,12 +64,13 @@ class PostManager extends BaseManager{
            $post->id_user= $result['id_user'];
 
 
+
            $userManager= New UserManager;
+           $id=$post->id_user;
            $user=$userManager->getUser($post->id_user);
            $nickname_user = $user->nickname;
            $post->nickname_user= $nickname_user;
 
-           //ON retroune l'objet de type post
            return $post;
     }
 
@@ -134,7 +131,7 @@ class PostManager extends BaseManager{
     {
         $db=$this->dbconnect();
         $sql="DELETE FROM post WHERE id=$post->id";
-        $result=$post->id_post;
+        $result=$post->id;
         $result=$db->exec($sql);
         if(!$result){
 

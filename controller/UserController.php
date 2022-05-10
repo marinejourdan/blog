@@ -71,7 +71,7 @@ class UserController extends BaseController{
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
 
-                $this->redirect('location: index.php?controller=admin&action=displayLogin');
+                $this->redirect('index.php?controller=admin&action=displayLogin');
             }
 
             $user = $this->userManager->findUserByEmail($email);
@@ -90,7 +90,7 @@ class UserController extends BaseController{
             }
 
             $_SESSION['email']=$user->email;
-            $this->redirect('index.php?controller=admin&action=displayAdminList');
+            $this->redirect('index.php?controller=admin&action=displayAdminHome');
         }
     }
 
@@ -104,7 +104,7 @@ class UserController extends BaseController{
 
     function accessAdmin(){
         if(!isset($_SESSION['email'])){
-        $this->redirect('index.php?controller=admin&action=displayLogin');
+        $this->redirect('index.php?controller=user&action=displayLogin');
         }
         $email=($_SESSION['email']);
         $user = $this->userManager->findUserByEmail($email);

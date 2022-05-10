@@ -20,7 +20,22 @@
     </head>
 
 <body class="body">
+<h1>Navigation</h1>
+    <div class="container">
+        <div class="col-3">
+         <nav>
+             <ul class="nav flex-column">
+                 <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=post&action=displayAdminList">Posts</a></li>
+                 <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=user&action=displayAdminList">Users</a></li>
+                 <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=comment&action=displayAdminList">comments</a></li>
+             </ul>
+         </nav>
+    </div>
+
+        <div class="col-9">
     <?php
     echo $content;
     ?>
+        </div>
+    </div>
 </body>

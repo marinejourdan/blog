@@ -16,38 +16,49 @@ class CommentManager extends BaseManager{
        $this->postManager=$postManager;
    }
 
-    public function getCommentList(){
 
-        $db=$this->dbconnect();
-        $sql ="SELECT * FROM comment;";
-        $result=$db->query($sql);
-        $tous_les_commentaires=$result->fetchAll(\PDO::FETCH_ASSOC);
+    const SQL_GET_COMMENT_LIST= <<<'SQL'
+    SELECT *
+    FROM comment
+    SQL;
+    public function getCommentList():array
+    {
 
-        $comment_object_list = array();
+    $db=$this->dbconnect();
+    $statement=$db->prepare(self::SQL_GET_COMMENT_LIST);
+    $statement->execute();
+    $tous_les_commentaires = $statement->fetchAll(\PDO::FETCH_ASSOC);
+    $comment_object_list = array();
 
-        foreach ($tous_les_commentaires as $un_commentaire_sous_forme_de_tableau){
-            $comment=$this->getComment($comment->id_comment);
-            $comment_object_list[] = $comment;
-        }
-        return $comment_object_list;
+    foreach ($tous_les_commentaires as $un_commentaire_sous_forme_de_tableau){
+        $id=$un_commentaire_sous_forme_de_tableau['id'];
+        $comment=$this->getComment($id);
+        $comment_object_list[] = $comment;
+    }
+    return $comment_object_list;
     }
 
-    public function getComment(int $id_comment){
+
+    const SQL_GET_COMMENT = <<<'SQL'
+    SELECT id, content, creation_date, id_post, id_user
+    FROM comment
+    WHERE id=:id;
+    SQL;
+
+    public function getComment(int $id) :comment{
 
         $db=$this->dbconnect();
-
-        $sql ="SELECT id, content, creation_date, id_post, id_user FROM comment WHERE id=:id_comment;";
-        $statement=$db->prepare($sql);
-        $statement->bindValue(':id_comment', $id_comment);
+        $statement=$db->prepare(self::SQL_GET_COMMENT);
+        $statement->bindValue(':id', $id);
         $statement->execute();
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
-
         if(!$result){
           var_dump($result_prepare->errorInfo());
           die('ERROR');
         }
 
         $comment=New Comment;
+
         $comment->id=$result['id'];
         $comment->content=$result['content'];
         $comment->creation_date=$result['creation_date'];
@@ -55,28 +66,27 @@ class CommentManager extends BaseManager{
         $comment->id_user=$result['id_user'];
 
         $user=$this->userManager->getUser($comment->id_user);
-
-
         $nickname_user = $user->nickname;
         $comment->nickname_user= $nickname_user;
 
         $post=$this->postManager->getPost($comment->id_post);
-        $comment->post = $post;
-
-        $comment_object_list[] = $comment;
+        $post= $post->content;
+        $comment->post= $post;
 
         return $comment;
+
     }
 
 
+    const SQL_INSERT_COMMENT = <<<'SQL'
+    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
+    VALUES (:content ,:creation_date, :id_post, :id_user);
+    SQL;
 
     public function insertComment($comment): bool
     {
         $db=$this->dbconnect();
-        $sql =" INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
-                  VALUES (:content ,:creation_date, :id_post, :id_user);";
-
-        $statement=$db->prepare($sql);
+        $statement=$db->prepare(self::SQL_INSERT_COMMENT);
         $statement->bindValue(':content', $comment->content);
         $statement->bindValue(':creation_date',$comment->creation_date);
         $statement->bindValue(':id_post', $comment->id_post);;
@@ -109,12 +119,19 @@ class CommentManager extends BaseManager{
         //
 
 
+    const SQL_DELET_COMMENT = <<<'SQL'
+    DELETE FROM `comment`
+    WHERE id=:id;
+    SQL;
+
     public function deletComment(Comment $comment): bool
     {
         $db=$this->dbconnect();
-        $sql="DELETE FROM `comment` WHERE id=$comment->id_comment";
-        $result=$comment->id_comment;
-        $result=$db->exec($sql);
+        $statement=$db->prepare(self::SQL_DELET_COMMENT);
+        $statement->bindValue(':id', $comment->id);;
+        $result=$statement->execute();
+        $id=$comment->id;
+
         if(!$result){
 
             die('ERROR');
@@ -123,6 +140,12 @@ class CommentManager extends BaseManager{
         return $result;
 
     }
+
+    const SQL_GET_COMMENT_FROM_POST = <<<'SQL'
+    SELECT id,content,creation_date, id_post,id_user
+    FROM comment WHERE id_post=$id_post;
+    SQL;
+
     public function getCommentsFromPost(int $id_post): array
     {
 

@@ -1,6 +1,6 @@
 
 
-    <form method="post" action="./index.php?controller=admin&action=doAdminUpdate">
+    <form method="post" action="./index.php?controller=admin&entity=post&action=doAdminUpdate">
         <input type="hidden" name="id_post" value="<?php echo $id;?>" />
 
         <tr><label>title<br /></label><input type="textarea" name="title" value="<?php echo $post->title ?>" size="250"> <tr/>
