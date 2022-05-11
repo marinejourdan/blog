@@ -21,7 +21,7 @@ class CommentManager extends BaseManager{
     SELECT *
     FROM comment
     SQL;
-    public function getCommentList():array
+    public function getList():array
     {
 
     $db=$this->dbconnect();
@@ -45,7 +45,7 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function getComment(int $id) :comment{
+    public function get(int $id) :comment{
 
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_GET_COMMENT);
@@ -65,11 +65,11 @@ class CommentManager extends BaseManager{
         $comment->id_post=$result['id_post'];
         $comment->id_user=$result['id_user'];
 
-        $user=$this->userManager->getUser($comment->id_user);
+        $user=$this->userManager->get($comment->id_user);
         $nickname_user = $user->nickname;
         $comment->nickname_user= $nickname_user;
 
-        $post=$this->postManager->getPost($comment->id_post);
+        $post=$this->postManager->get($comment->id_post);
         $post= $post->content;
         $comment->post= $post;
 
@@ -83,7 +83,7 @@ class CommentManager extends BaseManager{
     VALUES (:content ,:creation_date, :id_post, :id_user);
     SQL;
 
-    public function insertComment($comment): bool
+    public function insert($comment): bool
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_INSERT_COMMENT);
@@ -124,11 +124,11 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function deletComment(Comment $comment): bool
+    public function delete(Comment $comment): bool
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_DELET_COMMENT);
-        $statement->bindValue(':id', $comment->id);;
+        $statement->bindValue(':id', $comment->id);
         $result=$statement->execute();
         $id=$comment->id;
 

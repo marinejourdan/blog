@@ -44,7 +44,7 @@ private $userManager;
                 $comment->id_user=$id_user;
                 $comment->creation_date=date('Y-m-d H:i:s');
 
-                $result=$this->commentManager->insertComment($comment);
+                $result=$this->commentManager->insert($comment);
             }
         }
         $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);

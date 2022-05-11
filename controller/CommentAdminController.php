@@ -23,8 +23,7 @@ class CommentAdminController extends AdminController
 
 
     function displayAdminList(){
-            $commentList=$this->commentManager->getCommentList();
-
+            $commentList=$this->commentManager->getList();
             ob_start();
             include_once ("./view/commentDisplayAdminList.html.php");
             $content=ob_get_clean();
@@ -34,7 +33,7 @@ class CommentAdminController extends AdminController
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
-        $comment=$this->commentManager->getComment($id);
+        $comment=$this->commentManager->get($id);
 
         ob_start();
         include_once ("./view/commentDisplayAdminUpdate.html.php");
@@ -72,7 +71,7 @@ class CommentAdminController extends AdminController
                 }
 
                 $post->id_user=$user->id;
-                $result=$this->postManager->updatePost($post);
+                $result=$this->postManager->update($post);
             }
 
         }
@@ -99,8 +98,8 @@ class CommentAdminController extends AdminController
 
     function doAdminDelete(){
         $id=$_POST['id'];
-        $comment=$this->commentManager->getComment($id);
-        $this->commentManager->deletComment($comment);
+        $comment=$this->commentManager->get($id);
+        $this->commentManager->delete($comment);
         $this->redirect('./index.php?controller=admin&entity=comment&action=displayAdminList');
     }
 }

@@ -31,7 +31,7 @@ class PostAdminController extends AdminController
 
 
     function displayAdminList(){
-            $postList=$this->postManager->getPostList();
+            $postList=$this->postManager->getList();
             ob_start();
             include_once ("./view/displayAdminList.html.php");
             $content=ob_get_clean();
@@ -41,7 +41,7 @@ class PostAdminController extends AdminController
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
-        $post=$this->postManager->getPost($id);
+        $post=$this->postManager->get($id);
 
         ob_start();
         include_once ("./view/displayAdminUpdate.html.php");
@@ -79,7 +79,7 @@ class PostAdminController extends AdminController
                 }
 
                 $post->id_user=$user->id;
-                $result=$this->postManager->updatePost($post);
+                $result=$this->postManager->update($post);
             }
 
         }
@@ -130,7 +130,7 @@ class PostAdminController extends AdminController
                 }
 
                 $post->id_user=$user->id;
-                $result=$this->postManager->insertPost($post);
+                $result=$this->postManager->insert($post);
             }
 
         }
@@ -148,8 +148,8 @@ class PostAdminController extends AdminController
 
     function doAdminDelete(){
         $id=$_POST['id'];
-        $post=$this->postManager->getPost($id);
-        $this->postManager->deletePost($post);
+        $post=$this->postManager->get($id);
+        $this->postManager->delete($post);
         $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
     }
 }

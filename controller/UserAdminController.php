@@ -10,6 +10,8 @@ use App\Entity\User;
 
 class UserAdminController extends AdminController
 {
+    public static $entity = 'User';
+
     private $userManager;
     private $postManager;
     private $commentManager;
@@ -22,7 +24,7 @@ class UserAdminController extends AdminController
     }
 
     function displayAdminList(){
-            $userList=$this->userManager->getUserList();
+            $userList=$this->userManager->getList();
             include_once ("./view/userDisplayAdminList.html.php");
             $content=ob_get_clean();
             include_once ("./layoutAdmin.html.php");
@@ -30,7 +32,7 @@ class UserAdminController extends AdminController
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
-        $user=$this->userManager->getUser($id);
+        $user=$this->userManager->get($id);
 
         ob_start();
         include_once ("./view/userDisplayAdminUpdate.html.php");
@@ -69,7 +71,7 @@ class UserAdminController extends AdminController
                 $user->email=$email;
                 $user->password=$password;
                 $user->access=$access;
-                $result=$this->userManager->updateUser($user);
+                $result=$this->userManager->update($user);
             }
         }
         $this->redirect('index.php?controller=admin&entity=user&action=displayAdminList');
@@ -115,7 +117,7 @@ class UserAdminController extends AdminController
                 $user->password=$password;
                 $user->access=$access;
 
-                $result=$this->userManager->insertUser($user);
+                $result=$this->userManager->insert($user);
             }
         }
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
@@ -135,8 +137,8 @@ class UserAdminController extends AdminController
 
     function doAdminDelete(){
         $id=$_POST['id'];
-        $user=$this->userManager->getUser($id);
-        $this->userManager->deletUser($user);
+        $user=$this->userManager->get($id);
+        $this->userManager->delete($user);
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
     }
 }

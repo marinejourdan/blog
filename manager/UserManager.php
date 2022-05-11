@@ -2,10 +2,13 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use App\Manager\PostManager;
+use App\Manager\UserManager;
+
 class UserManager extends BaseManager{
 
 
-    private function createUserFromDatabase($tableau_user){
+    private function createFromDatabase($tableau_user){
         $user=New User();
         $user->id = $tableau_user ['id'];
         $user->name = $tableau_user ['name'];
@@ -23,7 +26,7 @@ class UserManager extends BaseManager{
         FROM user;
         SQL;
 
-    public function getUserList(): array {
+    public function getList(): array {
 
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_GET_USER_LIST);
@@ -33,7 +36,7 @@ class UserManager extends BaseManager{
         $user_object_list = array();
 
         foreach($tous_les_users as $un_user_sous_forme_de_tableau){
-            $user=$this-> createUserFromDatabase($un_user_sous_forme_de_tableau);
+            $user=$this-> createFromDatabase($un_user_sous_forme_de_tableau);
             $user_object_list[] = $user;
         }
 
@@ -47,7 +50,7 @@ class UserManager extends BaseManager{
     SQL;
 
 
-    public function getUser(int $id): User
+    public function get(int $id): User
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_GET_USER);
@@ -55,7 +58,7 @@ class UserManager extends BaseManager{
         $statement->execute();
         $tableau_user= $statement->fetch(\PDO::FETCH_ASSOC);
 
-        $user=$this-> createUserFromDatabase($tableau_user);
+        $user=$this-> createFromDatabase($tableau_user);
 
         //$user->password = $tableau_user['password'];
 
@@ -67,7 +70,7 @@ class UserManager extends BaseManager{
     VALUES (:name, :first_name, :nickname,:email, :password, :access);
     SQL;
 
-    public function insertUser(User $user): bool
+    public function insert(User $user): bool
     {
         $db=$this->dbconnect();
         $result_prepare=$db->prepare(self::SQL_INSERT_USER);
@@ -94,7 +97,7 @@ class UserManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function updateUser(User $user) :bool
+    public function update(User $user) :bool
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(self::SQL_UPDATE_USER);
@@ -115,14 +118,22 @@ class UserManager extends BaseManager{
     }
 
 
-    public function deletUser(User $user): bool
-    {
-        $db=$this->dbconnect();
-        $sql="DELETE FROM `user` WHERE id=$user->id";
-        $result=$user->id;
-        $result=$db->exec($sql);
-        if(!$result){
+    const SQL_DELET_USER= <<<'SQL'
+    DELETE FROM `user`
+    WHERE id=:id;
+    SQL;
 
+    public function delete(User $user): bool
+    {
+
+        $db=$this->dbconnect();
+        $statement=$db->prepare(self::SQL_DELET_USER);
+        $statement->bindValue(':id', $user->id);
+        $id=$user->id;
+        $result=$statement->execute();
+
+        if(!$result){
+            var_dump($statement->errorInfo());
             die('ERROR');
         }
 
@@ -143,7 +154,7 @@ class UserManager extends BaseManager{
 
         $user=null;
         if (!empty($user_row)){
-            $user=$this->getUser($user_row['id']);
+            $user=$this->get($user_row['id']);
         }
         return $user;
     }

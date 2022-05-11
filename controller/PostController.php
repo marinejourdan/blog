@@ -18,7 +18,7 @@ class PostController extends BaseController{
 
     public function displayList(){
 
-        $postList=$this->postManager->getPostList();
+        $postList=$this->postManager->getList();
         ob_start();
         include_once ("./view/displayList.html.php");
         $content=ob_get_clean();
@@ -27,7 +27,7 @@ class PostController extends BaseController{
 
     public function displayOne(){
         $id_post = $_GET['id'];
-        $post=$this->postManager->getPost($id_post);
+        $post=$this->postManager->get($id_post);
         $commentList=$this->commentManager->getCommentsFromPost($id_post);
         ob_start();
         include_once ("./view/displayOne.html.php");
