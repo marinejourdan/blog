@@ -2,7 +2,7 @@
 <h1> Mes derniers articles</h1>
 
 <div class="row">
-    <?php foreach($lastPosts as $post){ ?>
+    <?php foreach($params['lastPosts'] as $post){ ?>
         <div class="col-sm-4">
             <div class="card">
               <div class="card-body">

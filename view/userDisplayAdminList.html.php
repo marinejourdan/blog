@@ -16,7 +16,7 @@
         </thead>
 
         <tbody>
-            <?php foreach($userList as $user){
+            <?php foreach($params['userList'] as $user){
                 echo '<tr>';
                     echo '<th scope="row">'. $user->id.'</th>';
                     echo '<td>'. $user->name.'</td>';

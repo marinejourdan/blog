@@ -17,13 +17,14 @@ class UserController extends BaseController{
 
     // index.php?controller=user&action=displayLogin
     function displayLogin(){
-        ob_start();
-        include_once ("./view/displayLogin.html.php");
-        $content=ob_get_clean();
-        // Tt revient à la normal à partir d'ici
-        // On "affiche" la structure html complète qui se charge de faire un echo $content
-        // pour placer le contenu au bon endroit dans le html ;)
-        include_once("./layout.html.php");
+
+        $this->render(
+        "./view/displayLogin.html.php",
+            [
+
+            ]
+        );
+
     }
 
 
@@ -33,7 +34,7 @@ class UserController extends BaseController{
         die('youhou2');
     }
 
-    // index.php?controller=user&action=doRegister
+
     function doRegister(){
 
         die('youhou3');

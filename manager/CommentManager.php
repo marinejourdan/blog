@@ -17,53 +17,26 @@ class CommentManager extends BaseManager{
    }
 
 
-    const SQL_GET_COMMENT_LIST= <<<'SQL'
+    const SQL_GET_LIST= <<<'SQL'
     SELECT *
     FROM comment
     SQL;
-    public function getList():array
-    {
 
-    $db=$this->dbconnect();
-    $statement=$db->prepare(self::SQL_GET_COMMENT_LIST);
-    $statement->execute();
-    $tous_les_commentaires = $statement->fetchAll(\PDO::FETCH_ASSOC);
-    $comment_object_list = array();
-
-    foreach ($tous_les_commentaires as $un_commentaire_sous_forme_de_tableau){
-        $id=$un_commentaire_sous_forme_de_tableau['id'];
-        $comment=$this->getComment($id);
-        $comment_object_list[] = $comment;
-    }
-    return $comment_object_list;
-    }
-
-
-    const SQL_GET_COMMENT = <<<'SQL'
+    const SQL_GET = <<<'SQL'
     SELECT id, content, creation_date, id_post, id_user
     FROM comment
     WHERE id=:id;
     SQL;
 
-    public function get(int $id) :comment{
-
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_GET_COMMENT);
-        $statement->bindValue(':id', $id);
-        $statement->execute();
-        $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        if(!$result){
-          var_dump($result_prepare->errorInfo());
-          die('ERROR');
-        }
+    public function create(array $row=[]): Comment{
 
         $comment=New Comment;
 
-        $comment->id=$result['id'];
-        $comment->content=$result['content'];
-        $comment->creation_date=$result['creation_date'];
-        $comment->id_post=$result['id_post'];
-        $comment->id_user=$result['id_user'];
+        $comment->id=$row['id'];
+        $comment->content=$row['content'];
+        $comment->creation_date=$row['creation_date'];
+        $comment->id_post=$row['id_post'];
+        $comment->id_user=$row['id_user'];
 
         $user=$this->userManager->get($comment->id_user);
         $nickname_user = $user->nickname;
@@ -78,7 +51,7 @@ class CommentManager extends BaseManager{
     }
 
 
-    const SQL_INSERT_COMMENT = <<<'SQL'
+    const SQL_INSERT = <<<'SQL'
     INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
     VALUES (:content ,:creation_date, :id_post, :id_user);
     SQL;
@@ -86,7 +59,7 @@ class CommentManager extends BaseManager{
     public function insert($comment): bool
     {
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_INSERT_COMMENT);
+        $statement=$db->prepare(self::SQL_INSERT);
         $statement->bindValue(':content', $comment->content);
         $statement->bindValue(':creation_date',$comment->creation_date);
         $statement->bindValue(':id_post', $comment->id_post);;
@@ -119,7 +92,7 @@ class CommentManager extends BaseManager{
         //
 
 
-    const SQL_DELET_COMMENT = <<<'SQL'
+    const SQL_DELETE= <<<'SQL'
     DELETE FROM `comment`
     WHERE id=:id;
     SQL;
@@ -127,7 +100,7 @@ class CommentManager extends BaseManager{
     public function delete(Comment $comment): bool
     {
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELET_COMMENT);
+        $statement=$db->prepare(self::SQL_DELETE);
         $statement->bindValue(':id', $comment->id);
         $result=$statement->execute();
         $id=$comment->id;

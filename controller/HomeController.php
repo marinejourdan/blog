@@ -16,10 +16,13 @@ class HomeController extends BaseController{
         $postManager=$this->postManager;
         $lastPosts=$postManager->lastPosts();
 
-        ob_start();
-        include_once ("./view/displayhome.html.php");
-        $content=ob_get_clean();
-        include_once ("./layout.html.php");
+        $this->render(
+            "./view/displayhome.html.php",
+            [
+                'lastPosts' => $lastPosts,
+            ]
+        );
+
     }
 
 

@@ -7,34 +7,17 @@ use App\Manager\UserManager;
 
 class PostManager extends BaseManager{
 
-
-
-
-    const SQL_GET_POST_LIST= <<<'SQL'
+    const SQL_GET_LIST= <<<'SQL'
     SELECT *
     FROM post
     ORDER BY id DESC
     SQL;
 
-    public function getList(): array
-    {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_GET_POST_LIST);
-        $statement->execute();
-        $tous_les_posts=$statement->fetchAll(\PDO::FETCH_ASSOC);
-        $post_object_list = array();
-
-        foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
-            $id_du_post=$un_post_sous_forme_de_tableau['id'];
-            $post=$this->getPost($id_du_post);
-            $post_object_list[] = $post;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
-        }
-
-        return $post_object_list;
-    }
-
-
-
+    const SQL_GET= <<<'SQL'
+    SELECT id, title, header, content, updated , id_user
+    FROM post
+    WHERE id=:id ;
+    SQL;
 
     public function lastPosts(int $last=3): array
     {
@@ -43,6 +26,7 @@ class PostManager extends BaseManager{
         $statement=$db->prepare($sql);
         $statement->execute();
         $tous_les_posts=$statement->fetchAll(\PDO::FETCH_ASSOC);
+
         $post_object_list = array();
 
         foreach($tous_les_posts as $un_post_sous_forme_de_tableau){
@@ -53,53 +37,36 @@ class PostManager extends BaseManager{
         return $post_object_list;
     }
 
-    const SQL_GET_POST= <<<'SQL'
-    SELECT id, title, header, content, updated , id_user
-    FROM post
-    WHERE id=:id_post ;
-    SQL;
+    public function create(array $row=[]): post{
 
+        $post=New Post;
 
-    public function get($id_post): Post
-    {
-           $db=$this->dbconnect();
-           $statement=$db->prepare(self::SQL_GET_POST);
-           $statement->bindValue(':id_post', $id_post);
-           $statement->execute();
-           $result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $post->id = $row['id'];
+        $post->title = $row['title'];
+        $post->header = $row ['header'];
+        $post->content = $row ['content'];
+        $post->updated = $row ['updated'];
+        $post->id_user= $row['id_user'];
 
+        $userManager= New UserManager;
+        $id=$post->id_user;
+        $user=$userManager->get($post->id_user);
+        $nickname_user = $user->nickname;
+        $post->nickname_user= $nickname_user;
 
-           $post=New Post;
+        return $post;
 
-           $post->id = $result['id'];
-           $post->title = $result['title'];
-           $post->header = $result ['header'];
-           $post->content = $result ['content'];
-           $post->updated = $result ['updated'];
-           $post->id_user= $result['id_user'];
-
-
-
-           $userManager= New UserManager;
-           $id=$post->id_user;
-           $user=$userManager->get($post->id_user);
-           $nickname_user = $user->nickname;
-           $post->nickname_user= $nickname_user;
-
-           return $post;
     }
 
-
-    const SQL_INSERT_POST = <<<'SQL'
+    const SQL_INSERT = <<<'SQL'
     INSERT INTO `post` (`title`, `header`, `content`, `updated`,`id_user`)
     VALUES (:title ,:header, :content,:updated, :id_user);
     SQL;
 
     public function insert(Post $post): bool
     {
-        var_dump($post);
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_INSERT_POST);
+        $statement=$db->prepare(self::SQL_INSERT);
         $statement->bindValue(':title', $post->title);
         $statement->bindValue(':header', $post->header);
         $statement->bindValue(':content',$post->content);
@@ -116,7 +83,7 @@ class PostManager extends BaseManager{
        return $result;
     }
 
-    const SQL_UPDATE_COMMENT = <<<'SQL'
+    const SQL_UPDATE = <<<'SQL'
     UPDATE post
     SET title=:title, header=:header,
     content=:content, updated= :updated, id_user= :id_user
@@ -127,7 +94,7 @@ class PostManager extends BaseManager{
     public function update(Post $post) :bool
     {
        $db=$this->dbconnect();
-       $statement=$db->prepare(self::SQL_UPDATE_COMMENT);
+       $statement=$db->prepare(self::SQL_UPDATE);
        $statement->bindValue(':id', $post->id);
        $statement->bindValue(':title', $post->title);
        $statement->bindValue(':header', $post->header);
@@ -144,7 +111,7 @@ class PostManager extends BaseManager{
        return $result;
     }
 
-    const SQL_DELET_POST = <<<'SQL'
+    const SQL_DELETE = <<<'SQL'
     DELETE FROM `post`
     WHERE id=:id;
     SQL;
@@ -152,7 +119,7 @@ class PostManager extends BaseManager{
     public function delete(Post $post): bool
     {
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELET_POST);
+        $statement=$db->prepare(self::SQL_DELETE);
         $statement->bindValue(':id', $post->id);
         $result=$statement->execute();
         $id=$post->id;

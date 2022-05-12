@@ -20,34 +20,32 @@ class PostAdminController extends AdminController
        $this->commentManager=$commentManager;
     }
 
-    function displayAdminHome(){
-        ob_start();
-        include_once("./view/displayAdminHome.html.php");
-        $content=ob_get_clean();
-
-
-        include_once("./layoutAdmin.html.php");
-    }
-
-
     function displayAdminList(){
-            $postList=$this->postManager->getList();
-            ob_start();
-            include_once ("./view/displayAdminList.html.php");
-            $content=ob_get_clean();
-            include_once ("./layoutAdmin.html.php");
-    }
+        $postList=$this->postManager->getList();
+
+
+            $this->renderAdmin(
+            "./view/displayAdminList.html.php",
+            [
+                'postList' => $postList,
+            ]
+            );
+
+        }
+
 
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
         $post=$this->postManager->get($id);
 
-        ob_start();
-        include_once ("./view/displayAdminUpdate.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
-
+        $this->renderAdmin(
+            "./view/displayAdminUpdate.html.php",
+            [
+                'post' => $post,
+                'id' => $id,
+            ]
+        );
     }
 
 
@@ -88,12 +86,16 @@ class PostAdminController extends AdminController
 
 
     function displayAdminCreate(){
-        ob_start();
-        include_once("./view/displayAdminCreate.html.php");
 
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/displayAdminCreate.html.php",
+            [
+
+            ]
+        );
     }
+
+
 
 
     function doAdminCreate(){
@@ -141,9 +143,13 @@ class PostAdminController extends AdminController
 
         ob_start();
         $id=$_GET['id'];
-        include_once("./view/displayAdminDelete.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/displayAdminDelete.html.php",
+            [
+                'id' => $id,
+            ]
+        );
+
     }
 
     function doAdminDelete(){

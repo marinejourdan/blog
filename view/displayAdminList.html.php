@@ -14,7 +14,7 @@
         </thead>
 
         <tbody>
-            <?php foreach($postList as $post){
+            <?php foreach($params['postList'] as $post){
                 echo '<tr>';
                     echo '<th scope="row">'. $post->id.'</th>';
                     echo '<td>'. $post->title.'</td>';

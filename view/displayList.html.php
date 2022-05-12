@@ -2,7 +2,7 @@
 
 <h1> Mes articles</h1>
 <div class="row">
-    <?php foreach($postList as $post){ ?>
+    <?php foreach($params['postList'] as $post){ ?>
         <div class="col-sm-6">
             <div class="card">
               <div class="card-body">

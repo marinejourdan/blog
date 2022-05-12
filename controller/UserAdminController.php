@@ -25,19 +25,25 @@ class UserAdminController extends AdminController
 
     function displayAdminList(){
             $userList=$this->userManager->getList();
-            include_once ("./view/userDisplayAdminList.html.php");
-            $content=ob_get_clean();
-            include_once ("./layoutAdmin.html.php");
+            $this->renderAdmin(
+            "./view/userDisplayAdminList.html.php",
+            [
+                'userList' => $userList,
+            ]
+        );
     }
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
         $user=$this->userManager->get($id);
 
-        ob_start();
-        include_once ("./view/userDisplayAdminUpdate.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/userdisplayAdminUpdate.html.php",
+            [
+                'user' => $user,
+                'id' => $id,
+            ]
+        );
     }
 
     function doAdminUpdate(){
@@ -79,13 +85,13 @@ class UserAdminController extends AdminController
 
 
     function displayAdminCreate(){
-        ob_start();
-        include_once("./view/userDisplayAdminCreate.html.php");
+        $this->renderAdmin(
+            "./view/userDisplayAdminCreate.html.php",
+            [
 
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+            ]
+        );
     }
-
 
     function doAdminCreate(){
 
@@ -128,11 +134,14 @@ class UserAdminController extends AdminController
 
         ob_start();
         $id=$_GET['id'];
-        include_once("./view/userDisplayAdminDelete.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
-    }
+        $this->renderAdmin(
+            "./view/userDisplayAdminDelete.html.php",
+            [
+                'id' => $id,
+            ]
+        );
 
+    }
 
 
     function doAdminDelete(){

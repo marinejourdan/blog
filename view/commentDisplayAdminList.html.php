@@ -10,7 +10,7 @@
         </thead>
 
         <tbody>
-            <?php foreach($commentList as $comment){
+            <?php foreach($params['commentList'] as $comment){
                 echo '<tr>';
 
                     echo '<td>'. $comment->post.'</td>';

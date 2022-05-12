@@ -18,21 +18,29 @@ class PostController extends BaseController{
 
     public function displayList(){
 
-        $postList=$this->postManager->getList();
-        ob_start();
-        include_once ("./view/displayList.html.php");
-        $content=ob_get_clean();
-        include_once("./layout.html.php");
+            $postList=$this->postManager->getList();
+            $this->render(
+            "./view/displayList.html.php",
+            [
+                'postList' => $postList,
+            ]
+        );
+
     }
+
 
     public function displayOne(){
         $id_post = $_GET['id'];
         $post=$this->postManager->get($id_post);
         $commentList=$this->commentManager->getCommentsFromPost($id_post);
-        ob_start();
-        include_once ("./view/displayOne.html.php");
-        $content=ob_get_clean();
-        include_once("./layout.html.php");
+        $this->render(
+        "./view/displayOne.html.php",
+        [
+            'post' => $post,
+            'commentList' => $commentList,
+        ]
+    );
+
     }
 
     public function doComment(){

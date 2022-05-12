@@ -24,21 +24,26 @@ class CommentAdminController extends AdminController
 
     function displayAdminList(){
             $commentList=$this->commentManager->getList();
-            ob_start();
-            include_once ("./view/commentDisplayAdminList.html.php");
-            $content=ob_get_clean();
-            include_once ("./layoutAdmin.html.php");
+            $this->renderAdmin(
+            "./view/commentDisplayAdminList.html.php",
+            [
+                'commentList' => $commentList,
+            ]
+            );
+
     }
 
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
         $comment=$this->commentManager->get($id);
-
-        ob_start();
-        include_once ("./view/commentDisplayAdminUpdate.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/commentDisplayAdminUpdate.html.php",
+            [
+                'comment' => $comment,
+                'id' => $id,
+            ]
+        );
 
     }
 
@@ -80,20 +85,25 @@ class CommentAdminController extends AdminController
 
 
     function displayAdminCreate(){
-        ob_start();
-        include_once("./view/CommentDisplayAdminCreate.html.php");
 
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/displayAdminCreate.html.php",
+            [
+
+            ]
+        );
     }
 
     function displayAdminDelete(){
-
         ob_start();
         $id=$_GET['id'];
-        include_once("./view/commentDisplayAdminDelete.html.php");
-        $content=ob_get_clean();
-        include_once("./layoutAdmin.html.php");
+        $this->renderAdmin(
+            "./view/commentDisplayAdminDelete.html.php",
+            [
+                'id' => $id,
+            ]
+        );
+
     }
 
     function doAdminDelete(){

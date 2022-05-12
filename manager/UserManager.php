@@ -8,64 +8,37 @@ use App\Manager\UserManager;
 class UserManager extends BaseManager{
 
 
-    private function createFromDatabase($tableau_user){
+    protected function create(array $row = []): User
+    {
+
         $user=New User();
-        $user->id = $tableau_user ['id'];
-        $user->name = $tableau_user ['name'];
-        $user->first_name = $tableau_user ['first_name'];
-        $user->nickname = $tableau_user ['nickname'];
-        $user->email = $tableau_user ['email'];
-        $user->password = $tableau_user ['password'];
-        $user->access = $tableau_user ['access'];
+        $user->id = $row ['id'];
+        $user->name = $row ['name'];
+        $user->first_name = $row ['first_name'];
+        $user->nickname = $row ['nickname'];
+        $user->email = $row ['email'];
+        $user->password = $row ['password'];
+        $user->access = $row ['access'];
+
         return $user;
     }
 
 
-        const SQL_GET_USER_LIST = <<<'SQL'
-        SELECT *
-        FROM user;
-        SQL;
+    const SQL_GET_LIST = <<<'SQL'
+    SELECT *
+    FROM user;
+    SQL;
 
-    public function getList(): array {
 
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_GET_USER_LIST);
-        $statement->execute();
-        $tous_les_users = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-        $user_object_list = array();
-
-        foreach($tous_les_users as $un_user_sous_forme_de_tableau){
-            $user=$this-> createFromDatabase($un_user_sous_forme_de_tableau);
-            $user_object_list[] = $user;
-        }
-
-    return $user_object_list;
-    }
-
-    const SQL_GET_USER = <<<'SQL'
+    const SQL_GET = <<<'SQL'
     SELECT id, name, first_name, nickname, email, password, access
     FROM user;
     WHERE id=:id
     SQL;
 
 
-    public function get(int $id): User
-    {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_GET_USER);
-        $statement->bindValue(':id', $id);
-        $statement->execute();
-        $tableau_user= $statement->fetch(\PDO::FETCH_ASSOC);
-
-        $user=$this-> createFromDatabase($tableau_user);
-
-        //$user->password = $tableau_user['password'];
-
-        return $user;
-    }
-
-    const SQL_INSERT_USER = <<<'SQL'
+    const SQL_INSERT = <<<'SQL'
     INSERT INTO `user` (`name`, `first_name`, `nickname`, `email`,`password`,`access` )
     VALUES (:name, :first_name, :nickname,:email, :password, :access);
     SQL;
@@ -73,7 +46,7 @@ class UserManager extends BaseManager{
     public function insert(User $user): bool
     {
         $db=$this->dbconnect();
-        $result_prepare=$db->prepare(self::SQL_INSERT_USER);
+        $result_prepare=$db->prepare(self::SQL_INSERT);
         $result_prepare->bindValue(':name', $user->name);
         $result_prepare->bindValue(':first_name', $user->first_name);
         $result_prepare->bindValue(':nickname',$user->nickname);
@@ -91,7 +64,7 @@ class UserManager extends BaseManager{
         return $result;
     }
 
-    const SQL_UPDATE_USER = <<<'SQL'
+    const SQL_UPDATE= <<<'SQL'
     UPDATE user SET name =:name, first_name=:first_name,
     nickname=:nickname, email=:email, password=:password, access=:access
     WHERE id=:id;
@@ -100,7 +73,7 @@ class UserManager extends BaseManager{
     public function update(User $user) :bool
     {
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_UPDATE_USER);
+        $statement=$db->prepare(self::SQL_UPDATE);
         $statement->bindValue(':id', $user->id);
         $statement->bindValue(':name',$user->name);
         $statement->bindValue(':first_name',$user->first_name);
@@ -118,7 +91,7 @@ class UserManager extends BaseManager{
     }
 
 
-    const SQL_DELET_USER= <<<'SQL'
+    const SQL_DELETE= <<<'SQL'
     DELETE FROM `user`
     WHERE id=:id;
     SQL;
@@ -127,7 +100,7 @@ class UserManager extends BaseManager{
     {
 
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELET_USER);
+        $statement=$db->prepare(self::SQL_DELETE);
         $statement->bindValue(':id', $user->id);
         $id=$user->id;
         $result=$statement->execute();
