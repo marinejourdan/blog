@@ -10,6 +10,7 @@ class User{
     public $email = NULL;
     public $access = NULL;
     public $password= NULL;
+    public $enabled= NULL;
 
     //
     // function recupererUserFromDatabase(int $id){

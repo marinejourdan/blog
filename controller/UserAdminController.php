@@ -24,12 +24,14 @@ class UserAdminController extends AdminController
     }
 
     function displayAdminList(){
-            $userList=$this->userManager->getList();
-            $this->renderAdmin(
-            "./view/userDisplayAdminList.html.php",
+        $userList=$this->userManager->getList();
+
+        $this->renderAdmin(
+            "./view/admin/user/userDisplayAdminList.html.php",
             [
                 'userList' => $userList,
             ]
+
         );
     }
 
@@ -38,7 +40,7 @@ class UserAdminController extends AdminController
         $user=$this->userManager->get($id);
 
         $this->renderAdmin(
-            "./view/userdisplayAdminUpdate.html.php",
+            "./view/admin/user/userdisplayAdminUpdate.html.php",
             [
                 'user' => $user,
                 'id' => $id,
@@ -57,6 +59,7 @@ class UserAdminController extends AdminController
             $email=$_POST['email'];
             $password=$_POST['password'];
             $access=$_POST['access'];
+            $enabled=$_POST['enabled'];
 
             if (
                 empty($name) ||
@@ -77,6 +80,7 @@ class UserAdminController extends AdminController
                 $user->email=$email;
                 $user->password=$password;
                 $user->access=$access;
+                $user->enabled=$enables;
                 $result=$this->userManager->update($user);
             }
         }
@@ -86,7 +90,7 @@ class UserAdminController extends AdminController
 
     function displayAdminCreate(){
         $this->renderAdmin(
-            "./view/userDisplayAdminCreate.html.php",
+            "./view/admin/user/userDisplayAdminCreate.html.php",
             [
 
             ]
@@ -135,7 +139,7 @@ class UserAdminController extends AdminController
         ob_start();
         $id=$_GET['id'];
         $this->renderAdmin(
-            "./view/userDisplayAdminDelete.html.php",
+            "./view/admin/user/userDisplayAdminDelete.html.php",
             [
                 'id' => $id,
             ]

@@ -33,7 +33,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php">Accueil</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=post&action=displayList">Mon blog</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=accessAdmin">admin
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayRegister">inscription
                         </a></li>
 
                         <?php if(isset($_SESSION['email'])){?>
@@ -48,6 +48,7 @@
                 </div>
             </div>
         </nav>
+
 
 
 
@@ -75,14 +76,21 @@
         </div> -->
     </header>
 
+    <div class="container">
 
-    <body class="body">
-        <?php
-        echo $content;
-        ?>
-    </body>
+            <body class="body">
+                <div class="col-10">
+                    <?php
+                    echo $content;
+                    ?>
+                </div>
+                <div class="col-2">
+                    <img class="masthead-avatar mb-5" src="assets/img/portfolio/dame4.jpg">
+                </div>
+            </body>
+
+    </div>
     <!--Section: Contact v.2-->
-
     <div class="contact_form">
         <section class="mb-4">
 
@@ -174,7 +182,7 @@
 
             </div>
         </section>
-    </div>
+
     <!--Section: Contact v.2-->
 
     <footer class="footer text-center">

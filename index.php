@@ -114,6 +114,10 @@ switch($controller){
 
 
         $controller=$adminController;
+
+
+
+
         if ($entity=='post'){
             $controller=$postAdminController;
         }elseif ($entity=='user'){

@@ -23,9 +23,8 @@ class PostAdminController extends AdminController
     function displayAdminList(){
         $postList=$this->postManager->getList();
 
-
             $this->renderAdmin(
-            "./view/displayAdminList.html.php",
+            "./view/admin/post/displayAdminList.html.php",
             [
                 'postList' => $postList,
             ]
@@ -40,7 +39,7 @@ class PostAdminController extends AdminController
         $post=$this->postManager->get($id);
 
         $this->renderAdmin(
-            "./view/displayAdminUpdate.html.php",
+            "./view/admin/post/displayAdminUpdate.html.php",
             [
                 'post' => $post,
                 'id' => $id,
@@ -88,7 +87,7 @@ class PostAdminController extends AdminController
     function displayAdminCreate(){
 
         $this->renderAdmin(
-            "./view/displayAdminCreate.html.php",
+            "./view/admin/post/displayAdminCreate.html.php",
             [
 
             ]
@@ -144,7 +143,7 @@ class PostAdminController extends AdminController
         ob_start();
         $id=$_GET['id'];
         $this->renderAdmin(
-            "./view/displayAdminDelete.html.php",
+            "./view/admin/post/displayAdminDelete.html.php",
             [
                 'id' => $id,
             ]

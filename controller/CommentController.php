@@ -25,7 +25,14 @@ private $userManager;
             $this->redirect('./index.php?controller=user&action=displayLogin');
         }else{
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
+            if ($user->enabled==0){
+            echo 'vous netes pas autorisé à publier de commentaire';
+            die('youhou');
+            }
         }
+
+
+
 
         if(count($_POST)>0){
 

@@ -20,7 +20,7 @@ class PostController extends BaseController{
 
             $postList=$this->postManager->getList();
             $this->render(
-            "./view/displayList.html.php",
+            "./view/public/displayList.html.php",
             [
                 'postList' => $postList,
             ]
@@ -34,7 +34,7 @@ class PostController extends BaseController{
         $post=$this->postManager->get($id_post);
         $commentList=$this->commentManager->getCommentsFromPost($id_post);
         $this->render(
-        "./view/displayOne.html.php",
+        "./view/public/displayOne.html.php",
         [
             'post' => $post,
             'commentList' => $commentList,

@@ -15,14 +15,13 @@ class BaseManager{
         $statement=$db->prepare(static::SQL_GET_LIST);
         $statement->execute();
         $data_list=$statement->fetchAll(\PDO::FETCH_ASSOC);
-        $object_list = array();
 
+        $object_list = array();
         foreach($data_list as $row){
             $id=$row['id'];
             $object=$this->get($id);
             $object_list[] = $object;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
         }
-
         return $object_list;
     }
 
@@ -31,7 +30,10 @@ class BaseManager{
         $db=$this->dbconnect();
         $statement=$db->prepare(static::SQL_GET);
         $statement->bindValue(':id', $id);
-        $statement->execute();
+        if(!$statement->execute()){
+            var_dump($statement->errorInfo());
+            die('ERROR');
+        }
         $row = $statement->fetch(\PDO::FETCH_ASSOC);
         $object=$this->create($row);
 

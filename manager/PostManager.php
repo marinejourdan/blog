@@ -19,7 +19,7 @@ class PostManager extends BaseManager{
     WHERE id=:id ;
     SQL;
 
-    public function lastPosts(int $last=3): array
+    public function lastPosts(int $last=6): array
     {
         $db=$this->dbconnect();
         $sql ="SELECT * FROM post ORDER BY updated DESC LIMIT ".$last.";";

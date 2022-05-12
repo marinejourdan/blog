@@ -19,7 +19,7 @@ class UserController extends BaseController{
     function displayLogin(){
 
         $this->render(
-        "./view/displayLogin.html.php",
+        "./view/public/displayLogin.html.php",
             [
 
             ]
@@ -30,16 +30,57 @@ class UserController extends BaseController{
 
     // index.php?controller=user&action=displayRegister
     function displayRegister(){
-        $id_post = $_GET['id']; // A ne pas oublier qd tu vas générer l'URL
-        die('youhou2');
+
+        $this->render(
+        "./view/public/displayRegister.html.php",
+            [
+
+            ]
+        );
+
     }
+
 
 
     function doRegister(){
 
-        die('youhou3');
-    }
 
+        if(count($_POST)>0){
+            $name=$_POST['name'];
+            $first_name=$_POST['first_name'];
+            $nickname=$_POST['nickname'];
+            $email=$_POST['email'];
+            $password=$_POST['password'];
+            $access=$_POST['access'];
+            $enabled=$_POST['enabled'];
+
+            if (
+                empty($name) ||
+                empty($first_name)||
+                empty($nickname)||
+                empty($email)||
+                empty($password)
+            ){
+                echo 'merci de renseigner un contenu';
+
+            }else{
+
+                $user=new User;
+                $user->name=$name;
+                $user->first_name=$first_name;
+                $user->nickname=$nickname;
+                $user->email=$email;
+                $user->password=$password;
+                $user->access=$access;
+                $user->enabled=$enabled;
+
+
+                $result=$this->userManager->insert($user);
+                var_dump($result);
+            }
+        }
+        //$this->redirect('./index.php?controller=post&action=displayList');
+    }
     // index.php?controller=user&action=doLogin
     function doLogin(){
 
@@ -71,8 +112,7 @@ class UserController extends BaseController{
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-
-                $this->redirect('index.php?controller=admin&action=displayLogin');
+                $this->redirect('index.php?controller=home&action=displayList');
             }
 
             $user = $this->userManager->findUserByEmail($email);
@@ -87,7 +127,8 @@ class UserController extends BaseController{
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-                $this->redirect('index.php?controller=admin&action=displayLogin');
+                $this->redirect('index.php?controller=user&action=displayLogin');
+
             }
 
             $_SESSION['email']=$user->email;
@@ -99,7 +140,7 @@ class UserController extends BaseController{
 
         if(isset($_SESSION['email'])){
         session_destroy();
-        $this->redirect('index.php?controller=admin&action=displayLogin');
+        $this->redirect('index.php?controller=user&action=displayLogin');
         }
     }
 

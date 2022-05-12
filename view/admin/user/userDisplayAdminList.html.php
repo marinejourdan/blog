@@ -25,6 +25,7 @@
                     echo '<td>'. $user->email.'</td>';
                     echo '<td>'. $user->password.'</td>';
                     echo '<td>'. $user->access.'</td>';
+                    echo '<td>'. $user->enabled.'</td>';
                     echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminUpdate&id='.$user->id.'"> modif_user</a>'.'</td>';
                     echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminDelete&id='.$user->id.'"> delete_user</a>'.'</td>';
                 echo '</tr>';

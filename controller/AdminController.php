@@ -6,7 +6,7 @@ class AdminController extends BaseController{
     function displayAdminHome(){
 
         $this->renderAdmin(
-        "./view/displayAdminHome.html.php",
+        "./view/admin/displayAdminHome.html.php",
         [
 
         ]

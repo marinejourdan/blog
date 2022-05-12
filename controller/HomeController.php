@@ -17,7 +17,7 @@ class HomeController extends BaseController{
         $lastPosts=$postManager->lastPosts();
 
         $this->render(
-            "./view/displayhome.html.php",
+            "./view/public/displayhome.html.php",
             [
                 'lastPosts' => $lastPosts,
             ]

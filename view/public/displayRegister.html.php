@@ -11,8 +11,9 @@
     </tr>
     <tr><label>password<br /></label><input type="textarea" name="password" value="" size="250"> <tr/>
     </tr>
-    <tr><label>access<br /></label><input type="textarea" name="access" value="" size="250"> <tr/>
-    </tr>
+    <input type="hidden" name="enabled" value="0" />
+    <input type="hidden" name="access" value="0" />
+
     <p><input type="submit" class="button-blue left" value="Ajouter mon User" /></p>
 
 </form>

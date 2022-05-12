@@ -131,7 +131,7 @@ class CommentManager extends BaseManager{
         //var_dump($comment_list);
         foreach($comment_list as $row){
 
-           $comment=$this->getComment($row['id']);
+           $comment=$this->get($row['id']);
 
            $comment_object_list[] = $comment;
         }

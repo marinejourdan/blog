@@ -14,6 +14,8 @@
         </tr>
         <tr><label>access<br /></label><input type="textarea" name="access" value="<?php echo $params['user']->access ?>" size="250"> <tr/>
         </tr>
+        tr><label>enabled<br /></label><input type="textarea" name="enabled" value="<?php echo $params['user']->enabled ?>" size="250"> <tr/>
+        </tr>
 
         <p><input type="submit" class="button-blue left" value="Mise à jour de l utilisateur" /></p>
 

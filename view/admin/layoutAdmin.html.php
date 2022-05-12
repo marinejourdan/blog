@@ -28,6 +28,7 @@
                  <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=post&action=displayAdminList">Posts</a></li>
                  <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=user&action=displayAdminList">Users</a></li>
                  <li class="nav-item"><a class="nav-link" href="./index.php?controller=admin&entity=comment&action=displayAdminList">comments</a></li>
+                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php">Accueil</a></li>
              </ul>
          </nav>
     </div>

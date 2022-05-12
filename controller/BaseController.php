@@ -15,7 +15,7 @@ class BaseController{
         ob_start();
         include_once ($viewPath);
         $content=ob_get_clean();
-        include_once ("./layout.html.php");
+        include_once ("./view/public/layout.html.php");
 
     }
 
@@ -25,7 +25,7 @@ class BaseController{
         ob_start();
         include_once ($viewPath);
         $content=ob_get_clean();
-        include_once ("./layoutAdmin.html.php");
+        include_once ("./view/admin/layoutAdmin.html.php");
 
     }
 }

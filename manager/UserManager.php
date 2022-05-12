@@ -7,40 +7,40 @@ use App\Manager\UserManager;
 
 class UserManager extends BaseManager{
 
+        const SQL_GET_LIST= <<<'SQL'
+        SELECT *
+        FROM user
+        SQL;
+
 
     protected function create(array $row = []): User
     {
 
         $user=New User();
-        $user->id = $row ['id'];
-        $user->name = $row ['name'];
-        $user->first_name = $row ['first_name'];
-        $user->nickname = $row ['nickname'];
-        $user->email = $row ['email'];
-        $user->password = $row ['password'];
-        $user->access = $row ['access'];
+
+        $user->id = $row['id'];
+        $user->name = $row['name'];
+        $user->first_name = $row['first_name'];
+        $user->nickname = $row['nickname'];
+        $user->email = $row['email'];
+        $user->password = $row['password'];
+        $user->access = $row['access'];
+        $user->enabled = $row['enabled'];
 
         return $user;
     }
 
 
-    const SQL_GET_LIST = <<<'SQL'
-    SELECT *
-    FROM user;
-    SQL;
-
-
-
     const SQL_GET = <<<'SQL'
-    SELECT id, name, first_name, nickname, email, password, access
-    FROM user;
+    SELECT id, name, first_name, nickname, email, password, access,enabled
+    FROM user
     WHERE id=:id
     SQL;
 
 
     const SQL_INSERT = <<<'SQL'
-    INSERT INTO `user` (`name`, `first_name`, `nickname`, `email`,`password`,`access` )
-    VALUES (:name, :first_name, :nickname,:email, :password, :access);
+    INSERT INTO `user` (`name`, `first_name`, `nickname`, `email`,`password`,`access`,`enabled`)
+    VALUES (:name, :first_name, :nickname,:email, :password, :access, :enabled)
     SQL;
 
     public function insert(User $user): bool
@@ -53,6 +53,7 @@ class UserManager extends BaseManager{
         $result_prepare->bindValue(':email', $user->email);
         $result_prepare->bindValue(':password', $user->password);
         $result_prepare->bindValue(':access', $user->access);
+        $result_prepare->bindValue(':enabled', $user->enabled);
 
         $result=$result_prepare->execute();
 
@@ -66,7 +67,7 @@ class UserManager extends BaseManager{
 
     const SQL_UPDATE= <<<'SQL'
     UPDATE user SET name =:name, first_name=:first_name,
-    nickname=:nickname, email=:email, password=:password, access=:access
+    nickname=:nickname, email=:email, password=:password, access=:access enabled=:enabled
     WHERE id=:id;
     SQL;
 
@@ -81,6 +82,7 @@ class UserManager extends BaseManager{
         $statement->bindValue(':email', $user->email);
         $statement->bindValue(':password', $user->password);
         $statement->bindValue(':access', $user->access);
+        $statement->bindValue(':enabled', $user->enabled);
         $result=$statement->execute();
 
         if(!$result){
