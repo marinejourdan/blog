@@ -49,6 +49,7 @@ class UserAdminController extends AdminController
     }
 
     function doAdminUpdate(){
+        $errors[]=array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -68,8 +69,7 @@ class UserAdminController extends AdminController
                 empty($email)||
                 empty($password)
             ){
-                echo 'merci de renseigner un contenu';
-                die();
+                $errors[]='merci de renseigner un contenu';
 
             }else{
                 $user=new User;
@@ -99,6 +99,7 @@ class UserAdminController extends AdminController
 
     function doAdminCreate(){
 
+        $errors[]=array();
         if(count($_POST)>0){
             $email=$_SESSION['email'];
             $name=$_POST['name'];
@@ -115,8 +116,8 @@ class UserAdminController extends AdminController
                 empty($email)||
                 empty($password)
             ){
-                echo 'merci de renseigner un contenu';
-                die();
+                $errors[]='merci de renseigner un contenu';
+
             }else{
 
                 $user=new User;

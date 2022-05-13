@@ -28,4 +28,5 @@ class BaseController{
         include_once ("./view/admin/layoutAdmin.html.php");
 
     }
+
 }
