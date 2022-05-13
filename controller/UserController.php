@@ -50,7 +50,7 @@ class UserController extends BaseController{
             $first_name=$_POST['first_name'];
             $nickname=$_POST['nickname'];
             $email=$_POST['email'];
-            $password=$_POST['password'];
+            $plainPassword=$_POST['password'];
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
@@ -59,7 +59,7 @@ class UserController extends BaseController{
                 empty($first_name)||
                 empty($nickname)||
                 empty($email)||
-                empty($password)
+                empty($plainPassword)
             ){
                 echo 'merci de renseigner un contenu';
 
@@ -70,13 +70,12 @@ class UserController extends BaseController{
                 $user->first_name=$first_name;
                 $user->nickname=$nickname;
                 $user->email=$email;
-                $user->password=$password;
-                $user->access=$access;
+                $user->password=password_hash($plainPassword, PASSWORD_DEFAULT);
                 $user->enabled=$enabled;
 
-
                 $result=$this->userManager->insert($user);
-                var_dump($result);
+                $this->redirect('./index.php?controller=user&action=displayLogin');
+
             }
         }
         //$this->redirect('./index.php?controller=post&action=displayList');
@@ -108,7 +107,8 @@ class UserController extends BaseController{
             ){
                 $errors[] =  'merci de renseigner un mot de passe';
             }
-            $password=$_POST['password'];
+
+            $plainPassword=$_POST['password'];
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
@@ -119,7 +119,7 @@ class UserController extends BaseController{
 
             if(
                 $user==null ||
-                $user->password!=$password
+                password_verify($plainPassword, $user->password)
             ){
                 $errors[]='ce compte est inexistant';
 

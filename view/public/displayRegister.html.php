@@ -1,5 +1,5 @@
 
-<form method="post" action="./index.php?controller=admin&entity=user&action=doAdminCreate">
+<form method="post" action="./index.php?controller=user&action=doRegister">
 
     <tr><label>name<br /></label><input type="textarea" name="name" value="" size="250"> <tr/>
     </tr>

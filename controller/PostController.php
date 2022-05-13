@@ -43,8 +43,4 @@ class PostController extends BaseController{
 
     }
 
-    public function doComment(){
-        $id_post = $_GET['id'];
-        die('youhou2');
-    }
 }

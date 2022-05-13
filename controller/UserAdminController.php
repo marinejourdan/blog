@@ -57,7 +57,7 @@ class UserAdminController extends AdminController
             $id=$_POST['id'];
             $nickname=$_POST['nickname'];
             $email=$_POST['email'];
-            $password=$_POST['password'];
+            $user->password=$password;
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
@@ -124,7 +124,8 @@ class UserAdminController extends AdminController
                 $user->first_name=$first_name;
                 $user->nickname=$nickname;
                 $user->email=$email;
-                $user->password=$password;
+                $user->password;
+                $user->password;
                 $user->access=$access;
 
                 $result=$this->userManager->insert($user);
