@@ -23,8 +23,8 @@ class PostAdminController extends AdminController
     function displayAdminList(){
         $postList=$this->postManager->getList();
 
-            $this->renderAdmin(
-            "./view/admin/post/displayAdminList.html.php",
+            $this->render(
+            "post/displayAdminList.html.php",
             [
                 'postList' => $postList,
             ]
@@ -32,14 +32,12 @@ class PostAdminController extends AdminController
 
         }
 
-
-
     function displayAdminUpdate(){
         $id=$_GET['id'];
         $post=$this->postManager->get($id);
 
-        $this->renderAdmin(
-            "./view/admin/post/displayAdminUpdate.html.php",
+        $this->render(
+            "post/displayAdminUpdate.html.php",
             [
                 'post' => $post,
                 'id' => $id,
@@ -47,11 +45,11 @@ class PostAdminController extends AdminController
         );
     }
 
-
     function doAdminUpdate(){
+        $errors[]=array();
 
         if(count($_POST)>0){
-            $email=$_SESSION['email'];
+            $id=$_POST['id'];
             $title=$_POST['title'];
             $header=$_POST['header'];
             $content=$_POST['content'];
@@ -61,44 +59,33 @@ class PostAdminController extends AdminController
                 empty($header)||
                 empty($content)
             ){
-                echo 'merci de renseigner un contenu';
+                $errors[]= 'merci de renseigner un contenu';
                 die();
+
             }else{
-                $post=new Post;
+                $post=$this->postManager->get($id);
                 $post->title=$title;
                 $post->header=$header;
                 $post->content=$content;
                 $post->updated=date('Y-m-d H:i:s');
-                $user=$this->userManager->findUserByEmail($email);
-
-                if (!$user instanceof User){
-                    die('nous n avons pas trouvé le user');
-                }
-
-                $post->id_user=$user->id;
                 $result=$this->postManager->update($post);
             }
-
         }
         $this->redirect('index.php?controller=admin&entity=post&action=displayAdminList');
     }
 
-
     function displayAdminCreate(){
 
-        $this->renderAdmin(
-            "./view/admin/post/displayAdminCreate.html.php",
+        $this->render(
+            "post/displayAdminCreate.html.php",
             [
 
             ]
         );
     }
 
-
-
-
     function doAdminCreate(){
-
+        $errors[]=array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -108,16 +95,14 @@ class PostAdminController extends AdminController
             $header=$_POST['header'];
             $content=$_POST['content'];
 
-
             if (
                 empty($title) ||
                 empty($header)||
                 empty($content)
             ){
-                echo 'merci de renseigner un contenu';
+                $errors[]='merci de renseigner un contenu';
                 die();
             }else{
-
 
                 $post=new Post;
                 $post->title=$title;
@@ -142,13 +127,12 @@ class PostAdminController extends AdminController
 
         ob_start();
         $id=$_GET['id'];
-        $this->renderAdmin(
-            "./view/admin/post/displayAdminDelete.html.php",
+        $this->render(
+            "post/displayAdminDelete.html.php",
             [
                 'id' => $id,
             ]
         );
-
     }
 
     function doAdminDelete(){

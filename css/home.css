@@ -1,7 +1,14 @@
 
-
 h1{
-color:#2b3937;
+    color:#2b3937;
+}
+
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
+  color: black;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link{
+        font-family: Days One;
+        font-size:20px;
 }
 
 .bg-primary{
@@ -13,8 +20,8 @@ color:#2b3937;
 }
 
 .masthead{
-padding-bottom:6px;
-padding-top:150px;
+    padding-bottom:6px;
+    padding-top:150px;
 }
 .container{
     display:flex;
@@ -25,10 +32,13 @@ padding-top:150px;
     margin-top: 80px;
 }
 
+.row{
+
+}
 
 .masthead .masthead-avatar{
     width:100%;
-    margin-top: 0px;
+    margin-top:-130px;
 }
 
 
@@ -46,16 +56,28 @@ padding-top:150px;
 
 h2{
     font-size: 5rem !important;
+    font-family: Days One;
 }
+
 
 .footer{
     background-color: #E9967A !important ;
 }
 
-h4{
-color:#2b3937!important ;
+h1{
+    text-align: right;
+    margin:5px;
+    font-family: Days One;
+    font-size: 34px;
 }
 
+h4{
+    color:#2b3937!important ;
+}
+
+#form-contact{
+    margin:50px;
+}
 
 .btn-primary{
 

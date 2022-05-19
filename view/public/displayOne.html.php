@@ -1,4 +1,9 @@
 
+<?php
+$errorsMessage['no_authorized']= 'vous netes pas autorisé à publier de commentaire';
+$errorsMessage['no_content']= 'merci de renseigner un contenu';
+?>
+
 <div class="row">
 
         <h2 class="title"><?php echo $params['post']->title;?></h2>
@@ -15,13 +20,20 @@
         <p class="title"><?php echo $comment->creation_date;?></p>
     <?php }?>
 
-
+    <?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) { ?>
+        <div class="errors">
+            <ul>
+            <?php foreach ($_SESSION['errors'] as $error) {?>
+                <li><?php echo $errorsMessage[$error];?></li>
+            <?php }?>
+            </ul>
+        </div>
+    <?php }?>
     <h3>Poster un commentaire</h3>
     <form method="post" action="./index.php?controller=comment&action=doComment">
-    	<input type="hidden" name="id_post" value="<?php echo $params['post']->id;?>" />
-    	<p>Commentaire<br /><textarea name="content"></textarea></p>
-    	<p><input type="submit" class="button-blue left" value="Poster mon commentaire" /></p>
-    	<p class="red right">Votre adresse e-mail n'est pas publiée lorsque vous ajoutez un commentaire.</p>
-    </form>
 
+    	<input type="hidden" name="id_post" value="<?php echo $params['post']->id;?>"/>
+    	<p>Commentaire<br/><textarea name="content"></textarea></p>
+    	<p><input type="submit" class="button-blue left" value="Poster mon commentaire"/></p>
+    </form>
 </div>

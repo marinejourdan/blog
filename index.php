@@ -16,7 +16,8 @@ use App\Manager\UserManager;
 require 'vendor/autoload.php';
 
 session_start();
-
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $controller='home';
 if (isset($_GET['controller'])){
@@ -75,8 +76,8 @@ switch($controller){
 
         break;
 
-
     case 'user':
+
         $userManager= new UserManager();
         $userController=new UserController($userManager);
 
@@ -90,14 +91,16 @@ switch($controller){
             $userController->doRegister();
         }elseif ($action == 'doLogout'){
             $userController->dologout();
-        }elseif ($action == 'accessAdmin'){
-            $userController->accessAdmin();
         }else{
             die('404 not found');
         }
         break;
 
     case 'admin':
+
+        if (!isset($_SESSION['email'])){
+            BaseController::redirect('./index.php?controller=user&action=displayLogin');
+        }
 
         $entity=null;
         if (isset($_GET['entity'])){
@@ -112,11 +115,7 @@ switch($controller){
         $userAdminController=New UserAdminController($userManager, $postManager, $commentManager);
         $commentAdminController=New commentAdminController($userManager, $postManager, $commentManager);
 
-
         $controller=$adminController;
-
-
-
 
         if ($entity=='post'){
             $controller=$postAdminController;
@@ -150,45 +149,3 @@ switch($controller){
         die('404 not found');
 
 }
-
-// // ROUTER
-// if (count($_GET)==0){
-//     $homeController->displayHome();
-// }else{
-//     $controller=$_GET['controller'];
-//     $action=$_GET['action'];
-//
-//     if ($controller == 'post'){
-//     $postController=new PostController($postManager,$commentManager);
-//         if ($action == 'displayList'){
-//             $postController->displayList();
-//         }elseif($action == 'displayOne'){
-//             $postController->displayOne();
-//         }elseif($action == 'doComment'){
-//             $postController->doComment();
-//         }
-//     }
-//
-//
-//
-//     if ($controller == 'home'){
-//         if ($action == 'displayHome'){
-//             $homeController->displayHome();
-//         }elseif($action == 'doSendEmail'){
-//             $homeController->doSendEmail();
-//         }
-//     }
-//     if ($controller == 'user'){
-//     $userController=new UserController();
-//         if ($action == 'displayLogin'){
-//             $userController->displayLogin();
-//         }elseif($action == 'displayRegister'){
-//             $userController->displayRegister();
-//         }elseif($action == 'doLogin'){
-//             $userController->doRegister();
-//         }elseif($action == 'doRegister'){
-//             $userController->doRegister();
-//         }
-//
-//     }
-// }

@@ -1,5 +1,5 @@
 
-<h1> Mes derniers articles</h1>
+<h1> Mes dernieres actus</h1>
 
 <div class="row">
     <?php foreach($params['lastPosts'] as $post){ ?>

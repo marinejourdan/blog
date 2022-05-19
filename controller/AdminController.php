@@ -3,15 +3,14 @@ namespace App\Controller;
 
 class AdminController extends BaseController{
 
+    const BASE_PATH = 'view/admin/';
+    const LAYOUT_VIEW = 'layoutAdmin.html.php';
+
     function displayAdminHome(){
 
-        $this->renderAdmin(
-        "./view/admin/displayAdminHome.html.php",
-        [
-
-        ]
+        $this->render(
+            "displayAdminHome.html.php",
+            []
         );
-
     }
-
 }

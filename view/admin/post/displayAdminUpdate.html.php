@@ -1,7 +1,7 @@
 
 
     <form method="post" action="./index.php?controller=admin&entity=post&action=doAdminUpdate">
-        <input type="hidden" name="id_post" value="<?php echo $params['id'];?>" />
+        <input type="hidden" name="id" value="<?php echo $params['post']->id;?>" />
 
         <tr><label>title<br /></label><input type="textarea" name="title" value="<?php echo $params['post']->title ?>" size="250"> <tr/>
         </tr>

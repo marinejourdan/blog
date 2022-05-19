@@ -17,7 +17,7 @@ class HomeController extends BaseController{
         $lastPosts=$postManager->lastPosts();
 
         $this->render(
-            "./view/public/displayhome.html.php",
+            "displayhome.html.php",
             [
                 'lastPosts' => $lastPosts,
             ]
@@ -25,15 +25,15 @@ class HomeController extends BaseController{
 
     }
 
-
     public function doSendEmail(){
+
 
         if (!isset($_POST['name'])){
             die("$ post name absent");
         }
-        $name = $_POST['name'];
-        if ($name === '') {
-            die("merci de remplir le nom");
+         $name = $_POST['name'];
+         if ($name === '') {
+             die("merci de remplir le nom");
         }
         if (!isset($_POST['email'])){
             die("$ post email absent");
@@ -51,21 +51,23 @@ class HomeController extends BaseController{
         }
         $content = $_POST['message'];
         if ($content === '') {
-            die("merci de remplir le message");
+        die("merci de remplir le message");
         }
         if (!isset($_POST['subject'])){
-            die("$ post subject absent");
+           die("$ post subject absent");
         }
         $subject = $_POST['subject'];
         if ($subject === '') {
             die("merci de remplir le sujet");
-        }
-
+         }
 
         try {
-            // Create the SMTP Transport
-            $transport = New \Swift_SmtpTransport();
-            // Create the Mailer using your created Transport
+                //Create the SMTP Transport
+            $transport = New \Swift_SmtpTransport($_ENV['SMTP'], $_ENV['PORT']);
+            $transport->setUsername($_ENV['ID']);
+            $transport->setPassword($_ENV['CLE']);
+
+             // Create the Mailer using your created Transport
             $mailer = new \Swift_Mailer($transport);
             // Create a message
             $message = new \Swift_Message();
@@ -74,13 +76,15 @@ class HomeController extends BaseController{
             // Set the "From address"
             $message->setFrom([$email => $name]);
             // Set the "To address" [Use setTo method for multiple recipients, argument should be array]
-            $message->addTo('marine.misser@gmail.com','Marine Jourdan');
-            // Set the plain-text "Body"
+            $message->addTo($_ENV['ID'],'Marine Jourdan');
+             // Set the plain-text "Body"
             $message->setBody($content);
-            // Send the message
+             // Send the message
             $result = $mailer->send($message);
-        }catch (Exception $e) {
+
+        }catch (Exception $e){
             echo $e->getMessage();
+            die();
         }
     }
 }

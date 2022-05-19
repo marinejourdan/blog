@@ -8,7 +8,6 @@ use App\Manager\PostManager;
 class PostController extends BaseController{
 
      private $postManager;
-
      private $commentManager;
 
     public function __construct(PostManager $postManager, CommentManager $commentManager){
@@ -18,14 +17,13 @@ class PostController extends BaseController{
 
     public function displayList(){
 
-            $postList=$this->postManager->getList();
-            $this->render(
-            "./view/public/displayList.html.php",
+        $postList=$this->postManager->getList();
+        $this->render(
+            "displayList.html.php",
             [
                 'postList' => $postList,
             ]
         );
-
     }
 
 
@@ -34,7 +32,7 @@ class PostController extends BaseController{
         $post=$this->postManager->get($id_post);
         $commentList=$this->commentManager->getCommentsFromPost($id_post);
         $this->render(
-        "./view/public/displayOne.html.php",
+            "displayOne.html.php",
         [
             'post' => $post,
             'commentList' => $commentList,

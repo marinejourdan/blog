@@ -24,8 +24,8 @@ class CommentAdminController extends AdminController
 
     function displayAdminList(){
             $commentList=$this->commentManager->getList();
-            $this->renderAdmin(
-            "./view/admin/comment/commentDisplayAdminList.html.php",
+            $this->render(
+            "comment/commentDisplayAdminList.html.php",
             [
                 'commentList' => $commentList,
             ]
@@ -37,8 +37,8 @@ class CommentAdminController extends AdminController
     function displayAdminUpdate(){
         $id=$_GET['id'];
         $comment=$this->commentManager->get($id);
-        $this->renderAdmin(
-            "./view/admin/comment/commentDisplayAdminUpdate.html.php",
+        $this->render(
+            "comment/commentDisplayAdminUpdate.html.php",
             [
                 'comment' => $comment,
                 'id' => $id,
@@ -87,7 +87,7 @@ class CommentAdminController extends AdminController
     function displayAdminCreate(){
 
         $this->renderAdmin(
-            "./view/admin/comment/commentDisplayAdminCreate.html.php",
+            "comment/commentDisplayAdminCreate.html.php",
             [
 
             ]
@@ -98,7 +98,7 @@ class CommentAdminController extends AdminController
         ob_start();
         $id=$_GET['id'];
         $this->renderAdmin(
-            "./view/admin/comment/commentDisplayAdminDelete.html.php",
+            "comment/commentDisplayAdminDelete.html.php",
             [
                 'id' => $id,
             ]

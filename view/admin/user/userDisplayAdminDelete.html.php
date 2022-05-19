@@ -5,4 +5,3 @@ ETES VOUS SUR DE VOULOIR SUPPRIMER LE USER?
 <input type="hidden" name="id" value="<?php echo $params['id'];?>" />
 <p><input type="submit" class="button-blue left" value="oui" /></p>
 </form>
-œ

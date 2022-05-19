@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -16,13 +17,12 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/home.css" rel="stylesheet" />
-
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Days+One" />
     </head>
 
-
-    <body id="page-top">
+    <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <nav id="mainNav" class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="assets/img/portfolio/CV.pdf">Mon CV</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,13 +35,10 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=post&action=displayList">Mon blog</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayRegister">inscription
                         </a></li>
-
                         <?php if(isset($_SESSION['email'])){?>
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=doLogout">Logout</a></li>
-
                         <?php }else{?>
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayLogin">Login</a></li>
-
                         <?php }?>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href= "#contact-form">Contact</a></li>
                     </ul>
@@ -49,19 +46,15 @@
             </div>
         </nav>
 
-
-
-
-<!-- <body id="content">
     <!-- Masthead-->
     <header class="masthead bg-primary text-white text-center">
         <div class="container">
-            <div class="col-6">
+            <div class="col-5">
                 <!-- Masthead Avatar Image-->
                 <img class="masthead-avatar mb-5" src="assets/img/portfolio/profile.jpeg" alt="..." />
             </div>
 
-            <div class="col-6">
+            <div class="col-7">
                     <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Marine Jourdan</h1>
                 <!-- Icon Divider-->
@@ -73,39 +66,31 @@
             <!-- Masthead Subheading-->
                 <p class="masthead-subheading font-weight-light mb-0">Freelance-développeuse PHP</p>
             </div>
-        </div> -->
+        </div>
     </header>
 
-    <div class="container">
+<div class="container">
+<div class="col-8">
+<?php
+echo $content;
+?>
+</div>
+<div class="col-4">
+<img class="masthead-avatar mb-5" src="assets/img/portfolio/dame2.jpg">
+</div>
+</div>
 
-            <body class="body">
-                <div class="col-10">
-                    <?php
-                    echo $content;
-                    ?>
-                </div>
-                <div class="col-2">
-                    <img class="masthead-avatar mb-5" src="assets/img/portfolio/dame4.jpg">
-                </div>
-            </body>
-
-    </div>
     <!--Section: Contact v.2-->
     <div class="contact_form">
-        <section class="mb-4">
+        <section id=form-contact class="mb-4">
 
             <!--Section heading-->
             <h2 class="h1-responsive font-weight-bold text-center my-4">Contactez-moi</h2>
-
             <div class="row">
-
-                <!--Grid column-->
                 <div class="col-md-9 mb-md-0 mb-5">
                     <form id="contact-form" name="contact-form" action="./index.php?controller=home&action=doSendEmail" method="POST">
-
-                        <!--Grid row-->
-                        <div class="row">
-
+                            <!--Grid row-->
+                            <div class="row">
                             <!--Grid column-->
                             <div class="col-md-6">
                                 <div class="md-form mb-0">
@@ -121,8 +106,7 @@
                                     <label for="email" class="">Votre mail</label>
                                     <input type="text" id="email" name="email" class="form-control">
                                 </div>
-                            </div>
-                            <!--Grid column-->
+            </div>
 
                         </div>
                         <!--Grid row-->
@@ -145,7 +129,7 @@
                             <div class="col-md-12">
 
                                 <div class="md-form">
-                                    <label for="message">Votre message</label>
+                                    <label for="message">Votre message</label></br>
                                     <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
                                 </div>
 
@@ -206,9 +190,12 @@
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="text-uppercase mb-4">acces admin </h4>
+                    <img class="masthead-avatar mb-5" src="assets/img/beyonce.png">
                     <p class="lead mb-0">
                         Acces à l'admin réservé aux administrateurs du site
-                        <a href="./index.php?controller=user&action=accessAdmin">Accès admin</a>
+                        <a href="./index.php?controller=admin&action=displayAdminHome
+                        ">Accès admin</a>
+
                     </p>
                 </div>
             </div>

@@ -4,7 +4,7 @@ namespace App\Manager;
 class BaseManager{
 
     protected function dbconnect(){
-        $db = new \PDO('mysql:host=localhost;dbname=blog_test;charset=utf8','user','mdp');
+        $db = new \PDO("mysql:host=".$_ENV['SQLHOST'].";dbname=".$_ENV['DBNAME'], $_ENV['SQLLOGIN'], $_ENV['SQLPASS']);
         return $db;
     }
 
@@ -18,9 +18,8 @@ class BaseManager{
 
         $object_list = array();
         foreach($data_list as $row){
-            $id=$row['id'];
-            $object=$this->get($id);
-            $object_list[] = $object;//j'ajoute chaque objet post dans un tableau post object list au lieu des résultats de fetch all/
+            $object=$this->get($row['id']);
+            $object_list[] = $object;
         }
         return $object_list;
     }
@@ -34,42 +33,14 @@ class BaseManager{
             var_dump($statement->errorInfo());
             die('ERROR');
         }
-        $row = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        if(!$row = $statement->fetch(\PDO::FETCH_ASSOC)){
+            var_dump($this);
+            die('ERROR : unknown object id '.$id);
+        }
+
         $object=$this->create($row);
 
         return $object;
     }
 }
-
-
-// private static $dbName = 'nom_de_la_base_de_données';
-// private static $dbHost = 'localhost';
-// private static $dbUsername = 'nom_d’utilisateur';
-// private static $dbUserPassword = 'mot_de_passe';
-//
-// private static $cont = null;
-//
-// public function __construct() {
-// die('Fonction Init non autorisée');
-// }
-// public static function connect() {
-// // Autoriser une seule connexion pour toute la durée de l’accès
-// if ( null == self::$cont )
-// {
-//   try
-//   {
-//     self::$cont = new PDO( "mysql:host=".self::$dbHost.";"."dbname=".self::$dbName, self::$dbUsername, self::$dbUserPassword);
-//   }
-//   catch(PDOException $e)
-//   {
-//     die($e->getMessage());
-//   }
-// }
-// return self::$cont;
-// }
-//
-// public static function disconnect()
-// {
-// self::$cont = null;
-// }
-// }

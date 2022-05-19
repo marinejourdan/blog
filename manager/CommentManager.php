@@ -16,7 +16,6 @@ class CommentManager extends BaseManager{
        $this->postManager=$postManager;
    }
 
-
     const SQL_GET_LIST= <<<'SQL'
     SELECT *
     FROM comment
@@ -28,26 +27,24 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function create(array $row=[]): Comment{
-
+    public function create(array $row=[]): Comment
+    {
         $comment=New Comment;
-
         $comment->id=$row['id'];
         $comment->content=$row['content'];
         $comment->creation_date=$row['creation_date'];
         $comment->id_post=$row['id_post'];
         $comment->id_user=$row['id_user'];
 
+
         $user=$this->userManager->get($comment->id_user);
         $nickname_user = $user->nickname;
         $comment->nickname_user= $nickname_user;
-
         $post=$this->postManager->get($comment->id_post);
         $post= $post->content;
         $comment->post= $post;
 
         return $comment;
-
     }
 
 
@@ -74,8 +71,6 @@ class CommentManager extends BaseManager{
 
         return $result;
     }
-
-
     // function updateComment(Post $post) :bool
     // {
     //     $db=$this->dbconnect();
@@ -109,32 +104,30 @@ class CommentManager extends BaseManager{
 
             die('ERROR');
         }
-
         return $result;
-
     }
 
-    const SQL_GET_COMMENT_FROM_POST = <<<'SQL'
+    const SQL_GET_COMMENTS_FROM_POST = <<<'SQL'
     SELECT id,content,creation_date, id_post,id_user
-    FROM comment WHERE id_post=$id_post;
+    FROM comment WHERE id=:id_post;
     SQL;
 
     public function getCommentsFromPost(int $id_post): array
     {
 
         $db=$this->dbconnect();
-        $sql ="SELECT id,content,creation_date, id_post,id_user FROM comment WHERE id_post=$id_post ;";
-        $result=$db->query($sql);
-        $comment_list=$result->fetchAll(\PDO::FETCH_ASSOC);
+        $statement=$db->prepare(self::SQL_GET_COMMENTS_FROM_POST);
+        $statement->bindValue(':id_post',$id_post);
+        $statement->execute();
+        $data_list=$statement->fetchAll(\PDO::FETCH_ASSOC);
 
-        $comment_object_list = array();
-        //var_dump($comment_list);
-        foreach($comment_list as $row){
+        $object_list = array();
 
-           $comment=$this->get($row['id']);
-
-           $comment_object_list[] = $comment;
+        foreach($data_list as $row){
+            $object=$this->create($row);
+            $object_list[] = $object;
         }
-        return $comment_object_list;
+        return $object_list;
     }
+
 }

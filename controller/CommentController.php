@@ -19,20 +19,17 @@ private $userManager;
     }
 
     public function doComment(){
-
+        $errors = array();
 
         if (!isset ($_SESSION['email'])){
             $this->redirect('./index.php?controller=user&action=displayLogin');
         }else{
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
             if ($user->enabled==0){
-            echo 'vous netes pas autorisé à publier de commentaire';
+            $errors[]='no_authorized';
             die('youhou');
             }
         }
-
-
-
 
         if(count($_POST)>0){
 
@@ -41,7 +38,7 @@ private $userManager;
             $id_user=$user->id;
 
             if (empty($content)){
-                echo 'merci de renseigner un contenu';
+                $errors[]='no_content';
                 die('youhou');
             }else{
                 $comment=new Comment;

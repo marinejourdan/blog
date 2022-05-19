@@ -15,38 +15,27 @@ class UserController extends BaseController{
        $this->userManager=$userManager;
    }
 
-    // index.php?controller=user&action=displayLogin
     function displayLogin(){
-
         $this->render(
-        "./view/public/displayLogin.html.php",
-            [
-
-            ]
+        'displayLogin.html.php',
+            []
         );
-
     }
 
-
-    // index.php?controller=user&action=displayRegister
     function displayRegister(){
 
         $this->render(
-        "./view/public/displayRegister.html.php",
-            [
-
-            ]
+            "displayRegister.html.php",
+            []
         );
-
     }
-
-
 
     function doRegister(){
 
         $errors[]=array();
 
         if(count($_POST)>0){
+
             $errors = array();
             $name=$_POST['name'];
             $first_name=$_POST['first_name'];
@@ -56,11 +45,6 @@ class UserController extends BaseController{
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
-
-            if ($user) {
-                $errors[] = 'vous avez déjà un compte, merci de vous connecter';
-            }
-
             if (
                 empty($name) ||
                 empty($first_name)||
@@ -68,31 +52,35 @@ class UserController extends BaseController{
                 empty($email)||
                 empty($plainPassword)
             ){
-                $errors[] = 'merci de renseigner un contenu';
+                $errors[] = 'missing_fields';
+            }else{
+                $user = $this->userManager->findUserByEmail($email);
+
+                if ($user) {
+                    $errors[] = 'already_account';
+                }
+            }
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
-                $this->redirect('index.php?controller=user&action=doRegister');
+                $this->redirect('index.php?controller=user&action=displayRegister');
+                exit;
             }
 
-            }else{
+            $user=new User;
+            $user->name=$name;
+            $user->first_name=$first_name;
+            $user->nickname=$nickname;
+            $user->email=$email;
+            $user->password=password_hash($plainPassword, PASSWORD_DEFAULT);
+            $user->enabled=$enabled;
 
-                $user=new User;
-                $user->name=$name;
-                $user->first_name=$first_name;
-                $user->nickname=$nickname;
-                $user->email=$email;
-                $user->password=password_hash($plainPassword, PASSWORD_DEFAULT);
-                $user->enabled=$enabled;
+            $result=$this->userManager->insert($user);
+            $this->redirect('./index.php?controller=user&action=displayLogin');
+            exit;
 
-                $result=$this->userManager->insert($user);
-                $this->redirect('./index.php?controller=user&action=displayLogin');
-
-            }
         }
-        //$this->redirect('./index.php?controller=post&action=displayList');
     }
-    // index.php?controller=user&action=doLogin
     function doLogin(){
 
         $errors = array();
@@ -103,13 +91,13 @@ class UserController extends BaseController{
                 !isset($_POST['email']) ||
                 $_POST['email'] == ''
             ){
-                $errors[] =  'merci de renseigner un mail';
+                $errors[] = 'no_mail';
             }
 
             $email=$_POST['email'];
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors[] = "L'adresse email '$email' n'est pas valide.";
+                $errors[] = "email_invalid";
             }else{
                 $_SESSION['last_email']=$email;
             }
@@ -118,38 +106,37 @@ class UserController extends BaseController{
                 !isset($_POST['password']) ||
                 $_POST['password'] == ''
             ){
-                $errors[] =  'merci de renseigner un mot de passe';
+                $errors[] =  'no_pass';
             }
 
             $plainPassword=$_POST['password'];
-
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=home&action=displayList');
+                exit();
             }
             $user = $this->userManager->findUserByEmail($email);
-
-            var_dump($user);
             if(
                 $user==null ||
                 !password_verify($plainPassword, $user->password)
             ){
-                $errors[]='ce compte est inexistant';
+                $errors[]='no_account';
 
             }
 
             if ($user->enabled==0){
-                $errors[]='votre compte est en attente d activation, merci de patienter';
+                $errors[]='waiting_account';
             }
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=user&action=displayLogin');
-
+                exit();
             }
 
             $_SESSION['email']=$user->email;
             $this->redirect('index.php?controller=home&action=displayHome');
+            exit();
         }
     }
 
@@ -158,14 +145,13 @@ class UserController extends BaseController{
         if(isset($_SESSION['email'])){
         session_destroy();
         $this->redirect('index.php?controller=user&action=displayLogin');
+        exit();
         }
     }
 
     function accessAdmin(){
 
         $errors = array();
-
-
         if(!isset($_SESSION['email'])){
         $this->redirect('index.php?controller=home&action=displayHome');
         }
@@ -174,14 +160,12 @@ class UserController extends BaseController{
 
         if($user->access==1){
             $this->redirect('index.php?controller=admin&action=displayAdminHome');
+            exit();
         }else{
-
             $errors[]= 'vous navez pas accès à cette page';
             $_SESSION['errors']=$errors;
             $this->redirect('index.php?controller=user&action=displayLogin');
-
+            exit();
         }
     }
-
-
 }

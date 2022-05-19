@@ -50,6 +50,7 @@ class PostManager extends BaseManager{
 
         $userManager= New UserManager;
         $id=$post->id_user;
+
         $user=$userManager->get($post->id_user);
         $nickname_user = $user->nickname;
         $post->nickname_user= $nickname_user;
@@ -103,7 +104,6 @@ class PostManager extends BaseManager{
        $statement->bindValue(':id_user', $post->id_user);
 
        $result=$statement->execute();
-
        if(!$result){
             var_dump($statement->errorInfo());
            die('ERROR');

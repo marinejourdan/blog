@@ -7,10 +7,10 @@ use App\Manager\UserManager;
 
 class UserManager extends BaseManager{
 
-        const SQL_GET_LIST= <<<'SQL'
-        SELECT *
-        FROM user
-        SQL;
+    const SQL_GET_LIST= <<<'SQL'
+    SELECT *
+    FROM user
+    SQL;
 
 
     protected function create(array $row = []): User
@@ -29,7 +29,6 @@ class UserManager extends BaseManager{
 
         return $user;
     }
-
 
     const SQL_GET = <<<'SQL'
     SELECT id, name, first_name, nickname, email, password, access,enabled
@@ -67,7 +66,7 @@ class UserManager extends BaseManager{
 
     const SQL_UPDATE= <<<'SQL'
     UPDATE user SET name =:name, first_name=:first_name,
-    nickname=:nickname, email=:email, password=:password, access=:access enabled=:enabled
+    nickname=:nickname, email=:email, password=:password, access=:access, enabled=:enabled
     WHERE id=:id;
     SQL;
 
@@ -90,8 +89,8 @@ class UserManager extends BaseManager{
             die('ERROR');
         }
         return $result;
+        var_dump($result);
     }
-
 
     const SQL_DELETE= <<<'SQL'
     DELETE FROM `user`

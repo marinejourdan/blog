@@ -27,11 +27,10 @@ class UserAdminController extends AdminController
         $userList=$this->userManager->getList();
 
         $this->renderAdmin(
-            "./view/admin/user/userDisplayAdminList.html.php",
+            "user/userDisplayAdminList.html.php",
             [
                 'userList' => $userList,
             ]
-
         );
     }
 
@@ -40,7 +39,7 @@ class UserAdminController extends AdminController
         $user=$this->userManager->get($id);
 
         $this->renderAdmin(
-            "./view/admin/user/userdisplayAdminUpdate.html.php",
+            "user/userDisplayAdminUpdate.html.php",
             [
                 'user' => $user,
                 'id' => $id,
@@ -49,7 +48,6 @@ class UserAdminController extends AdminController
     }
 
     function doAdminUpdate(){
-        $errors[]=array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -58,11 +56,14 @@ class UserAdminController extends AdminController
             $id=$_POST['id'];
             $nickname=$_POST['nickname'];
             $email=$_POST['email'];
-            $user->password=$password;
+            $plainPassword=$_POST['password'];
+            $password=password_hash($plainPassword, PASSWORD_DEFAULT);
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
-            if (
+            $errors[]=array();
+
+            if(
                 empty($name) ||
                 empty($first_name)||
                 empty($nickname)||
@@ -70,9 +71,9 @@ class UserAdminController extends AdminController
                 empty($password)
             ){
                 $errors[]='merci de renseigner un contenu';
-
             }else{
                 $user=new User;
+
                 $user->id=$id;
                 $user->name=$name;
                 $user->first_name=$first_name;
@@ -80,8 +81,10 @@ class UserAdminController extends AdminController
                 $user->email=$email;
                 $user->password=$password;
                 $user->access=$access;
-                $user->enabled=$enables;
+                $user->enabled=$enabled;
+
                 $result=$this->userManager->update($user);
+
             }
         }
         $this->redirect('index.php?controller=admin&entity=user&action=displayAdminList');
@@ -90,7 +93,7 @@ class UserAdminController extends AdminController
 
     function displayAdminCreate(){
         $this->renderAdmin(
-            "./view/admin/user/userDisplayAdminCreate.html.php",
+            "user/userDisplayAdminCreate.html.php",
             [
 
             ]
@@ -100,6 +103,7 @@ class UserAdminController extends AdminController
     function doAdminCreate(){
 
         $errors[]=array();
+
         if(count($_POST)>0){
             $email=$_SESSION['email'];
             $name=$_POST['name'];
@@ -135,20 +139,18 @@ class UserAdminController extends AdminController
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
     }
 
-
     function displayAdminDelete(){
 
         ob_start();
         $id=$_GET['id'];
         $this->renderAdmin(
-            "./view/admin/user/userDisplayAdminDelete.html.php",
+            "user/userDisplayAdminDelete.html.php",
             [
                 'id' => $id,
             ]
         );
 
     }
-
 
     function doAdminDelete(){
         $id=$_POST['id'];
