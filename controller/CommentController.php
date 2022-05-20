@@ -27,7 +27,7 @@ private $userManager;
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
             if ($user->enabled==0){
             $errors[]='no_authorized';
-            die('youhou');
+
             }
         }
 
@@ -42,13 +42,13 @@ private $userManager;
                 die('youhou');
             }else{
                 $comment=new Comment;
-
                 $comment->content=$content;
                 $comment->id_post=$id_post;
                 $comment->id_user=$id_user;
                 $comment->creation_date=date('Y-m-d H:i:s');
 
                 $result=$this->commentManager->insert($comment);
+
             }
         }
         $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);

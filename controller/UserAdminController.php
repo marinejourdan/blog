@@ -49,7 +49,10 @@ class UserAdminController extends AdminController
 
     function doAdminUpdate(){
 
+        $errors=array();
+
         if(count($_POST)>0){
+
             $email=$_SESSION['email'];
             $name=$_POST['name'];
             $first_name=$_POST['first_name'];
@@ -61,8 +64,6 @@ class UserAdminController extends AdminController
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
-            $errors[]=array();
-
             if(
                 empty($name) ||
                 empty($first_name)||
@@ -70,10 +71,15 @@ class UserAdminController extends AdminController
                 empty($email)||
                 empty($password)
             ){
-                $errors[]='merci de renseigner un contenu';
-            }else{
-                $user=new User;
+                $errors[]='no_content';
+            }
 
+            if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                $this->redirect('index.php?controller=admin&entity=user&action=displayAdminUpdate&id='.$id);
+            }
+            else{
+                $user=new User;
                 $user->id=$id;
                 $user->name=$name;
                 $user->first_name=$first_name;
@@ -110,8 +116,10 @@ class UserAdminController extends AdminController
             $first_name=$_POST['first_name'];
             $nickname=$_POST['nickname'];
             $email=$_POST['email'];
-            $password=$_POST['password'];
+            $plainpassword=$_POST['password'];
+            $password=password_hash($plainPassword, PASSWORD_DEFAULT);
             $access=$_POST['access'];
+            $enabled=$_POST['enabled'];
 
             if (
                 empty($name) ||
@@ -129,14 +137,15 @@ class UserAdminController extends AdminController
                 $user->first_name=$first_name;
                 $user->nickname=$nickname;
                 $user->email=$email;
-                $user->password;
-                $user->password;
+                $user->password=$password;
                 $user->access=$access;
+                $user->enabled=$enabled;
 
                 $result=$this->userManager->insert($user);
             }
         }
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
+        exit();
     }
 
     function displayAdminDelete(){
@@ -157,5 +166,6 @@ class UserAdminController extends AdminController
         $user=$this->userManager->get($id);
         $this->userManager->delete($user);
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
+        exit();
     }
 }

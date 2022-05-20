@@ -29,6 +29,9 @@ class BaseManager{
         $db=$this->dbconnect();
         $statement=$db->prepare(static::SQL_GET);
         $statement->bindValue(':id', $id);
+        $statement->execute();
+        $row = $statement->fetch(\PDO::FETCH_ASSOC);
+
         if(!$statement->execute()){
             var_dump($statement->errorInfo());
             die('ERROR');

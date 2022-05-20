@@ -29,6 +29,7 @@ $errorsMessage['no_content']= 'merci de renseigner un contenu';
             </ul>
         </div>
     <?php }?>
+
     <h3>Poster un commentaire</h3>
     <form method="post" action="./index.php?controller=comment&action=doComment">
 

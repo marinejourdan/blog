@@ -49,14 +49,13 @@ class CommentManager extends BaseManager{
 
 
     const SQL_INSERT = <<<'SQL'
-    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`)
-    VALUES (:content ,:creation_date, :id_post, :id_user);
+    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`) VALUES (:content , :creation_date, :id_post, :id_user);
     SQL;
 
-    public function insert($comment): bool
+    public function insert(Comment $comment): bool
     {
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_INSERT);
+        $statement=$db->prepare(static::SQL_INSERT);
         $statement->bindValue(':content', $comment->content);
         $statement->bindValue(':creation_date',$comment->creation_date);
         $statement->bindValue(':id_post', $comment->id_post);;
@@ -109,7 +108,7 @@ class CommentManager extends BaseManager{
 
     const SQL_GET_COMMENTS_FROM_POST = <<<'SQL'
     SELECT id,content,creation_date, id_post,id_user
-    FROM comment WHERE id=:id_post;
+    FROM comment WHERE id_post=:id_post;
     SQL;
 
     public function getCommentsFromPost(int $id_post): array

@@ -130,17 +130,14 @@ echo $content;
 
                                 <div class="md-form">
                                     <label for="message">Votre message</label></br>
-                                    <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                                    <textarea type="text" id="message" name="message" rows="4" class="form-control md-textarea"></textarea></br>
                                 </div>
-
                             </div>
                         </div>
                         <!--Grid row-->
-
                     </form>
-
                     <div class="text-center text-md-left">
-                        <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
+                        <a class="btn btn-dark" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
                     </div>
                     <div class="status"></div>
                 </div>
@@ -190,12 +187,9 @@ echo $content;
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="text-uppercase mb-4">acces admin </h4>
-                    <img class="masthead-avatar mb-5" src="assets/img/beyonce.png">
                     <p class="lead mb-0">
                         Acces à l'admin réservé aux administrateurs du site
-                        <a href="./index.php?controller=admin&action=displayAdminHome
-                        ">Accès admin</a>
-
+                        <a href="./index.php?controller=admin&action=displayAdminHome">Accès admin</a>
                     </p>
                 </div>
             </div>

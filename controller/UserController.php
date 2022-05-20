@@ -74,6 +74,7 @@ class UserController extends BaseController{
             $user->email=$email;
             $user->password=password_hash($plainPassword, PASSWORD_DEFAULT);
             $user->enabled=$enabled;
+            $user->access=$access;
 
             $result=$this->userManager->insert($user);
             $this->redirect('./index.php?controller=user&action=displayLogin');

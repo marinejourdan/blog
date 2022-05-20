@@ -59,8 +59,11 @@ class PostAdminController extends AdminController
                 empty($header)||
                 empty($content)
             ){
-                $errors[]= 'merci de renseigner un contenu';
-                die();
+                $errors[]= 'no_content';
+
+            }if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                $this->redirect('index.php?controller=admin&entity=post&action=displayAdminUpdate');
 
             }else{
                 $post=$this->postManager->get($id);
@@ -100,8 +103,12 @@ class PostAdminController extends AdminController
                 empty($header)||
                 empty($content)
             ){
-                $errors[]='merci de renseigner un contenu';
-                die();
+                $errors[]='no_content';
+
+            }if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                $this->redirect('index.php?controller=admin&entity=post&action=displayAdminCreate');
+
             }else{
 
                 $post=new Post;
