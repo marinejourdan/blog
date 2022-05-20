@@ -39,7 +39,13 @@ private $userManager;
 
             if (empty($content)){
                 $errors[]='no_content';
-                die('youhou');
+            }
+
+            if(count($errors)>0){
+                $_SESSION['errors']=$errors;
+                $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
+                exit;
+
             }else{
                 $comment=new Comment;
                 $comment->content=$content;
@@ -50,7 +56,7 @@ private $userManager;
                 $result=$this->commentManager->insert($comment);
 
             }
+                $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
         }
-        $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
     }
 }
