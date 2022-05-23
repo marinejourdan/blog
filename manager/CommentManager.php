@@ -64,7 +64,7 @@ class CommentManager extends BaseManager{
         $result=$statement->execute();
         return $result;
 
-    const SQL_DELETE= <<<'SQL'
+    const SQL_DELETE = <<<'SQL'
     DELETE FROM `comment`
     WHERE id=:id;
     SQL;

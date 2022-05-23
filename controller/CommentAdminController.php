@@ -22,7 +22,7 @@ class CommentAdminController extends AdminController
     }
 
 
-    function displayAdminList(){
+    public function displayAdminList(){
             $commentList=$this->commentManager->getList();
             $this->render(
             "comment/commentDisplayAdminList.html.php",
