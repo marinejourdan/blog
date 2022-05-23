@@ -31,17 +31,6 @@ class BaseManager{
         $statement->bindValue(':id', $id);
         $statement->execute();
         $row = $statement->fetch(\PDO::FETCH_ASSOC);
-
-        if(!$statement->execute()){
-            var_dump($statement->errorInfo());
-            die('ERROR');
-        }
-
-        if(!$row = $statement->fetch(\PDO::FETCH_ASSOC)){
-            var_dump($this);
-            die('ERROR : unknown object id '.$id);
-        }
-
         $object=$this->create($row);
 
         return $object;

@@ -63,7 +63,6 @@ class HomeController extends BaseController{
          if(count($errors)>0){
              $_SESSION['errors']=$errors;
              $this->redirect('index.php?controller=home&action=displayHome');
-             exit;
          }
         try {
                 //Create the SMTP Transport

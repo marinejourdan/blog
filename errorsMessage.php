@@ -18,3 +18,8 @@ $errorsMessage['login.waiting_account']='votre compte est en attente d activatio
 $errorsMessage['login.email_invalid']="L'adresse email n'est pas valide.";
 $errorsMessage['login.no access']="Vous n'avez pas accès à cette page.";
 $errorsMessage['user.create.no_content']='merci de renseigner un contenu dans tous les champs';
+$errorsMessage['connexion_required']='Merci de vous connecter pour ajouter un commentaire';
+
+$errorsMessage['register.missing_fields']= 'merci de renseigner tous les champs';
+$errorsMessage['register.salready_account']= 'Vous avez déjà un compte, merci de vous y connecter';
+$errorsMessage['create.post.no.user']='Nous ne trouvons pas l utilisateur';

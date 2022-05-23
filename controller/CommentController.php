@@ -22,7 +22,9 @@ private $userManager;
         $errors = array();
 
         if (!isset ($_SESSION['email'])){
+            $errors[]='connexion_required';
             $this->redirect('./index.php?controller=user&action=displayLogin');
+
         }else{
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
             if ($user->enabled==0){
@@ -44,7 +46,6 @@ private $userManager;
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
-                exit;
 
             }else{
                 $comment=new Comment;

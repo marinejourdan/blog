@@ -15,14 +15,14 @@ class UserController extends BaseController{
        $this->userManager=$userManager;
    }
 
-    function displayLogin(){
+    public function displayLogin(){
         $this->render(
         'displayLogin.html.php',
             []
         );
     }
 
-    function displayRegister(){
+    public function displayRegister(){
 
         $this->render(
             "displayRegister.html.php",
@@ -30,7 +30,7 @@ class UserController extends BaseController{
         );
     }
 
-    function doRegister(){
+    public function doRegister(){
 
         $errors=array();
 
@@ -52,19 +52,18 @@ class UserController extends BaseController{
                 empty($email)||
                 empty($plainPassword)
             ){
-                $errors[] = 'missing_fields';
+                $errors[] = 'register.missing_fields';
             }else{
                 $user = $this->userManager->findUserByEmail($email);
 
                 if ($user) {
-                    $errors[] = 'already_account';
+                    $errors[] = 'register.already_account';
                 }
             }
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=user&action=displayRegister');
-                exit;
             }
 
             $user=new User;
@@ -78,11 +77,10 @@ class UserController extends BaseController{
 
             $result=$this->userManager->insert($user);
             $this->redirect('./index.php?controller=user&action=displayLogin');
-            exit;
 
         }
     }
-    function doLogin(){
+    public function doLogin(){
 
         $errors = array();
 
@@ -114,7 +112,6 @@ class UserController extends BaseController{
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=home&action=displayList');
-                exit();
             }
             $user = $this->userManager->findUserByEmail($email);
             if(
@@ -132,25 +129,22 @@ class UserController extends BaseController{
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=user&action=displayLogin');
-                exit();
             }
 
             $_SESSION['email']=$user->email;
             $this->redirect('index.php?controller=home&action=displayHome');
-            exit();
         }
     }
 
-    function doLogout(){
+    public function doLogout(){
 
         if(isset($_SESSION['email'])){
         session_destroy();
         $this->redirect('index.php?controller=user&action=displayLogin');
-        exit();
         }
     }
 
-    function accessAdmin(){
+    public function accessAdmin(){
 
         $errors = array();
         if(!isset($_SESSION['email'])){
@@ -161,12 +155,10 @@ class UserController extends BaseController{
 
         if($user->access==1){
             $this->redirect('index.php?controller=admin&action=displayAdminHome');
-            exit();
         }else{
             $errors[]= 'login.no access';
             $_SESSION['errors']=$errors;
             $this->redirect('index.php?controller=user&action=displayLogin');
-            exit();
         }
     }
 }

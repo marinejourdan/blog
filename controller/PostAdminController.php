@@ -20,7 +20,7 @@ class PostAdminController extends AdminController
        $this->commentManager=$commentManager;
     }
 
-    function displayAdminList(){
+    public function displayAdminList(){
         $postList=$this->postManager->getList();
 
             $this->render(
@@ -32,7 +32,7 @@ class PostAdminController extends AdminController
 
         }
 
-    function displayAdminUpdate(){
+    public function displayAdminUpdate(){
         $id=$_GET['id'];
         $post=$this->postManager->get($id);
 
@@ -45,7 +45,7 @@ class PostAdminController extends AdminController
         );
     }
 
-    function doAdminUpdate(){
+    public function doAdminUpdate(){
         $errors=array();
 
         if(count($_POST)>0){
@@ -77,7 +77,7 @@ class PostAdminController extends AdminController
         $this->redirect('index.php?controller=admin&entity=post&action=displayAdminList');
     }
 
-    function displayAdminCreate(){
+    public function displayAdminCreate(){
 
         $this->render(
             "post/displayAdminCreate.html.php",
@@ -87,7 +87,7 @@ class PostAdminController extends AdminController
         );
     }
 
-    function doAdminCreate(){
+    public function doAdminCreate(){
         $errors=array();
 
         if(count($_POST)>0){
@@ -119,7 +119,7 @@ class PostAdminController extends AdminController
                 $user=$this->userManager->findUserByEmail($email);
 
                 if (!$user instanceof User){
-                    die('nous n avons pas trouvé le user');
+                    $errors[]='create.post.no.user';
                 }
 
                 $post->id_user=$user->id;
@@ -130,7 +130,7 @@ class PostAdminController extends AdminController
         $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
     }
 
-    function displayAdminDelete(){
+    public function displayAdminDelete(){
 
         ob_start();
         $id=$_GET['id'];
@@ -142,7 +142,7 @@ class PostAdminController extends AdminController
         );
     }
 
-    function doAdminDelete(){
+    public function doAdminDelete(){
         $id=$_POST['id'];
         $post=$this->postManager->get($id);
         $this->postManager->delete($post);

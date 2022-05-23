@@ -34,7 +34,7 @@ class CommentAdminController extends AdminController
     }
 
 
-    function displayAdminUpdate(){
+    public function displayAdminUpdate(){
         $id=$_GET['id'];
         if (!isset($_GET['id'])){
                 $this->redirect('./index.php?controller=user&action=displayAdminHome');
@@ -51,7 +51,7 @@ class CommentAdminController extends AdminController
     }
 
 
-    function displayAdminCreate(){
+    public function displayAdminCreate(){
 
         $this->renderAdmin(
             "comment/commentDisplayAdminCreate.html.php",
@@ -61,7 +61,7 @@ class CommentAdminController extends AdminController
         );
     }
 
-    function displayAdminDelete(){
+    public function displayAdminDelete(){
         $id=$_GET['id'];
         $this->renderAdmin(
             "comment/commentDisplayAdminDelete.html.php",
@@ -72,7 +72,7 @@ class CommentAdminController extends AdminController
 
     }
 
-    function doAdminDelete(){
+    public function doAdminDelete(){
         $id=$_POST['id'];
         $comment=$this->commentManager->get($id);
         $this->commentManager->delete($comment);

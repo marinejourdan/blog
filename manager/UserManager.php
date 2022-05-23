@@ -55,12 +55,6 @@ class UserManager extends BaseManager{
         $result_prepare->bindValue(':enabled', $user->enabled);
 
         $result=$result_prepare->execute();
-
-        if(!$result){
-            var_dump($result_prepare->errorInfo());
-            die('ERROR');
-        }
-
         return $result;
     }
 
@@ -84,12 +78,7 @@ class UserManager extends BaseManager{
         $statement->bindValue(':enabled', $user->enabled);
         $result=$statement->execute();
 
-        if(!$result){
-            var_dump($statement->errorInfo());
-            die('ERROR');
-        }
         return $result;
-        var_dump($result);
     }
 
     const SQL_DELETE= <<<'SQL'
@@ -105,11 +94,6 @@ class UserManager extends BaseManager{
         $statement->bindValue(':id', $user->id);
         $id=$user->id;
         $result=$statement->execute();
-
-        if(!$result){
-            var_dump($statement->errorInfo());
-            die('ERROR');
-        }
 
         return $result;
     }
@@ -127,9 +111,6 @@ class UserManager extends BaseManager{
         $user_row=$result_prepare->fetch(\PDO::FETCH_ASSOC);
 
         $user=null;
-        if (!empty($user_row)){
-            $user=$this->get($user_row['id']);
-        }
         return $user;
     }
 

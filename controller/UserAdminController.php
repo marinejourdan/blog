@@ -23,7 +23,7 @@ class UserAdminController extends AdminController
        $this->commentManager=$commentManager;
     }
 
-    function displayAdminList(){
+    public function displayAdminList(){
         $userList=$this->userManager->getList();
 
         $this->renderAdmin(
@@ -34,7 +34,7 @@ class UserAdminController extends AdminController
         );
     }
 
-    function displayAdminUpdate(){
+    public function displayAdminUpdate(){
         $id=$_GET['id'];
         $user=$this->userManager->get($id);
 
@@ -47,7 +47,7 @@ class UserAdminController extends AdminController
         );
     }
 
-    function doAdminUpdate(){
+    public function doAdminUpdate(){
 
         $errors=array();
 
@@ -97,7 +97,7 @@ class UserAdminController extends AdminController
     }
 
 
-    function displayAdminCreate(){
+    public function displayAdminCreate(){
         $this->renderAdmin(
             "user/userDisplayAdminCreate.html.php",
             [
@@ -106,7 +106,7 @@ class UserAdminController extends AdminController
         );
     }
 
-    function doAdminCreate(){
+    public function doAdminCreate(){
 
         $errors=array();
 
@@ -145,10 +145,10 @@ class UserAdminController extends AdminController
             }
         }
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
-        exit();
+
     }
 
-    function displayAdminDelete(){
+    public function displayAdminDelete(){
 
         ob_start();
         $id=$_GET['id'];
@@ -161,11 +161,10 @@ class UserAdminController extends AdminController
 
     }
 
-    function doAdminDelete(){
+    public function doAdminDelete(){
         $id=$_POST['id'];
         $user=$this->userManager->get($id);
         $this->userManager->delete($user);
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
-        exit();
     }
 }

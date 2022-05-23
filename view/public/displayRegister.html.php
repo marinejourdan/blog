@@ -13,11 +13,7 @@
                             </div>
 
                             <form method="post" action="./index.php?controller=user&action=doRegister">
-                            <?php
-                                $errorsMessage['missing_fields']= 'merci de renseigner tous les champs';
-                                $errorsMessage['already_account']= 'Vous avez déjà un compte, merci de vous y connecter';
-                                ?>
-
+                            
                             <form class="user">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <tr><label>name<br /></label><input type="textarea" name="name" value="" size="50"> <tr/>

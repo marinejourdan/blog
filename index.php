@@ -43,7 +43,7 @@ switch($controller){
         }elseif ($action == 'doSendEmail'){
             $homeController->doSendEmail();
         }else{
-            die('404 not found');
+            echo '404 not found';
         }
         break;
 
@@ -59,7 +59,7 @@ switch($controller){
         }elseif ($action == 'displayOne'){
             $postController->displayOne();
         }else{
-            die('404 not found');
+            echo '404 not found';
         }
 
         break;
@@ -72,7 +72,7 @@ switch($controller){
         if ($action == 'doComment'){
             $commentController->doComment();
         }else{
-            die('404 not found');
+            echo '404 not found';
         }
 
         break;
@@ -93,7 +93,7 @@ switch($controller){
         }elseif ($action == 'doLogout'){
             $userController->dologout();
         }else{
-            die('404 not found');
+            echo '404 not found';
         }
         break;
 
@@ -147,6 +147,5 @@ switch($controller){
         break;
 
     default:
-        die('404 not found');
-
+        echo '404 not found';
 }

@@ -17,7 +17,6 @@
                                 $last_email=$_SESSION['last_email'];
                                 }
                                 ?>
-
                                 <label>mail</label></br><input type="email" name="email" value="<?php echo $last_email; ?>" size="60"  placeholder="Votre adresse email ici" /></br>
                                 <label>Mot de passe</label></br><input type="password" name="password"  value="" size="60"></p>
 

@@ -62,29 +62,7 @@ class CommentManager extends BaseManager{
         $statement->bindValue(':id_user', $comment->id_user);
 
         $result=$statement->execute();
-
-        if(!$result){
-          var_dump($statement->errorInfo());
-          die('ERROR');
-        }
-
         return $result;
-    }
-    // function updateComment(Post $post) :bool
-    // {
-    //     $db=$this->dbconnect();
-    //     $sql = "UPDATE comment SET content='$comment->content', header='$post->header', content='$post->content'
-    //                 WHERE id=$post->id_post;";
-    //     $result=$post->id_post;
-    //     $result=$db->exec($sql);
-
-        //
-        // if(!$result){
-        //     die('ERROR');
-        // }
-        // return $result;
-        //
-
 
     const SQL_DELETE= <<<'SQL'
     DELETE FROM `comment`

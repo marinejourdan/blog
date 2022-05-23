@@ -75,12 +75,6 @@ class PostManager extends BaseManager{
         $statement->bindValue(':id_user', $post->id_user);
 
         $result=$statement->execute();
-
-        if(!$result){
-         var_dump($statement->errorInfo());
-         die('ERROR');
-        }
-
        return $result;
     }
 
@@ -104,10 +98,7 @@ class PostManager extends BaseManager{
        $statement->bindValue(':id_user', $post->id_user);
 
        $result=$statement->execute();
-       if(!$result){
-            var_dump($statement->errorInfo());
-           die('ERROR');
-       }
+
        return $result;
     }
 
@@ -123,12 +114,6 @@ class PostManager extends BaseManager{
         $statement->bindValue(':id', $post->id);
         $result=$statement->execute();
         $id=$post->id;
-
-        if(!$result){
-
-           die('ERROR');
-       }
-
        return $result;
     }
 }
