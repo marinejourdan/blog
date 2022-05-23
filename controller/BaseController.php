@@ -10,6 +10,7 @@ class BaseController{
 
     public function redirect(string $url){
         header('Location:'.$url);
+        exit();
     }
 
     public function render(string $viewFilePath, array $params = [])
@@ -27,5 +28,4 @@ class BaseController{
         $content=ob_get_clean();
         include_once (static::ADMIN_BASE_PATH .static::ADMIN_LAYOUT_VIEW);
     }
-
 }

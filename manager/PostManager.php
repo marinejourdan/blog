@@ -8,7 +8,7 @@ use App\Manager\UserManager;
 class PostManager extends BaseManager{
 
     const SQL_GET_LIST= <<<'SQL'
-    SELECT *
+    SELECT id
     FROM post
     ORDER BY id DESC
     SQL;
@@ -22,8 +22,10 @@ class PostManager extends BaseManager{
     public function lastPosts(int $last=3): array
     {
         $db=$this->dbconnect();
-        $sql ="SELECT * FROM post ORDER BY updated DESC LIMIT ".$last.";";
+        $sql ="SELECT * FROM post ORDER BY updated DESC LIMIT :limit";
+        $sql=\str_replace(':limit',$last, $sql);
         $statement=$db->prepare($sql);
+        //$statement->bindValue(':limit', $last);
         $statement->execute();
         $tous_les_posts=$statement->fetchAll(\PDO::FETCH_ASSOC);
 

@@ -85,7 +85,7 @@ class HomeController extends BaseController{
              // Send the message
             $result = $mailer->send($message);
 
-        }catch (Exception $e){
+        }catch (\Exception $e){
             echo $e->getMessage();
         }
     }

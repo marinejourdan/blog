@@ -115,7 +115,7 @@ class UserController extends BaseController{
             }
             $user = $this->userManager->findUserByEmail($email);
             if(
-                $user==null ||
+                $user===null ||
                 !password_verify($plainPassword, $user->password)
             ){
                 $errors[]='login.no_account';

@@ -8,7 +8,7 @@ use App\Manager\UserManager;
 class UserManager extends BaseManager{
 
     const SQL_GET_LIST= <<<'SQL'
-    SELECT *
+    SELECT id
     FROM user
     SQL;
 

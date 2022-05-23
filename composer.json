@@ -1,6 +1,7 @@
 {
     "name": "mjourdan/blog",
     "type": "project",
+    "license":"proprietary",
     "authors": [
         {
             "name": "mjourdan",

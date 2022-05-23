@@ -17,7 +17,7 @@ class CommentManager extends BaseManager{
    }
 
     const SQL_GET_LIST= <<<'SQL'
-    SELECT *
+    SELECT id
     FROM comment
     SQL;
 
