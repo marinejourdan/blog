@@ -26,7 +26,7 @@ private $userManager;
         }else{
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
             if ($user->enabled==0){
-            $errors[]='no_authorized';
+            $errors[]='comment.no_authorized';
 
             }
         }
@@ -38,7 +38,7 @@ private $userManager;
             $id_user=$user->id;
 
             if (empty($content)){
-                $errors[]='no_content';
+                $errors[]='comment.no_content';
             }
 
             if(count($errors)>0){

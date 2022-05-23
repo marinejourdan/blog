@@ -26,41 +26,45 @@ class HomeController extends BaseController{
     }
 
     public function doSendEmail(){
-
+        $errors=array();
 
         if (!isset($_POST['name'])){
-            die("$ post name absent");
+            $errors[] = 'mail.no_name';
         }
          $name = $_POST['name'];
          if ($name === '') {
-             die("merci de remplir le nom");
+             $errors[] = "mail.no_name";
         }
         if (!isset($_POST['email'])){
-            die("$ post email absent");
+            $errors[] = "mail.no_mail";
         }
         $email = $_POST['email'];
         if ($email === '') {
-            die("merci de remplir le mail");
+            $errors[] = "mail.no_mail";
         }
         if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-            echo "Email format invalid.";
-            die();
+            $errors[] = "mail.invalid_mail";
         }
         if (!isset($_POST['message'])){
-            die("$ post CONTENT absent");
+            $errors[] = "mail.no_content";
         }
         $content = $_POST['message'];
         if ($content === '') {
-        die("merci de remplir le message");
+        $errors[] = "mail.no_content";
         }
         if (!isset($_POST['subject'])){
-           die("$ post subject absent");
+          $errors[] = "mail.no_subject";
         }
         $subject = $_POST['subject'];
         if ($subject === '') {
-            die("merci de remplir le sujet");
+             $errors[] = "mail.no_subject";
          }
 
+         if(count($errors)>0){
+             $_SESSION['errors']=$errors;
+             $this->redirect('index.php?controller=home&action=displayHome');
+             exit;
+         }
         try {
                 //Create the SMTP Transport
             $transport = New \Swift_SmtpTransport($_ENV['SMTP'], $_ENV['PORT']);
@@ -84,7 +88,6 @@ class HomeController extends BaseController{
 
         }catch (Exception $e){
             echo $e->getMessage();
-            die();
         }
     }
 }

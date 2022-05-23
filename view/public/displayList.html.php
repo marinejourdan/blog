@@ -1,3 +1,5 @@
+<?php include('./view/part/displayMessage.html.php'); ?>
+
 <h1> Mes articles </h1>
 <div class="row">
     <?php foreach($params['postList'] as $post){ ?>

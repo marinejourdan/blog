@@ -1,4 +1,4 @@
-
+<?php include('./view/part/displayMessage.html.php'); ?>
 <body class="bg-gradient-primary">
 
     <div class="container">
@@ -17,17 +17,6 @@
                                 $errorsMessage['missing_fields']= 'merci de renseigner tous les champs';
                                 $errorsMessage['already_account']= 'Vous avez déjà un compte, merci de vous y connecter';
                                 ?>
-
-                            <?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0){ ?>
-
-                                <div class="errors">
-                                    <ul>
-                                    <?php foreach (($_SESSION['errors'])as $error) {?>
-                                        <li><?php echo $errorsMessage[$error];?></li>
-                                    <?php }?>
-                                    </ul>
-                                </div>
-                            <?php } ?>
 
                             <form class="user">
                                     <div class="col-sm-6 mb-3 mb-sm-0">

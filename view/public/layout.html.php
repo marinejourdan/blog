@@ -32,13 +32,13 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php">Accueil</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=post&action=displayList">Mon blog</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayRegister">inscription
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=post&action=displayList#content">Mon blog</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayRegister#content">inscription
                         </a></li>
                         <?php if(isset($_SESSION['email'])){?>
-                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=doLogout">Logout</a></li>
+                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=doLogout#content">Logout</a></li>
                         <?php }else{?>
-                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayLogin">Login</a></li>
+                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="./index.php?controller=user&action=displayLogin#content">Login</a></li>
                         <?php }?>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href= "#contact-form">Contact</a></li>
                     </ul>
@@ -64,82 +64,76 @@
                     <div class="divider-custom-line"></div>
                 </div>
             <!-- Masthead Subheading-->
-                <p class="masthead-subheading font-weight-light mb-0">Freelance-développeuse PHP</p>
+                <p class="masthead-subheading font-weight-light mb-0">le développement web par les femmes!</p>
             </div>
         </div>
     </header>
 
-<div class="container">
-<div class="col-8">
-<?php
-echo $content;
-?>
-</div>
-<div class="col-4">
-<img class="masthead-avatar mb-5" src="assets/img/portfolio/dame2.jpg">
-</div>
-</div>
+<!--Section: Content -->
+    <section id=content class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-10">
+                <?php
+                echo $content;
+                ?>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!--Section: Contact v.2-->
-    <div class="contact_form">
-        <section id=form-contact class="mb-4">
-
-            <!--Section heading-->
-            <h2 class="h1-responsive font-weight-bold text-center my-4">Contactez-moi</h2>
-            <div class="row">
-                <div class="col-md-9 mb-md-0 mb-5">
-                    <form id="contact-form" name="contact-form" action="./index.php?controller=home&action=doSendEmail" method="POST">
-                            <!--Grid row-->
+    <section id=form-contact class="mb-4">
+    <?php include('./view/part/displayMessage.html.php'); ?>
+        <!--Section heading-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="h1-responsive font-weight-bold text-center my-4">Contactez-moi</h2>
+                    </div>
+                    <div class="col-md-9 mb-md-0 mb-5">
+                        <form id="contact-form" name="contact-form" action="./index.php?controller=home&action=doSendEmail" method="POST">
+                        <!--Grid row-->
                             <div class="row">
                             <!--Grid column-->
-                            <div class="col-md-6">
-                                <div class="md-form mb-0">
-                                    <label for="name" class="">Votre nom</label>
-                                    <input type="text" id="name" name="name" class="form-control">
+                                <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                        <label for="name" class="">Votre nom</label>
+                                        <input type="text" id="name" name="name" class="form-control">
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+                                <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                        <label for="email" class="">Votre mail</label>
+                                        <input type="text" id="email" name="email" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-md-6">
-                                <div class="md-form mb-0">
-                                    <label for="email" class="">Votre mail</label>
-                                    <input type="text" id="email" name="email" class="form-control">
-                                </div>
-            </div>
-
-                        </div>
-                        <!--Grid row-->
-
-                        <!--Grid row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="md-form mb-0">
-                                    <label for="subject" class="">Sujet du mail</label>
-                                    <input type="text" id="subject" name="subject" class="form-control">
+                            <!--Grid row-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="md-form mb-0">
+                                        <label for="subject" class="">Sujet du mail</label>
+                                        <input type="text" id="subject" name="subject" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--Grid row-->
-
-                        <!--Grid row-->
-                        <div class="row">
-
-                            <!--Grid column-->
-                            <div class="col-md-12">
-
-                                <div class="md-form">
-                                    <label for="message">Votre message</label></br>
-                                    <textarea type="text" id="message" name="message" rows="4" class="form-control md-textarea"></textarea></br>
+                            <!--Grid row-->
+                            <div class="row">
+                                <!--Grid column-->
+                                <div class="col-md-12">
+                                    <div class="md-form">
+                                        <label for="message">Votre message</label></br>
+                                        <textarea type="text" id="message" name="message" rows="4" class="form-control md-textarea"></textarea></br>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--Grid row-->
-                    </form>
+                        </form>
+
                     <div class="text-center text-md-left">
                         <a class="btn btn-dark" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
                     </div>
-                    <div class="status"></div>
                 </div>
                 <!--Grid column-->
 
@@ -159,12 +153,10 @@ echo $content;
                         </li>
                     </ul>
                 </div>
-                <!--Grid column-->
-
             </div>
-        </section>
+        </div>
+    </section>
 
-    <!--Section: Contact v.2-->
 
     <footer class="footer text-center">
         <div class="container">

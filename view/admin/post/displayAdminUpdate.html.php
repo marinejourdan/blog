@@ -1,18 +1,6 @@
 
-<?php
-$errorsMessage['no_content']='merci de renseigner un contenu dans tous les champs';
-?>
+<?php include('./view/part/displayMessage.html.php'); ?>
 
-
-<?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0){ ?>
-    <div class="errors">
-        <ul>
-            <?php foreach ($_SESSION['errors'] as $error) {?>
-                <li><?php echo $errorsMessage[$error];?></li>
-            <?php }?>
-        </ul>
-    </div>
-<?php } ?>
 
 <form method="post" action="./index.php?controller=admin&entity=post&action=doAdminUpdate">
     <input type="hidden" name="id" value="<?php echo $params['post']->id;?>" />

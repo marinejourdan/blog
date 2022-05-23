@@ -1,4 +1,4 @@
-
+<?php include('./view/part/displayMessage.html.php'); ?>
 <h1> Mes dernieres actus</h1>
 
 <div class="row">

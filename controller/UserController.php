@@ -32,7 +32,7 @@ class UserController extends BaseController{
 
     function doRegister(){
 
-        $errors[]=array();
+        $errors=array();
 
         if(count($_POST)>0){
 
@@ -92,13 +92,13 @@ class UserController extends BaseController{
                 !isset($_POST['email']) ||
                 $_POST['email'] == ''
             ){
-                $errors[] = 'no_mail';
+                $errors[] = 'login.no_mail';
             }
 
             $email=$_POST['email'];
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors[] = "email_invalid";
+                $errors[] = "login.email_invalid";
             }else{
                 $_SESSION['last_email']=$email;
             }
@@ -107,7 +107,7 @@ class UserController extends BaseController{
                 !isset($_POST['password']) ||
                 $_POST['password'] == ''
             ){
-                $errors[] =  'no_pass';
+                $errors[] =  'login.no_pass';
             }
 
             $plainPassword=$_POST['password'];
@@ -121,12 +121,12 @@ class UserController extends BaseController{
                 $user==null ||
                 !password_verify($plainPassword, $user->password)
             ){
-                $errors[]='no_account';
+                $errors[]='login.no_account';
 
             }
 
             if ($user->enabled==0){
-                $errors[]='waiting_account';
+                $errors[]='login.waiting_account';
             }
 
             if(count($errors)>0){
@@ -163,7 +163,7 @@ class UserController extends BaseController{
             $this->redirect('index.php?controller=admin&action=displayAdminHome');
             exit();
         }else{
-            $errors[]= 'vous navez pas accès à cette page';
+            $errors[]= 'login.no access';
             $_SESSION['errors']=$errors;
             $this->redirect('index.php?controller=user&action=displayLogin');
             exit();

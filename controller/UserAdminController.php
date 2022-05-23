@@ -71,7 +71,7 @@ class UserAdminController extends AdminController
                 empty($email)||
                 empty($password)
             ){
-                $errors[]='no_content';
+                $errors[]='user.update.no_content';
             }
 
             if(count($errors)>0){
@@ -108,7 +108,7 @@ class UserAdminController extends AdminController
 
     function doAdminCreate(){
 
-        $errors[]=array();
+        $errors=array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -128,7 +128,7 @@ class UserAdminController extends AdminController
                 empty($email)||
                 empty($password)
             ){
-                $errors[]='merci de renseigner un contenu';
+                $errors[]='user.create.no_content';
 
             }else{
 

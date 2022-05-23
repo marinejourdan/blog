@@ -1,3 +1,4 @@
+<?php include('./view/part/displayMessage.html.php'); ?>
 
 <form method="post" action="./index.php?controller=admin&entity=user&action=doAdminCreate">
 

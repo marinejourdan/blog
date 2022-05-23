@@ -1,7 +1,11 @@
-
-h1{
-    color:#2b3937;
+.body{
+    text-align: left;
+    color: black;
+    background-color:#cococo ;
 }
+
+/* LAYOUT*/
+/*NAV*/
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
   color: black;
@@ -19,70 +23,74 @@ h1{
     background-color: #E9967A !important ;
 }
 
+
+/* LAYOUT*/
+/*MASTHEAD*/
+
+h1{
+    color:#2b3937;
+    text-align: right;
+    margin:5px;
+    font-family: Days One;
+    font-size: 34px;
+}
 .masthead{
     padding-bottom:6px;
     padding-top:150px;
 }
-.container{
-    display:flex;
-    flex-direction:row;
-}
 
-.masthead .masthead-heading{
-    margin-top: 80px;
-}
-
-.row{
-
-}
 
 .masthead .masthead-avatar{
     width:100%;
     margin-top:-130px;
 }
 
-
-.body{
-    text-align: left;
-    color: black;
-    background-color:#cococo ;
-
+header .container{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
-.body,li{
-    list-style-type: none;
-    text-align:center !important;
+/* LAYOUT*/
+/*CONTENT-GLOBAL*/
+
+.content{
+    background-image:url("./../assets/img/portfolio/dame2.jpg" );
+    background-position: top right;
+    background-repeat: no-repeat;
 }
 
+header .container{
+    display:flex;
+    flex-direction: row;
+}
+
+
+/* LAYOUT*/
+/*FORM-CONTACT*/
+
+#contact-form{
+    background-image:url("./../assets/img/portfolio/mains.jpg" );
+    background-size: cover;
+}
 h2{
-    font-size: 5rem !important;
     font-family: Days One;
+    font-size: 60px;
 }
-
-
-.footer{
-    background-color: #E9967A !important ;
-}
-
-h1{
-    text-align: right;
-    margin:5px;
-    font-family: Days One;
-    font-size: 34px;
-}
-
-h4{
-    color:#2b3937!important ;
-}
-
-#form-contact{
-    margin:50px;
-}
-
 .btn-primary{
 
     background-color: #E9967A !important ;
 }
+
+
+
+/* LAYOUT*/
+/*FOOTER*/
+.footer{
+    background-color: #E9967A !important ;
+}
+
+
 
 #layout_admin_content{
     padding-top:300px;

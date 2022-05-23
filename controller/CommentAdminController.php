@@ -36,6 +36,9 @@ class CommentAdminController extends AdminController
 
     function displayAdminUpdate(){
         $id=$_GET['id'];
+        if (!isset($_GET['id'])){
+                $this->redirect('./index.php?controller=user&action=displayAdminHome');
+        }
         $comment=$this->commentManager->get($id);
         $this->render(
             "comment/commentDisplayAdminUpdate.html.php",
@@ -45,42 +48,6 @@ class CommentAdminController extends AdminController
             ]
         );
 
-    }
-
-
-    function doAdminUpdate(){
-
-        if(count($_POST)>0){
-            $email=$_SESSION['email'];
-            $title=$_POST['title'];
-            $header=$_POST['header'];
-            $content=$_POST['content'];
-
-            if (
-                empty($title) ||
-                empty($header)||
-                empty($content)
-            ){
-                echo 'merci de renseigner un contenu';
-                die();
-            }else{
-                $post=new Post;
-                $post->title=$title;
-                $post->header=$header;
-                $post->content=$content;
-                $post->updated=date('Y-m-d H:i:s');
-                $user=$this->userManager->findUserByEmail($email);
-
-                if (!$user instanceof User){
-                    die('nous n avons pas trouvé le user');
-                }
-
-                $post->id_user=$user->id;
-                $result=$this->postManager->update($post);
-            }
-
-        }
-        $this->redirect('index.php?controller=admin&entity=comment&action=commentDisplayAdminList');
     }
 
 
@@ -95,7 +62,6 @@ class CommentAdminController extends AdminController
     }
 
     function displayAdminDelete(){
-        ob_start();
         $id=$_GET['id'];
         $this->renderAdmin(
             "comment/commentDisplayAdminDelete.html.php",

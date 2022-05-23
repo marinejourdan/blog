@@ -46,7 +46,7 @@ class PostAdminController extends AdminController
     }
 
     function doAdminUpdate(){
-        $errors[]=array();
+        $errors=array();
 
         if(count($_POST)>0){
             $id=$_POST['id'];
@@ -59,7 +59,7 @@ class PostAdminController extends AdminController
                 empty($header)||
                 empty($content)
             ){
-                $errors[]= 'no_content';
+                $errors[]= 'post.update.no_content';
 
             }if(count($errors)>0){
                 $_SESSION['errors']=$errors;
@@ -88,7 +88,7 @@ class PostAdminController extends AdminController
     }
 
     function doAdminCreate(){
-        $errors[]=array();
+        $errors=array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -103,7 +103,7 @@ class PostAdminController extends AdminController
                 empty($header)||
                 empty($content)
             ){
-                $errors[]='no_content';
+                $errors[]='post.create.no_content';
 
             }if(count($errors)>0){
                 $_SESSION['errors']=$errors;
