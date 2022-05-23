@@ -58,14 +58,14 @@ class CommentManager extends BaseManager{
         $statement=$db->prepare(static::SQL_INSERT);
         $statement->bindValue(':content', $comment->content);
         $statement->bindValue(':creation_date',$comment->creation_date);
-        $statement->bindValue(':id_post', $comment->id_post);;
+        $statement->bindValue(':id_post', $comment->id_post);
         $statement->bindValue(':id_user', $comment->id_user);
 
         $result=$statement->execute();
         return $result;
-
-    const SQL_DELETE = <<<'SQL'
-    DELETE FROM `comment`
+    }
+    const SQL_DELETE  = <<<'SQL'
+    DELETE FROM comment
     WHERE id=:id;
     SQL;
 
@@ -77,10 +77,6 @@ class CommentManager extends BaseManager{
         $result=$statement->execute();
         $id=$comment->id;
 
-        if(!$result){
-
-            die('ERROR');
-        }
         return $result;
     }
 
