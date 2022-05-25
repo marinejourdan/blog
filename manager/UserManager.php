@@ -99,7 +99,7 @@ class UserManager extends BaseManager{
     }
 
     const SQL_FIND_USER = <<<'SQL'
-    SELECT id FROM user WHERE email=:email LIMIT 1;
+    SELECT * FROM user WHERE email=:email LIMIT 1;
     SQL;
 
     public function findUserByEmail(string $email): ?User
@@ -108,9 +108,10 @@ class UserManager extends BaseManager{
         $result_prepare=$db->prepare(self::SQL_FIND_USER);
         $result_prepare ->bindValue (':email',$email);
         $result_prepare->execute();
-        $user_row=$result_prepare->fetch(\PDO::FETCH_ASSOC);
-
-        $user=null;
+        $user = null;
+        if($row = $result_prepare->fetch(\PDO::FETCH_ASSOC)){
+            $user=$this->create($row);
+        }
         return $user;
     }
 

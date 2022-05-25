@@ -1,4 +1,4 @@
-ETES VOUS SUR DE VOULOIR SUPPRIMER LE commentaire?
+Etes vous certain de vouloir supprimer ce commentaire?
 
 <form method="post" action="./index.php?controller=admin&entity=comment&action=doAdminDelete">
 

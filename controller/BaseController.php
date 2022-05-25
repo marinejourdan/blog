@@ -10,7 +10,7 @@ class BaseController{
 
     public function redirect(string $url){
         header('Location:'.$url);
-        exit();
+        exit;
     }
 
     public function render(string $viewFilePath, array $params = [])

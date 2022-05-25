@@ -109,20 +109,20 @@ class UserController extends BaseController{
             }
 
             $plainPassword=$_POST['password'];
+
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
                 $this->redirect('index.php?controller=home&action=displayList');
             }
+
             $user = $this->userManager->findUserByEmail($email);
+
             if(
                 $user===null ||
                 !password_verify($plainPassword, $user->password)
             ){
                 $errors[]='login.no_account';
-
-            }
-
-            if ($user->enabled==0){
+            }elseif($user->enabled==0){
                 $errors[]='login.waiting_account';
             }
 
@@ -132,6 +132,7 @@ class UserController extends BaseController{
             }
 
             $_SESSION['email']=$user->email;
+
             $this->redirect('index.php?controller=home&action=displayHome');
         }
     }
