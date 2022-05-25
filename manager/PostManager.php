@@ -25,7 +25,6 @@ class PostManager extends BaseManager{
         $sql ="SELECT * FROM post ORDER BY updated DESC LIMIT :limit";
         $sql=\str_replace(':limit',$last, $sql);
         $statement=$db->prepare($sql);
-        //$statement->bindValue(':limit', $last);
         $statement->execute();
         $tous_les_posts=$statement->fetchAll(\PDO::FETCH_ASSOC);
 

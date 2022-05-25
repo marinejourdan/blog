@@ -43,7 +43,7 @@
 
             <div class="col-8">
                     <!-- Masthead Heading-->
-                <h3 class="masthead-heading text-uppercase mb0">Administration du site</h3>
+                <h3 class="masthead-heading text-uppercase mb0">Administration</h3>
                 <!-- Icon Divider-->
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
