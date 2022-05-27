@@ -34,7 +34,7 @@ switch($controller){
 
     case 'home':
         $postManager= new PostManager();
-        $homeController = new HomeController($postManager);
+        $homeController= new HomeController($postManager);
         $userManager= new UserManager();
         $commentManager= new CommentManager($postManager, $userManager);
 
@@ -49,10 +49,10 @@ switch($controller){
 
     case'post':
 
-        $postManager= new PostManager;
+        $postManager= new PostManager();
         $userManager= new UserManager();
         $commentManager= new CommentManager($postManager, $userManager);
-        $postController = new PostController($postManager, $commentManager);
+        $postController= new PostController($postManager, $commentManager);
 
         if ($action == 'displayList'){
             $postController->displayList();
@@ -61,20 +61,18 @@ switch($controller){
         }else{
             echo '404 not found';
         }
-
         break;
 
     case'comment':
-        $postManager= new PostManager;
-        $userManager= new UserManager;
+        $postManager= new PostManager();
+        $userManager= new UserManager();
         $commentManager= new CommentManager($postManager, $userManager);
-        $commentController = new commentController($commentManager,$userManager, $postManager);
+        $commentController= new commentController($commentManager,$userManager, $postManager);
         if ($action == 'doComment'){
             $commentController->doComment();
         }else{
             echo '404 not found';
         }
-
         break;
 
     case 'user':
@@ -108,13 +106,13 @@ switch($controller){
             $entity=$_GET['entity'];
         }
 
-        $adminController=new AdminController();
-        $userManager=new UserManager();
-        $postManager= new PostManager;
+        $adminController= new AdminController();
+        $userManager= new UserManager();
+        $postManager= new PostManager();
         $commentManager= new CommentManager($postManager, $userManager);
-        $postAdminController=New PostAdminController($userManager, $postManager, $commentManager);
-        $userAdminController=New UserAdminController($userManager, $postManager, $commentManager);
-        $commentAdminController=New commentAdminController($userManager, $postManager, $commentManager);
+        $postAdminController= new PostAdminController($userManager, $postManager, $commentManager);
+        $userAdminController= new UserAdminController($userManager, $postManager, $commentManager);
+        $commentAdminController= new commentAdminController($userManager, $postManager, $commentManager);
 
         $controller=$adminController;
 
