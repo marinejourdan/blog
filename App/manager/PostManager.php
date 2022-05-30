@@ -108,13 +108,4 @@ class PostManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function delete(Post $post): bool
-    {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELETE);
-        $statement->bindValue(':id', $post->id);
-        $result=$statement->execute();
-        $id=$post->id;
-       return $result;
-    }
 }

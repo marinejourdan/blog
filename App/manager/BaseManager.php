@@ -35,4 +35,15 @@ class BaseManager{
 
         return $object;
     }
+
+
+    public function delete($object): bool
+    {
+        $db=$this->dbconnect();
+        $statement=$db->prepare(static::SQL_DELETE);
+        $statement->bindValue(':id', $object->id);
+        $result=$statement->execute();
+
+        return $result;
+    }
 }

@@ -69,16 +69,6 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function delete(Comment $comment): bool
-    {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELETE);
-        $statement->bindValue(':id', $comment->id);
-        $result=$statement->execute();
-        $id=$comment->id;
-
-        return $result;
-    }
 
     const SQL_GET_COMMENTS_FROM_POST = <<<'SQL'
     SELECT id,content,creation_date, id_post,id_user

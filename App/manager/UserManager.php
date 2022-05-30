@@ -86,17 +86,6 @@ class UserManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function delete(User $user): bool
-    {
-
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_DELETE);
-        $statement->bindValue(':id', $user->id);
-        $id=$user->id;
-        $result=$statement->execute();
-
-        return $result;
-    }
 
     const SQL_FIND_USER = <<<'SQL'
     SELECT * FROM user WHERE email=:email LIMIT 1;
