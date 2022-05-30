@@ -64,10 +64,9 @@ class UserManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function update(User $user) :bool
+
+    public function bindValues($statement, User $object)
     {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_UPDATE);
         $statement->bindValue(':id', $user->id);
         $statement->bindValue(':name',$user->name);
         $statement->bindValue(':first_name',$user->first_name);
@@ -76,10 +75,10 @@ class UserManager extends BaseManager{
         $statement->bindValue(':password', $user->password);
         $statement->bindValue(':access', $user->access);
         $statement->bindValue(':enabled', $user->enabled);
-        $result=$statement->execute();
 
-        return $result;
+        return $statement;
     }
+
 
     const SQL_DELETE= <<<'SQL'
     DELETE FROM `user`

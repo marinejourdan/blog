@@ -87,10 +87,8 @@ class PostManager extends BaseManager{
     SQL;
 
 
-    public function update(Post $post) :bool
+    public function bindValues($statement, Post $object)
     {
-       $db=$this->dbconnect();
-       $statement=$db->prepare(self::SQL_UPDATE);
        $statement->bindValue(':id', $post->id);
        $statement->bindValue(':title', $post->title);
        $statement->bindValue(':header', $post->header);
@@ -98,9 +96,7 @@ class PostManager extends BaseManager{
        $statement->bindValue(':updated', $post->updated);
        $statement->bindValue(':id_user', $post->id_user);
 
-       $result=$statement->execute();
-
-       return $result;
+       return $statement;
     }
 
     const SQL_DELETE = <<<'SQL'

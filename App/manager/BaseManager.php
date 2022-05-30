@@ -46,4 +46,16 @@ class BaseManager{
 
         return $result;
     }
+
+
+    public function update($object) :bool
+    {
+       $db=$this->dbconnect();
+       $statement=$db->prepare(self::SQL_UPDATE);
+       $statement=$this->bindValues();
+       $result=$statement->execute();
+
+       return $result;
+    }
+
 }
