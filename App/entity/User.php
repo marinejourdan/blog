@@ -95,7 +95,9 @@ class User{
 
     public function hydrate(array $row)
     {
+        if($row['id']!= null){
         $this->setId($row['id']);
+        }
         $this->setName($row['name']);
         $this->setFirstName($row['first_name']);
         $this->setNickname($row['nickname']);

@@ -67,13 +67,13 @@ class UserController extends BaseController{
             }
 
             $user=new User;
-            $user->name=$name;
-            $user->first_name=$first_name;
-            $user->nickname=$nickname;
-            $user->email=$email;
-            $user->password=password_hash($plainPassword, PASSWORD_DEFAULT);
-            $user->enabled=$enabled;
-            $user->access=$access;
+            $user->setName($name);
+            $user->setFirstName($first_name);
+            $user->setNickname($nickname);
+            $user->setEmail($email);
+            $user->setPassword(password_hash($plainPassword, PASSWORD_DEFAULT));
+            $user->setEnabled($enabled);
+            $user->setAccess($access);
 
             $result=$this->userManager->insert($user);
             $this->redirect('./index.php?controller=user&action=displayLogin');
