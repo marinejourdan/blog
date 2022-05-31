@@ -66,11 +66,13 @@ class PostAdminController extends AdminController
                 $this->redirect('index.php?controller=admin&entity=post&action=displayAdminUpdate');
 
             }else{
+
                 $post=$this->postManager->get($id);
-                $post->title=$title;
-                $post->header=$header;
-                $post->content=$content;
-                $post->updated=date('Y-m-d H:i:s');
+
+                $post->setTitle($title);
+                $post->setHeader($header);
+                $post->setContent($content);
+                $post->setUpdated(date('Y-m-d H:i:s'));
                 $result=$this->postManager->update($post);
             }
         }
@@ -112,17 +114,17 @@ class PostAdminController extends AdminController
             }else{
 
                 $post=new Post;
-                $post->title=$title;
-                $post->header=$header;
-                $post->content=$content;
-                $post->updated=date('Y-m-d H:i:s');
+                $post->setTitle($title);
+                $post->setHeader($header);
+                $post->setContent($content);
+                $post->setUpdated(date('Y-m-d H:i:s'));
                 $user=$this->userManager->findUserByEmail($email);
 
                 if (!$user instanceof User){
                     $errors[]='create.post.no.user';
                 }
 
-                $post->id_user=$user->id;
+                $post->setIdUser($user->getId());
                 $result=$this->postManager->insert($post);
             }
 

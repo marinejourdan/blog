@@ -80,14 +80,14 @@ class UserAdminController extends AdminController
             }
             else{
                 $user=new User;
-                $user->id=$id;
-                $user->name=$name;
-                $user->first_name=$first_name;
-                $user->nickname=$nickname;
-                $user->email=$email;
-                $user->password=$password;
-                $user->access=$access;
-                $user->enabled=$enabled;
+                $user->setId($id);
+                $user->setName($name);
+                $user->setFirstName($first_name);
+                $user->setNickname($nickname);
+                $user->setEmail($email);
+                $user->setPassword($password);
+                $user->setAccess($access);
+                $user->setEnabled($enabled);
 
                 $result=$this->userManager->update($user);
 

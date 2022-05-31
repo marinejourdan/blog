@@ -6,11 +6,11 @@
         <div class="col-sm-4">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title"><?php echo $post->title;?></h4>
-                <p class="card-text"><?php echo $post->header;?></p>
-                <p class="card-text"><?php echo $post->nickname_user;?></p>
-                <p class="card-text"><?php echo $post->updated;?></p>
-                <a href="index.php?controller=post&action=displayOne&id=<?php echo $post->id; ?>" class="btn btn-primary">
+                <h4 class="card-title"><?php echo $post->getTitle();?></h4>
+                <p class="card-text"><?php echo $post->getHeader();?></p>
+                <p class="card-text"><?php echo $post->getNicknameUser();?></p>
+                <p class="card-text"><?php echo $post->getUpdated();?></p>
+                <a href="index.php?controller=post&action=displayOne&id=<?php echo $post->getId(); ?>" class="btn btn-primary">
                     Voir l'article
                 </a>
               </div>

@@ -28,20 +28,21 @@ class BaseManager{
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(static::SQL_GET);
-        $statement->bindValue(':id', $id);
+        $statement->bindValue
+        (':id', $id);
         $statement->execute();
         $row = $statement->fetch(\PDO::FETCH_ASSOC);
-        $object=$this->create($row);
+
+        $object=$this->createObject($row);
 
         return $object;
     }
 
-
-    public function delete($object): bool
+    public function delete(object $object): bool
     {
         $db=$this->dbconnect();
         $statement=$db->prepare(static::SQL_DELETE);
-        $statement->bindValue(':id', $object->id);
+        $statement->bindValue(':id', $object->getId());
         $result=$statement->execute();
 
         return $result;
@@ -51,11 +52,20 @@ class BaseManager{
     public function update($object) :bool
     {
        $db=$this->dbconnect();
-       $statement=$db->prepare(self::SQL_UPDATE);
-       $statement=$this->bindValues();
+       $statement=$db->prepare(static::SQL_UPDATE);
+       $statement=$this->bindValues($statement, $object);
        $result=$statement->execute();
 
        return $result;
     }
 
+    public function insert(object $object) :bool
+    {
+        $db=$this->dbconnect();
+        $statement=$db->prepare(static::SQL_INSERT);
+        $statement=$this->bindValues($statement, $object);
+        $result=$statement->execute();
+
+        return $result;
+    }
 }

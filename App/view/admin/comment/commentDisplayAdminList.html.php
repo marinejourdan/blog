@@ -13,10 +13,10 @@
             <?php foreach($params['commentList'] as $comment){
                 echo '<tr>';
 
-                    echo '<td>'. $comment->post.'</td>';
-                    echo '<td>'. $comment->content.'</td>';
-                    echo '<td>'. $comment->nickname_user.'</td>';
-                    echo '<td>'.'<a href="./index.php?controller=admin&entity=comment&action=displayAdminDelete&id='.$comment->id.'"> delete_comment</a>'.'</td>';
+                    echo '<td>'. $comment->getPost().'</td>';
+                    echo '<td>'. $comment->getContent().'</td>';
+                    echo '<td>'. $comment->getNicknameUser().'</td>';
+                    echo '<td>'.'<a href="./index.php?controller=admin&entity=comment&action=displayAdminDelete&id='.$comment->getId().'"> delete_comment</a>'.'</td>';
                 echo '</tr>';
 
                 }?>

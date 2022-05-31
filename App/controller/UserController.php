@@ -119,10 +119,10 @@ class UserController extends BaseController{
 
             if(
                 $user===null ||
-                !password_verify($plainPassword, $user->password)
+                !password_verify($plainPassword, $user->getPassword())
             ){
                 $errors[]='login.no_account';
-            }elseif($user->enabled==0){
+            }elseif($user->getEnabled()==0){
                 $errors[]='login.waiting_account';
             }
 
@@ -131,7 +131,7 @@ class UserController extends BaseController{
                 $this->redirect('index.php?controller=user&action=displayLogin');
             }
 
-            $_SESSION['email']=$user->email;
+            $_SESSION['email']=$user->getEmail();
 
             $this->redirect('index.php?controller=home&action=displayHome');
         }

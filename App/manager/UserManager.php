@@ -4,6 +4,7 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
+use App\Entity\Comment;
 
 class UserManager extends BaseManager{
 
@@ -11,24 +12,6 @@ class UserManager extends BaseManager{
     SELECT id
     FROM user
     SQL;
-
-
-    protected function create(array $row = []): User
-    {
-
-        $user=New User();
-
-        $user->id = $row['id'];
-        $user->name = $row['name'];
-        $user->first_name = $row['first_name'];
-        $user->nickname = $row['nickname'];
-        $user->email = $row['email'];
-        $user->password = $row['password'];
-        $user->access = $row['access'];
-        $user->enabled = $row['enabled'];
-
-        return $user;
-    }
 
     const SQL_GET = <<<'SQL'
     SELECT id, name, first_name, nickname, email, password, access,enabled
@@ -42,21 +25,7 @@ class UserManager extends BaseManager{
     VALUES (:name, :first_name, :nickname,:email, :password, :access, :enabled)
     SQL;
 
-    public function insert(User $user): bool
-    {
-        $db=$this->dbconnect();
-        $result_prepare=$db->prepare(self::SQL_INSERT);
-        $result_prepare->bindValue(':name', $user->name);
-        $result_prepare->bindValue(':first_name', $user->first_name);
-        $result_prepare->bindValue(':nickname',$user->nickname);
-        $result_prepare->bindValue(':email', $user->email);
-        $result_prepare->bindValue(':password', $user->password);
-        $result_prepare->bindValue(':access', $user->access);
-        $result_prepare->bindValue(':enabled', $user->enabled);
 
-        $result=$result_prepare->execute();
-        return $result;
-    }
 
     const SQL_UPDATE= <<<'SQL'
     UPDATE user SET name =:name, first_name=:first_name,
@@ -64,17 +33,24 @@ class UserManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-
-    public function bindValues($statement, User $object)
+    public function createObject(array $row=[]): User
     {
-        $statement->bindValue(':id', $user->id);
-        $statement->bindValue(':name',$user->name);
-        $statement->bindValue(':first_name',$user->first_name);
-        $statement->bindValue(':nickname', $user->nickname);
-        $statement->bindValue(':email', $user->email);
-        $statement->bindValue(':password', $user->password);
-        $statement->bindValue(':access', $user->access);
-        $statement->bindValue(':enabled', $user->enabled);
+        $user=new User;
+        $user->hydrate($row);
+        return $user;
+    }
+
+
+    public function bindValues($statement, User $user)
+    {
+        $statement->bindValue(':id', $user->getId());
+        $statement->bindValue(':name',$user->getName());
+        $statement->bindValue(':first_name',$user->getFirstName());
+        $statement->bindValue(':nickname', $user->getNickname());
+        $statement->bindValue(':email', $user->getEmail());
+        $statement->bindValue(':password', $user->getPassword());
+        $statement->bindValue(':access', $user->getAccess());
+        $statement->bindValue(':enabled', $user->getEnabled());
 
         return $statement;
     }
@@ -98,7 +74,7 @@ class UserManager extends BaseManager{
         $result_prepare->execute();
         $user = null;
         if($row = $result_prepare->fetch(\PDO::FETCH_ASSOC)){
-            $user=$this->create($row);
+            $user=$this->createObject($row);
         }
         return $user;
     }

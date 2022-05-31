@@ -27,22 +27,17 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-    public function create(array $row=[]): Comment
+    public function createObject(array $row=[]): Comment
     {
         $comment=New Comment;
-        $comment->id=$row['id'];
-        $comment->content=$row['content'];
-        $comment->creation_date=$row['creation_date'];
-        $comment->id_post=$row['id_post'];
-        $comment->id_user=$row['id_user'];
+        $comment->hydrate($row);
 
-
-        $user=$this->userManager->get($comment->id_user);
-        $nickname_user = $user->nickname;
-        $comment->nickname_user= $nickname_user;
-        $post=$this->postManager->get($comment->id_post);
-        $post= $post->content;
-        $comment->post= $post;
+        $user=$this->userManager->get($comment->getIdUser());
+        $nickname_user = $user->getNickname();
+        $comment->setNicknameUser($nickname_user);
+        $post=$this->postManager->get($comment->getIdPost());
+        $post= $post->getContent();
+        $comment->setPost($post);
 
         return $comment;
     }
@@ -52,17 +47,14 @@ class CommentManager extends BaseManager{
     INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`) VALUES (:content , :creation_date, :id_post, :id_user);
     SQL;
 
-    public function insert(Comment $comment): bool
+    public function bindValues($statement, Comment $comment)
     {
-        $db=$this->dbconnect();
-        $statement=$db->prepare(static::SQL_INSERT);
-        $statement->bindValue(':content', $comment->content);
-        $statement->bindValue(':creation_date',$comment->creation_date);
-        $statement->bindValue(':id_post', $comment->id_post);
-        $statement->bindValue(':id_user', $comment->id_user);
+        $statement->bindValue(':content', $comment->getContent());
+        $statement->bindValue(':creation_date',$comment-> getCreationDate());
+        $statement->bindValue(':id_post', $comment->getIdPost());
+        $statement->bindValue(':id_user', $comment->getIdUser());
 
-        $result=$statement->execute();
-        return $result;
+        return $statement;
     }
     const SQL_DELETE  = <<<'SQL'
     DELETE FROM comment
@@ -87,7 +79,7 @@ class CommentManager extends BaseManager{
         $object_list = array();
 
         foreach($data_list as $row){
-            $object=$this->create($row);
+            $object=$this->createObject($row);
             $object_list[] = $object;
         }
         return $object_list;

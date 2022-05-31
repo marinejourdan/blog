@@ -13,11 +13,11 @@
     <tbody>
         <?php foreach($params['postList'] as $post){
             echo '<tr>';
-                echo '<th scope="row">'. $post->id.'</th>';
-                echo '<td>'. $post->title.'</td>';
-                echo '<td>'. $post->header.'</td>';
-                echo '<td>'.'<a href="./index.php?controller=admin&entity=post&action=displayAdminUpdate&id='.$post->id.'"> modif_post</a>'.'</td>';
-                echo '<td>'.'<a href="./index.php?controller=admin&entity=post&action=displayAdminDelete&id='.$post->id.'"> delete_post</a>'.'</td>';
+                echo '<th scope="row">'. $post->getId().'</th>';
+                echo '<td>'. $post->getTitle().'</td>';
+                echo '<td>'. $post->getHeader().'</td>';
+                echo '<td>'.'<a href="./index.php?controller=admin&entity=post&action=displayAdminUpdate&id='.$post->getId().'"> modif_post</a>'.'</td>';
+                echo '<td>'.'<a href="./index.php?controller=admin&entity=post&action=displayAdminDelete&id='.$post->getId().'"> delete_post</a>'.'</td>';
             echo '</tr>';
 
             }?>

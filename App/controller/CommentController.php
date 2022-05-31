@@ -27,7 +27,7 @@ private $userManager;
 
         }else{
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
-            if ($user->enabled==0){
+            if ($user->getEnabled()==0){
             $errors[]='comment.no_authorized';
 
             }
@@ -37,7 +37,7 @@ private $userManager;
 
             $content=$_POST['content'];
             $id_post=$_POST['id_post'];
-            $id_user=$user->id;
+            $id_user=$user->getId();
 
             if (empty($content)){
                 $errors[]='comment.no_content';
@@ -49,10 +49,10 @@ private $userManager;
 
             }else{
                 $comment=new Comment;
-                $comment->content=$content;
-                $comment->id_post=$id_post;
-                $comment->id_user=$id_user;
-                $comment->creation_date=date('Y-m-d H:i:s');
+                $comment->setContent($content);
+                $comment->setIdPost($id_post);
+                $comment->setIdUser($id_user);
+                $comment->setCreationDate(date('Y-m-d H:i:s'));
 
                 $result=$this->commentManager->insert($comment);
 

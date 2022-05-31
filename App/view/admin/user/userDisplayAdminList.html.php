@@ -19,15 +19,15 @@
         <tbody>
             <?php foreach($params['userList'] as $user){
                 echo '<tr>';
-                    echo '<th scope="row">'. $user->id.'</th>';
-                    echo '<td>'. $user->name.'</td>';
-                    echo '<td>'. $user->first_name.'</td>';
-                    echo '<td>'. $user->nickname.'</td>';
-                    echo '<td>'. $user->email.'</td>';
-                    echo '<td>'. $user->access.'</td>';
-                    echo '<td>'. $user->enabled.'</td>';
-                    echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminUpdate&id='.$user->id.'"> modif_user</a>'.'</td>';
-                    echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminDelete&id='.$user->id.'"> delete_user</a>'.'</td>';
+                    echo '<th scope="row">'. $user->getId().'</th>';
+                    echo '<td>'. $user->getName().'</td>';
+                    echo '<td>'. $user->getFirstName().'</td>';
+                    echo '<td>'. $user->getNickname().'</td>';
+                    echo '<td>'. $user->getEmail().'</td>';
+                    echo '<td>'. $user->getAccess().'</td>';
+                    echo '<td>'. $user->getEnabled().'</td>';
+                    echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminUpdate&id='.$user->getId().'"> modif_user</a>'.'</td>';
+                    echo '<td>'.'<a href="./index.php?controller=admin&entity=user&action=displayAdminDelete&id='.$user->getId().'"> delete_user</a>'.'</td>';
                 echo '</tr>';
 
                 }?>
