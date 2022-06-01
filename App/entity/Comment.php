@@ -10,6 +10,7 @@ class Comment{
     private $id_user = NULL;
     private $nickname_user= NULL;
     private $post=NULL;
+    private $publication=0;
 
 
     public function setId(int $id)
@@ -65,6 +66,16 @@ class Comment{
         return $this->id_user;
     }
 
+    public function setPublication(int $publication)
+    {
+        $this->publication = $publication;
+    }
+
+    public function getPublication(): int
+    {
+        return $this->publication;
+    }
+
     public function setNicknameUser(string $nickname_user)
     {
         $this->nickname_user = $nickname_user;
@@ -93,6 +104,7 @@ class Comment{
         $this->setCreationDate($row['creation_date']);
         $this->setIdPost($row['id_post']);
         $this->setIdUser($row['id_user']);
+        $this->setPublication($row['publication']);
     }
 
 }

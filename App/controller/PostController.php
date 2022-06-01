@@ -30,7 +30,7 @@ class PostController extends BaseController{
     public function displayOne(){
         $id_post = $_GET['id'];
         $post=$this->postManager->get($id_post);
-        $commentList=$this->commentManager->getCommentsFromPost($id_post);
+        $commentList=$this->commentManager->getPublishedCommentsFromPost($id_post);
         $this->render(
             "displayOne.html.php",
         [

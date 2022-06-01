@@ -22,7 +22,7 @@ class CommentManager extends BaseManager{
     SQL;
 
     const SQL_GET = <<<'SQL'
-    SELECT id, content, creation_date, id_post, id_user
+    SELECT id, content, creation_date, id_post, id_user,publication
     FROM comment
     WHERE id=:id;
     SQL;
@@ -44,7 +44,7 @@ class CommentManager extends BaseManager{
 
 
     const SQL_INSERT = <<<'SQL'
-    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`) VALUES (:content , :creation_date, :id_post, :id_user);
+    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`,'publication') VALUES (:content , :creation_date, :id_post, :id_user,:publication);
     SQL;
 
     public function bindValues($statement, Comment $comment)
@@ -53,6 +53,7 @@ class CommentManager extends BaseManager{
         $statement->bindValue(':creation_date',$comment-> getCreationDate());
         $statement->bindValue(':id_post', $comment->getIdPost());
         $statement->bindValue(':id_user', $comment->getIdUser());
+        $statement->bindValue(':publication', $comment->getPublication());
 
         return $statement;
     }
@@ -61,17 +62,33 @@ class CommentManager extends BaseManager{
     WHERE id=:id;
     SQL;
 
-
-    const SQL_GET_COMMENTS_FROM_POST = <<<'SQL'
-    SELECT id,content,creation_date, id_post,id_user
-    FROM comment WHERE id_post=:id_post;
+    const SQL_UPDATE= <<<'SQL'
+    UPDATE comment SET
+    publication=:publication
+    WHERE id=:id;
     SQL;
 
-    public function getCommentsFromPost(int $id_post): array
+    public function publishComment($comment) :bool
+    {
+       $db=$this->dbconnect();
+       $statement=$db->prepare(static::SQL_UPDATE);
+       $statement->bindValue(':publication', $comment->getPublication());
+       $statement->bindValue(':id', $comment->getId());
+       $result=$statement->execute();
+
+       return $result;
+    }
+
+    const SQL_GET_PUBLISHED_COMMENTS_FROM_POST = <<<'SQL'
+    SELECT id,content,creation_date, id_post,id_user, publication
+    FROM comment WHERE id_post=:id_post AND publication=1;
+    SQL;
+
+    public function getPublishedCommentsFromPost(int $id_post): array
     {
 
         $db=$this->dbconnect();
-        $statement=$db->prepare(self::SQL_GET_COMMENTS_FROM_POST);
+        $statement=$db->prepare(self::SQL_GET_PUBLISHED_COMMENTS_FROM_POST);
         $statement->bindValue(':id_post',$id_post);
         $statement->execute();
         $data_list=$statement->fetchAll(\PDO::FETCH_ASSOC);

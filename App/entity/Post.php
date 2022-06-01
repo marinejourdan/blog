@@ -99,7 +99,7 @@ class Post{
 
     public function hydrate(array $row)
     {
-        if($row['id']!= null){
+        if($row['id']!== null){
             $this->setId($row['id']);
         }
 

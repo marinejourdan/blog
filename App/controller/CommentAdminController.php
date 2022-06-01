@@ -51,6 +51,30 @@ class CommentAdminController extends AdminController
     }
 
 
+        public function doAdminUpdate(){
+
+            $errors=array();
+
+            if(count($_POST)>0){
+
+                $email=$_SESSION['email'];
+                $publication=$_POST['publication'];
+                $id=$_POST['id'];
+
+                $comment=new Comment;
+                $comment->setPublication($publication);
+                $comment->setId($id);
+
+                $result=$this->commentManager->publishComment($comment);
+
+            }
+            $this->redirect('index.php?controller=admin&entity=comment&action=displayAdminList');
+        }
+
+
+
+
+
     public function displayAdminCreate(){
 
         $this->renderAdmin(
