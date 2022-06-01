@@ -122,7 +122,7 @@ class UserController extends BaseController{
                 !password_verify($plainPassword, $user->getPassword())
             ){
                 $errors[]='login.no_account';
-            }elseif($user->getEnabled()==0){
+            }elseif(!$user->getEnabled()){
                 $errors[]='login.waiting_account';
             }
 

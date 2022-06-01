@@ -20,7 +20,7 @@ class Post{
 
     public function getId(): int
     {
-        return $this->id;
+            return $this->id;
     }
 
     public function setTitle(string $title)
@@ -99,7 +99,10 @@ class Post{
 
     public function hydrate(array $row)
     {
-        $this->setId($row['id']);
+        if($row['id']!= null){
+            $this->setId($row['id']);
+        }
+
         $this->setTitle($row['title']);
         $this->setHeader($row['header']);
         $this->setContent($row['content']);

@@ -23,3 +23,11 @@ Installez git et récupérez le projet de Github
 
 '''git@github.com:marinejourdan/blog.git'''
 Le contenu sera téléchargé dans le dossier où vous vous situez
+
+- Paramêtrer le.env.dist avec vos propres données.
+
+
+Au sein du projet vous aurez accès à trois dossiers:
+- App : dans ce dossier se trouve le site
+- Cas utilisation: Dans ce dossier se trouve les shémas des différents cas d'utilisation du site selon les profils (administrateur, vositeur inscrit, visiteur non-inscrit)
+- Diagramme UML: Dans ce dossier, vous trouverez les diégrammes UML (MCD, MPD)

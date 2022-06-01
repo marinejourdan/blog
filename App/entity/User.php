@@ -103,12 +103,7 @@ class User{
         $this->setNickname($row['nickname']);
         $this->setEmail($row['email']);
         $this->setPassword($row['password']);
-
-        if($row['access']==null){
-            $this->setAccess($row['access']=0);
-        }
-        if($row['enabled']==null){
-        $this->setEnabled($row['enabled']=0);
-        }
+        $this->setAccess($row['access']);
+        $this->setEnabled($row['enabled']);
     }
 }
