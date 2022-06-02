@@ -30,7 +30,6 @@ class CommentAdminController extends AdminController
                 'commentList' => $commentList,
             ]
             );
-
     }
 
 
@@ -47,13 +46,11 @@ class CommentAdminController extends AdminController
                 'id' => $id,
             ]
         );
-
     }
 
 
         public function doAdminUpdate(){
-
-            $errors=array();
+            $valid = array();
 
             if(count($_POST)>0){
 
@@ -66,14 +63,14 @@ class CommentAdminController extends AdminController
                 $comment->setId($id);
 
                 $result=$this->commentManager->publishComment($comment);
+                $valid[]='updated.comment';
 
+                if(count($valid)>0){
+                $_SESSION['valid']=$valid;
+                $this->redirect('index.php?controller=admin&entity=comment&action=displayAdminList');
+                }
             }
-            $this->redirect('index.php?controller=admin&entity=comment&action=displayAdminList');
         }
-
-
-
-
 
     public function displayAdminCreate(){
 
@@ -97,9 +94,15 @@ class CommentAdminController extends AdminController
     }
 
     public function doAdminDelete(){
+        $valid = array();
         $id=$_POST['id'];
         $comment=$this->commentManager->get($id);
         $this->commentManager->delete($comment);
+        $valid[]='delete.comment';
+
+        if(count($valid)>0){
+        $_SESSION['valid']=$valid;
         $this->redirect('./index.php?controller=admin&entity=comment&action=displayAdminList');
+        }
     }
 }

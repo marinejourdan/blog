@@ -12,7 +12,6 @@ class User{
     private $password= NULL;
     private $enabled= 0;
 
-
     public function setId(int $id)
         {
             $this->id = $id;

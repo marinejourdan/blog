@@ -13,28 +13,32 @@
                             </div>
 
                             <form method="post" action="./index.php?controller=user&action=doRegister">
-                            
+
                             <form class="user">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <tr><label>name<br /></label><input type="textarea" name="name" value="" size="50"> <tr/>
+                                        <tr><label>nom<br /></label><input type="textarea" name="name" value="" size="50"> <tr/>
                                         </tr>
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <tr><label>first_name<br /></label><input type="textarea" name="first_name" value="" size="50"> <tr/>
+                                        <tr><label>prénom<br /></label><input type="textarea" name="first_name" value="" size="50"> <tr/>
                                         </tr>
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <tr><label>nickname<br /></label><input type="textarea" name="nickname" value="" size="50"> <tr/>
-                                        </tr>
-                                    </div>
-
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <tr><label>password<br /></label><input type="textarea" name="password" value="" size="50"> <tr/>
+                                        <tr><label>surnom<br /></label><input type="textarea" name="nickname" value="" size="50"> <tr/>
                                         </tr>
                                     </div>
 
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <tr><label>email<br /></label><input type="textarea" name="email" value="" size="50"> <tr/>
+                                        <tr><label>mot de passe<br /></label><input type="textarea" name="password" value="" size="50"> <tr/>
+                                        </tr>
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <tr><label>confirmer le mot de passe<br /></label><input type="textarea" name="passwordVerify" value="" size="50"> <tr/>
+                                        </tr>
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <tr><label>adresse email<br /></label><input type="textarea" name="email" value="" size="50"> <tr/>
                                         </tr>
                                     </div>
 

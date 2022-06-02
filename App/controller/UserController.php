@@ -33,6 +33,7 @@ class UserController extends BaseController{
     public function doRegister(){
 
         $errors=array();
+        $valid = array();
 
         if(count($_POST)>0){
 
@@ -42,6 +43,7 @@ class UserController extends BaseController{
             $nickname=$_POST['nickname'];
             $email=$_POST['email'];
             $plainPassword=$_POST['password'];
+            $passwordVerify=$_POST['passwordVerify'];
             $access=$_POST['access'];
             $enabled=$_POST['enabled'];
 
@@ -60,6 +62,9 @@ class UserController extends BaseController{
                     $errors[] = 'register.already_account';
                 }
             }
+                if($plainpassword!= $passwordVerify){
+                    $errors[] = 'not.same.password';
+                }
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;
@@ -76,10 +81,15 @@ class UserController extends BaseController{
             $user->setAccess($access);
 
             $result=$this->userManager->insert($user);
-            $this->redirect('./index.php?controller=user&action=displayLogin');
+            $valid[]='register.user';
 
+            if(count($valid)>0){
+                $_SESSION['valid']=$valid;
+                $this->redirect('./index.php?controller=user&action=displayLogin');
+            }
         }
     }
+
     public function doLogin(){
 
         $errors = array();

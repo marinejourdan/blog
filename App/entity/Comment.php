@@ -96,7 +96,6 @@ class Comment{
         return $this->post;
     }
 
-
     public function hydrate(array $row){
 
         $this->setId($row['id']);

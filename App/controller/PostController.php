@@ -26,7 +26,6 @@ class PostController extends BaseController{
         );
     }
 
-
     public function displayOne(){
         $id_post = $_GET['id'];
         $post=$this->postManager->get($id_post);
@@ -37,7 +36,7 @@ class PostController extends BaseController{
             'post' => $post,
             'commentList' => $commentList,
         ]
-    );
+        );
 
     }
 

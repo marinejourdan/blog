@@ -48,7 +48,7 @@ class UserAdminController extends AdminController
     }
 
     public function doAdminUpdate(){
-
+        $valid = array();
         $errors=array();
 
         if(count($_POST)>0){
@@ -90,10 +90,13 @@ class UserAdminController extends AdminController
                 $user->setEnabled($enabled);
 
                 $result=$this->userManager->update($user);
-
+                $valid[]='update.user';
             }
         }
+        if(count($valid)>0){
+        $_SESSION['valid']=$valid;
         $this->redirect('index.php?controller=admin&entity=user&action=displayAdminList');
+        }
     }
 
 
@@ -107,8 +110,8 @@ class UserAdminController extends AdminController
     }
 
     public function doAdminCreate(){
-
         $errors=array();
+        $valid = array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -142,10 +145,13 @@ class UserAdminController extends AdminController
                 $user->enabled=$enabled;
 
                 $result=$this->userManager->insert($user);
+                $valid[]='create.user';
             }
         }
-        $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
-
+        if(count($valid)>0){
+            $_SESSION['valid']=$valid;
+            $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
+        }
     }
 
     public function displayAdminDelete(){
@@ -158,13 +164,17 @@ class UserAdminController extends AdminController
                 'id' => $id,
             ]
         );
-
     }
 
     public function doAdminDelete(){
         $id=$_POST['id'];
         $user=$this->userManager->get($id);
         $this->userManager->delete($user);
+        $valid[]='delete.user';
+
+        if(count($valid)>0){
+        $_SESSION['valid']=$valid;
         $this->redirect('./index.php?controller=admin&entity=user&action=displayAdminList');
+        }
     }
 }

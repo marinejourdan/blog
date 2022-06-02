@@ -1,4 +1,3 @@
-
 <?php include('./view/part/displayMessage.html.php'); ?>
 
 <div class="container">

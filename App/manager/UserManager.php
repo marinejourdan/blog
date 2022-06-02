@@ -25,8 +25,6 @@ class UserManager extends BaseManager{
     VALUES (:name, :first_name, :nickname,:email, :password, :access, :enabled)
     SQL;
 
-
-
     const SQL_UPDATE= <<<'SQL'
     UPDATE user SET name =:name, first_name=:first_name,
     nickname=:nickname, email=:email, password=:password, access=:access, enabled=:enabled
@@ -39,7 +37,6 @@ class UserManager extends BaseManager{
         $user->hydrate($row);
         return $user;
     }
-
 
     public function bindValues($statement, User $user)
     {
@@ -55,12 +52,10 @@ class UserManager extends BaseManager{
         return $statement;
     }
 
-
     const SQL_DELETE= <<<'SQL'
     DELETE FROM `user`
     WHERE id=:id;
     SQL;
-
 
     const SQL_FIND_USER = <<<'SQL'
     SELECT * FROM user WHERE email=:email LIMIT 1;
@@ -78,5 +73,4 @@ class UserManager extends BaseManager{
         }
         return $user;
     }
-
 }

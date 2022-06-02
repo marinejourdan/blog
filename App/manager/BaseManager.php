@@ -48,7 +48,6 @@ class BaseManager{
         return $result;
     }
 
-
     public function update($object) :bool
     {
        $db=$this->dbconnect();

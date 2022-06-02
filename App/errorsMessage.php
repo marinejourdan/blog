@@ -16,6 +16,7 @@ $errorsMessage['login.no_pass']= 'merci de renseigner un mot de passe';
 $errorsMessage['login.no_account']= 'ce compte est inexistant';
 $errorsMessage['login.waiting_account']='votre compte est en attente d activation, merci de patienter';
 $errorsMessage['login.email_invalid']="L'adresse email n'est pas valide.";
+$errorsMessage['not.same.password'] = "les deux mots de passe ne correspondent pas";
 $errorsMessage['login.no access']="Vous n'avez pas accès à cette page.";
 $errorsMessage['user.create.no_content']='merci de renseigner un contenu dans tous les champs';
 $errorsMessage['connexion_required']='Merci de vous connecter pour ajouter un commentaire';

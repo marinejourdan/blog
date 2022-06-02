@@ -20,4 +20,26 @@ if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0){
 <?php
     unset($_SESSION['errors']);
 }
+
+if(isset($_SESSION['valid']) && count($_SESSION['valid']) > 0){
+    include_once("./validMessage.php");
+?>
+    <div class="validation">
+        <ul>
+            <?php foreach ($_SESSION['valid'] as $valid) {?>
+                <li>
+                    <?php
+                    if(isset($validMessage[$valid])){
+                        echo $validMessage[$valid];
+                    }else{
+                        echo $valid;
+                    }
+                    ?>
+                </li>
+            <?php }?>
+        </ul>
+    </div>
+<?php
+    unset($_SESSION['valid']);
+}
 ?>

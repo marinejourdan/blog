@@ -23,7 +23,6 @@
     background-color: #E9967A !important ;
 }
 
-
 /* LAYOUT*/
 /*MASTHEAD*/
 
@@ -65,7 +64,6 @@ header .container{
     flex-direction: row;
 }
 
-
 /* LAYOUT*/
 /*FORM-CONTACT*/
 
@@ -82,15 +80,11 @@ h2{
     background-color: #E9967A !important ;
 }
 
-
-
 /* LAYOUT*/
 /*FOOTER*/
 .footer{
     background-color: #E9967A !important ;
 }
-
-
 
 /* LAYOUT*/
 /*CONTENT*/

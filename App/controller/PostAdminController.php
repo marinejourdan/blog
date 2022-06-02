@@ -29,7 +29,6 @@ class PostAdminController extends AdminController
                 'postList' => $postList,
             ]
             );
-
         }
 
     public function displayAdminUpdate(){
@@ -47,6 +46,7 @@ class PostAdminController extends AdminController
 
     public function doAdminUpdate(){
         $errors=array();
+        $valid = array();
 
         if(count($_POST)>0){
             $id=$_POST['id'];
@@ -74,9 +74,13 @@ class PostAdminController extends AdminController
                 $post->setContent($content);
                 $post->setUpdated(date('Y-m-d H:i:s'));
                 $result=$this->postManager->update($post);
+                $valid[]='updated.post';
             }
         }
+        if(count($valid)>0){
+        $_SESSION['valid']=$valid;
         $this->redirect('index.php?controller=admin&entity=post&action=displayAdminList');
+        }
     }
 
     public function displayAdminCreate(){
@@ -91,6 +95,7 @@ class PostAdminController extends AdminController
 
     public function doAdminCreate(){
         $errors=array();
+        $valid = array();
 
         if(count($_POST)>0){
             $email=$_SESSION['email'];
@@ -126,10 +131,14 @@ class PostAdminController extends AdminController
 
                 $post->setIdUser($user->getId());
                 $result=$this->postManager->insert($post);
+                $valid[]='create.post';
             }
 
         }
-        $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
+        if(count($valid)>0){
+            $_SESSION['valid']=$valid;
+            $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
+        }
     }
 
     public function displayAdminDelete(){
@@ -145,9 +154,15 @@ class PostAdminController extends AdminController
     }
 
     public function doAdminDelete(){
+        $valid = array();
         $id=$_POST['id'];
         $post=$this->postManager->get($id);
         $this->postManager->delete($post);
+        $valid[]='delete.post';
+
+        if(count($valid)>0){
+        $_SESSION['valid']=$valid;
         $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
+        }
     }
 }

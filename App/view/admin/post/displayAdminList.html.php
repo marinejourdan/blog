@@ -1,4 +1,4 @@
-
+<?php include('./view/part/displayMessage.html.php'); ?>
 <table class="table">
     <caption>List of  entities</caption>
     <thead>

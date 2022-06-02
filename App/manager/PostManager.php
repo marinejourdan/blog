@@ -79,5 +79,4 @@ class PostManager extends BaseManager{
     DELETE FROM `post`
     WHERE id=:id;
     SQL;
-
 }

@@ -20,6 +20,7 @@ private $userManager;
 
     public function doComment(){
         $errors = array();
+        $valid = array();
 
         if (!isset ($_SESSION['email'])){
             $errors[]='connexion_required';
@@ -29,7 +30,6 @@ private $userManager;
             $user = $this->userManager->findUserByEmail($_SESSION['email']);
             if ($user->getEnabled()==0){
             $errors[]='comment.no_authorized';
-
             }
         }
 
@@ -55,9 +55,13 @@ private $userManager;
                 $comment->setCreationDate(date('Y-m-d H:i:s'));
 
                 $result=$this->commentManager->insert($comment);
+                $valid[]='comment.ok';
 
-            }
+            if(count($valid)>0){
+                $_SESSION['valid']=$valid;
                 $this->redirect('./index.php?controller=post&action=displayOne&result='.$result.'&id='.$id_post);
+                }
+            }
         }
     }
 }

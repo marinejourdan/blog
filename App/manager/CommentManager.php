@@ -101,5 +101,4 @@ class CommentManager extends BaseManager{
         }
         return $object_list;
     }
-
 }
