@@ -42,7 +42,7 @@ class PostManager extends BaseManager{
 
         $post=new Post;
         $post->hydrate($row);
-        $userManager= New UserManager;
+        $userManager= new UserManager;
         $id=$post->getIdUser();
         $user=$userManager->get($post->getIdUser());
         $nickname_user = $user->getNickname();
@@ -65,7 +65,6 @@ class PostManager extends BaseManager{
 
     public function bindValues($statement, Post $post)
     {
-       $statement->bindValue(':id', $post->getId());
        $statement->bindValue(':title', $post->getTitle());
        $statement->bindValue(':header', $post->getHeader());
        $statement->bindValue(':content',$post->getContent());

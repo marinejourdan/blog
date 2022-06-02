@@ -3,9 +3,8 @@
 <table class="table">
   <caption>List of  entities</caption>
         <thead>
+                <a href="./index.php?controller=admin&entity=user&action=displayAdminCreate"class="btn btn-primary btn-lg active"> Ajouter un user</a>
 
-            <a href="./index.php?controller=admin&entity=user&action=displayAdminCreate"</a> Ajouter un user
-            <tr>
                 <th scope="col">id</th>
                 <th scope="col">name</th>
                 <th scope="col">first_name</th>
