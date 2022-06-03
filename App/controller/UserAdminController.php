@@ -90,6 +90,7 @@ class UserAdminController extends AdminController
                 $user->setEnabled($enabled);
 
                 $result=$this->userManager->update($user);
+                
                 $valid[]='update.user';
             }
         }

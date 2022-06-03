@@ -12,6 +12,7 @@ use App\Controller\BaseController;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
+use App\Manager\Db;
 
 require 'vendor/autoload.php';
 
@@ -29,6 +30,7 @@ $action='displayHome';
 if (isset($_GET['action'])){
     $action=$_GET['action'];
 }
+
 
 switch($controller){
 

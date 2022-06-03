@@ -17,18 +17,17 @@
     </tr>
     <tr>
     <tr> autorisation administration
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="access" id="0" value="1" checked>
-            <label class="form-check-label" for="exampleRadios1">
-                oui
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="access" id="1" value="0">
-            <label class="form-check-label" for="exampleRadios2">
-                non
-            </label>
-        </div>
+
+    <input class="form-check-input" type="radio" name="access" value="1" checked>
+    <label class="form-check-label" for="exampleRadios1">
+        oui
+    </label>
+
+    <input class="form-check-input" type="radio" name="access" value="0">
+    <label class="form-check-label" for="exampleRadios2">
+        non
+    </label>
+
     </tr>
     </tr>
     <tr>

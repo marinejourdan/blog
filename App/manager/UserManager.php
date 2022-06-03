@@ -40,6 +40,9 @@ class UserManager extends BaseManager{
 
     public function bindValues($statement, User $user)
     {
+        if($user->getId()){
+            $statement->bindValue(':id',$user->getId());
+        }
         $statement->bindValue(':name',$user->getName());
         $statement->bindValue(':first_name',$user->getFirstName());
         $statement->bindValue(':nickname', $user->getNickname());

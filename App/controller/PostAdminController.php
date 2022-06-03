@@ -74,12 +74,17 @@ class PostAdminController extends AdminController
                 $post->setContent($content);
                 $post->setUpdated(date('Y-m-d H:i:s'));
                 $result=$this->postManager->update($post);
+                var_dump($result);
+                die('you');
+
                 $valid[]='updated.post';
+
+                if(count($valid)>0){
+                $_SESSION['valid']=$valid;
+                $this->redirect('index.php?controller=admin&entity=post&action=displayAdminList');
+                }
             }
-        }
-        if(count($valid)>0){
-        $_SESSION['valid']=$valid;
-        $this->redirect('index.php?controller=admin&entity=post&action=displayAdminList');
+
         }
     }
 
@@ -135,10 +140,10 @@ class PostAdminController extends AdminController
             }
 
         }
-        if(count($valid)>0){
-            $_SESSION['valid']=$valid;
-            $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
-        }
+            if(count($valid)>0){
+                $_SESSION['valid']=$valid;
+                $this->redirect('./index.php?controller=admin&entity=post&action=displayAdminList');
+            }
     }
 
     public function displayAdminDelete(){

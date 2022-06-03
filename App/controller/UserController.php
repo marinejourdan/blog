@@ -52,19 +52,20 @@ class UserController extends BaseController{
                 empty($first_name)||
                 empty($nickname)||
                 empty($email)||
-                empty($plainPassword)
+                empty($plainPassword)||
+                empty($passwordVerify)
             ){
                 $errors[] = 'register.missing_fields';
-            }else{
-                $user = $this->userManager->findUserByEmail($email);
-
-                if ($user) {
-                    $errors[] = 'register.already_account';
-                }
             }
-                if($plainpassword!= $passwordVerify){
-                    $errors[] = 'not.same.password';
-                }
+
+            if($plainPassword !== $passwordVerify){
+                $errors[] = 'not.same.password';
+            }
+
+            if($this->userManager->findUserByEmail($email))
+            {
+                $errors[] = 'register.already_account';
+            }
 
             if(count($errors)>0){
                 $_SESSION['errors']=$errors;

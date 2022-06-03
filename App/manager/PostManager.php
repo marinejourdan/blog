@@ -52,7 +52,7 @@ class PostManager extends BaseManager{
 
     const SQL_INSERT = <<<'SQL'
     INSERT INTO `post` (`title`, `header`, `content`, `updated`,`id_user`)
-    VALUES ( :title ,:header, :content,:updated, :id_user);
+    VALUES (:title ,:header, :content,:updated, :id_user);
     SQL;
 
     const SQL_UPDATE = <<<'SQL'
@@ -65,6 +65,9 @@ class PostManager extends BaseManager{
 
     public function bindValues($statement, Post $post)
     {
+        if($user->getId()){
+            $statement->bindValue(':id',$user->getId());
+        }
        $statement->bindValue(':title', $post->getTitle());
        $statement->bindValue(':header', $post->getHeader());
        $statement->bindValue(':content',$post->getContent());

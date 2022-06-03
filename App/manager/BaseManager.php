@@ -4,10 +4,8 @@ namespace App\Manager;
 class BaseManager{
 
     protected function dbconnect(){
-        $db = new \PDO("mysql:host=".$_ENV['SQLHOST'].";dbname=".$_ENV['DBNAME'], $_ENV['SQLLOGIN'], $_ENV['SQLPASS']);
-        return $db;
+        return Db::getInstance();
     }
-
 
     public function getList(): array
     {
