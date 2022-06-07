@@ -53,9 +53,11 @@ class CommentController extends BaseController
                 $comment->setIdUser($id_user);
                 $comment->setCreationDate(date('Y-m-d H:i:s'));
 
-                $result = $this->commentManager->insert($comment);
-
-                $valid[] = 'comment.ok';
+                if($result = $this->commentManager->insert($comment)){
+                    $valid[] = 'comment.ok';
+                }else{
+                    $errors[] = 'comment.ko';
+                }
 
                 if (count($valid) > 0) {
                     $_SESSION['valid'] = $valid;

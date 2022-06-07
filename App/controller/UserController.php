@@ -43,8 +43,6 @@ class UserController extends BaseController
             $email = $_POST['email'];
             $plainPassword = $_POST['password'];
             $passwordVerify = $_POST['passwordVerify'];
-            $access = $_POST['access'];
-            $enabled = $_POST['enabled'];
 
             if (
                 empty($name) ||
@@ -68,21 +66,17 @@ class UserController extends BaseController
             if (count($errors) > 0) {
                 $_SESSION['errors'] = $errors;
                 $this->redirect('index.php?controller=user&action=displayRegister');
-            }
+            }else{
+                $user = new User();
+                $user->setName($name);
+                $user->setFirstName($first_name);
+                $user->setNickname($nickname);
+                $user->setEmail($email);
+                $user->setPassword(password_hash($plainPassword, PASSWORD_DEFAULT));
 
-            $user = new User();
-            $user->setName($name);
-            $user->setFirstName($first_name);
-            $user->setNickname($nickname);
-            $user->setEmail($email);
-            $user->setPassword(password_hash($plainPassword, PASSWORD_DEFAULT));
-            $user->setEnabled($enabled);
-            $user->setAccess($access);
+                $result = $this->userManager->insert($user);
+                $valid[] = 'register.user';
 
-            $result = $this->userManager->insert($user);
-            $valid[] = 'register.user';
-
-            if (count($valid) > 0) {
                 $_SESSION['valid'] = $valid;
                 $this->redirect('./index.php?controller=user&action=displayLogin');
             }

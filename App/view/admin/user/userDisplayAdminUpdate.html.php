@@ -5,16 +5,29 @@
 
     <input type="hidden" name="id" value="<?php echo $params['id'];?>"/>
 
-    <tr><label>nom<br /></label><input type="textarea" name="name" value="<?php echo $params['user']->getName()?>" size="250"> <tr/>
-    </tr>
-    <tr><label>prénom<br /></label><input type="textarea" name="first_name" value="<?php echo $params['user']->getFirstName() ?>" size="250"> <tr/>
-    </tr>
-    <tr><label>surnom<br /></label><input type="textarea" name="nickname" value="<?php echo $params['user']->getNickname() ?>" size="250"> <tr/>
-    </tr>
-    <tr><label>email<br /></label><input type="textarea" name="email" value="<?php echo $params['user']->getEmail() ?>" size="250"> <tr/>
-    </tr>
-    <tr><label>password<br /></label><input type="textarea" name="password" value="<?php echo $params['user']->getPassword() ?>" size="250"> <tr/>
-    </tr>
+    <tr>
+        <td><label>nom</label></td>
+        <td><input type="text" name="name" value="<?php echo $params['user']->getName()?>" size="250"></td>
+    <tr/>
+    <tr>
+        <td><label>prénom</label></td>
+        <td><input type="text" name="first_name" value="<?php echo $params['user']->getFirstName() ?>" size="250"></td>
+    <tr/>
+    <tr>
+        <td><label>surnom</label></td>
+        <td><input type="text" name="nickname" value="<?php echo $params['user']->getNickname() ?>" size="250"></td>
+    <tr/>
+    <tr>
+        <td><label>email</label></td>
+        <td><input type="text" name="email" value="<?php echo $params['user']->getEmail() ?>" size="250"></td>
+    <tr/>
+    <tr>
+        <td><label>modifier le mot de passe</label></td>
+        <td>
+            <input type="password" name="plain_password" size="250">
+            <input type="hidden" name="password" value="<?php echo $params['user']->getPassword() ?>" >
+        </td>
+    <tr/>
     <tr>
     <tr> autorisation administration
 

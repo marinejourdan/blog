@@ -4,8 +4,16 @@
     <div class="card" style="width: 55rem;">
         <h2><?php echo $params['post']->getTitle();?></h2>
         <div class="card-header">
-            <span> Published <p class="text"><?php echo $params['post']->getUpdated();?></p> by</span>
-            <a href="" class="text-dark"><p class="text"><?php echo $params['post']->getNicknameUser();?></p></a>
+            <span> Published
+                <p class="text">
+                    <?php echo $params['post']->getUpdated();?>
+                </p> by
+            </span>
+            <a href="" class="text-dark">
+                <p class="text">
+                    <?php echo $params['post']->getNicknameUser();?>
+                </p>
+            </a>
         </div>
 
         <div class="card-body">

@@ -1,14 +1,16 @@
 <?php include('./view/part/displayMessage.html.php'); ?>
 
 <form method="post" action="./index.php?controller=admin&entity=post&action=doAdminCreate">
-
-    <tr><label>title<br /></label><input type="textarea" name="title" value="" size="50"> <tr/>
+<table>
+    <tr>
+        <td><label>title</label></td><td><input type="text" name="title" value="" size="50"></td>
     </tr>
-    <tr><label>header<br /></label><input type="textarea" name="header" value="" size="100"> <tr/>
+    <tr>
+        <td><label>header</label></td><td><textarea name="header" value="" rows="4" cols="50"></textarea></td>
     </tr>
-    <tr><label>content<br /></label><input type="textarea" name="content" value="" size="250"> <tr/>
+    <tr>
+        <td><label>content</label></td><td><textarea name="content" value="" rows="4" cols="50"></textarea></td>
     </tr>
-    <p><input type="submit" class="btn btn-info" value="Poster mon article" /></p>
-
-
+</table>
+<p><input type="submit" class="btn btn-info" value="Poster mon article" /></p>
 </form>

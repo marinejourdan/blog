@@ -42,7 +42,7 @@ class CommentManager extends BaseManager
     }
 
     public const SQL_INSERT = <<<'SQL'
-    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`,'publication') VALUES (:content , :creation_date, :id_post, :id_user,:publication);
+    INSERT INTO `comment` (`content`, `creation_date`, `id_post`,`id_user`,`publication`) VALUES (:content, :creation_date, :id_post, :id_user, :publication);
     SQL;
 
     public function bindValues($statement, Comment $comment)

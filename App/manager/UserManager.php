@@ -10,6 +10,8 @@ class UserManager extends BaseManager
     public const SQL_GET_LIST = <<<'SQL'
     SELECT id
     FROM user
+    WHERE 1
+    ORDER BY id DESC
     SQL;
 
     public const SQL_GET = <<<'SQL'
