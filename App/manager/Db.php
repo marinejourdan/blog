@@ -13,7 +13,9 @@ class Db
     public static function getInstance()
     {
         if (null === self::$instance) {
-            self::$instance = new \PDO('mysql:host='.$_ENV['SQLHOST'].';dbname='.$_ENV['DBNAME'], $_ENV['SQLLOGIN'], $_ENV['SQLPASS']);
+            $db = new \PDO('mysql:host='.$_ENV['SQLHOST'].';dbname='.$_ENV['DBNAME'], $_ENV['SQLLOGIN'], $_ENV['SQLPASS']);
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            self::$instance = $db;
         }
 
         return self::$instance;

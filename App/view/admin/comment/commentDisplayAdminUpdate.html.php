@@ -6,7 +6,7 @@
 
     <tr> autorisation publication
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="publication" id="0" value="1" checked>
+            <input class="form-check-input" type="radio" name="publication" id="0" value="0" checked>
             <label class="form-check-label" for="exampleRadios1">
                 non
             </label>

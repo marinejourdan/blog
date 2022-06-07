@@ -64,7 +64,6 @@ class BaseManager
         $statement = $db->prepare(static::SQL_INSERT);
         $statement = $this->bindValues($statement, $object);
         $result = $statement->execute();
-
         return $result;
     }
 }

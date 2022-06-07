@@ -1,16 +1,17 @@
-
 <?php include('./view/part/displayMessage.html.php'); ?>
 
-
 <form method="post" action="./index.php?controller=admin&entity=post&action=doAdminUpdate">
-    <input type="hidden" name="id" value="<?php echo $params['post']->getid();?>" />
-
-    <tr><label>title<br /></label><input type="textarea" name="title" value="<?php echo $params['post']->getTitle() ?>" size="250"> <tr/>
+<table>
+    <tr>
+        <td><label>title</label></td><td><input type="text" name="title" value="<?php echo $params['post']->getTitle() ?>" size="50"></td>
     </tr>
-    <tr><label>header<br /></label><input type="textarea" name="header" value="<?php echo $params['post']->getHeader() ?>" size="250"> <tr/>
+    <tr>
+        <td><label>header</label></td><td><textarea name="header" rows="4" cols="50"><?php echo $params['post']->getHeader() ?></textarea></td>
     </tr>
-    <tr><label>content<br /></label><input type="textarea" name="content" value="<?php echo $params['post']->getContent() ?>" size="250"> <tr/>
+    <tr>
+        <td><label>content</label></td><td><textarea name="content" rows="4" cols="50"><?php echo $params['post']->getContent() ?></textarea></td>
     </tr>
-    <p><input type="submit" class="button-blue left" value="Mise à jour de l'article" /></p>
-
+</table>
+<input type="hidden" name="id" value="<?php echo $params['post']->getid();?>" />
+<p><input type="submit" class="btn btn-info" value="Poster mon article" /></p>
 </form>

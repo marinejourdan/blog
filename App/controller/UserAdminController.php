@@ -60,8 +60,13 @@ class UserAdminController extends AdminController
             $id = $_POST['id'];
             $nickname = $_POST['nickname'];
             $email = $_POST['email'];
-            $plainPassword = $_POST['password'];
-            $password = password_hash($plainPassword, PASSWORD_DEFAULT);
+            if(isset($_POST['plain_password']) && $_POST['plain_password'] != ''){
+                $plainPassword = $_POST['plain_password'];
+                $password = password_hash($plainPassword, PASSWORD_DEFAULT);
+            }else{
+                $password = $_POST['password'];
+            }
+
             $access = $_POST['access'];
             $enabled = $_POST['enabled'];
 
@@ -69,8 +74,7 @@ class UserAdminController extends AdminController
                 empty($name) ||
                 empty($first_name) ||
                 empty($nickname) ||
-                empty($email) ||
-                empty($password)
+                empty($email)
             ) {
                 $errors[] = 'user.update.no_content';
             }
@@ -120,7 +124,7 @@ class UserAdminController extends AdminController
             $first_name = $_POST['first_name'];
             $nickname = $_POST['nickname'];
             $email = $_POST['email'];
-            $plainpassword = $_POST['password'];
+            $plainPassword = $_POST['password'];
             $password = password_hash($plainPassword, PASSWORD_DEFAULT);
             $access = $_POST['access'];
             $enabled = $_POST['enabled'];
@@ -135,13 +139,13 @@ class UserAdminController extends AdminController
                 $errors[] = 'user.create.no_content';
             } else {
                 $user = new User();
-                $user->name = $name;
-                $user->first_name = $first_name;
-                $user->nickname = $nickname;
-                $user->email = $email;
-                $user->password = $password;
-                $user->access = $access;
-                $user->enabled = $enabled;
+                $user->setName($name);
+                $user->setFirstName($first_name);
+                $user->setNickname($nickname);
+                $user->setEmail($email);
+                $user->setPassword($password);
+                $user->setAccess($access);
+                $user->setEnabled($enabled);
 
                 $result = $this->userManager->insert($user);
                 $valid[] = 'create.user';
