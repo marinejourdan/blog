@@ -1,26 +1,26 @@
 <?php
+
 namespace App\Entity;
 
-class Post{
-
-    private  $id = NULL;
-    private  $title = NULL;
-    private  $header = NULL;
-    private  $content = NULL;
-    private  $updated = NULL;
-    private  $id_user = NULL;
-    private  $comment_list =NULL;
-    private  $nickname_user= NULL;
+class Post
+{
+    private $id = null;
+    private $title = null;
+    private $header = null;
+    private $content = null;
+    private $updated = null;
+    private $id_user = null;
+    private $comment_list = null;
+    private $nickname_user = null;
 
     public function setId(int $id)
-
     {
         $this->id = $id;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-            return $this->id;
+        return $this->id;
     }
 
     public function setTitle(string $title)
@@ -43,7 +43,6 @@ class Post{
         return $this->header;
     }
 
-
     public function setContent(string $content)
     {
         $this->content = $content;
@@ -63,7 +62,6 @@ class Post{
     {
         return $this->updated;
     }
-
 
     public function getCommentList(): array
     {
@@ -85,7 +83,6 @@ class Post{
         return $this->nickname_user;
     }
 
-
     public function setIdUser(int $id_user)
     {
         $this->id_user = $id_user;
@@ -96,10 +93,9 @@ class Post{
         return $this->id_user;
     }
 
-
     public function hydrate(array $row)
     {
-        if($row['id']!== null){
+        if (null !== $row['id']) {
             $this->setId($row['id']);
         }
 
@@ -108,6 +104,5 @@ class Post{
         $this->setContent($row['content']);
         $this->setUpdated($row['updated']);
         $this->setIdUser($row['id_user']);
-
     }
 }

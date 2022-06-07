@@ -1,41 +1,42 @@
 <?php
+
 namespace App\Entity;
 
-class User{
-
-    private $id = NULL;
-    private $name = NULL;
-    private $first_name = NULL;
-    private $nickname = NULL;
-    private $email = NULL;
+class User
+{
+    private $id = null;
+    private $name = null;
+    private $first_name = null;
+    private $nickname = null;
+    private $email = null;
     private $access = 0;
-    private $password= NULL;
-    private $enabled= 0;
+    private $password = null;
+    private $enabled = 0;
 
     public function setId(int $id)
-        {
-            $this->id = $id;
-        }
+    {
+        $this->id = $id;
+    }
 
-    public function getId(): int
-        {
-            return $this->id;
-        }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function setName(string $name)
-        {
-            $this->name = $name;
-        }
+    {
+        $this->name = $name;
+    }
 
-        public function getName(): string
-        {
-            return $this->name;
-        }
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
     public function setFirstName(string $first_name)
-        {
-            $this->first_name = $first_name;
-        }
+    {
+        $this->first_name = $first_name;
+    }
 
     public function getFirstName(): string
     {
@@ -43,59 +44,59 @@ class User{
     }
 
     public function setNickname(string $nickname)
-        {
-            $this->nickname = $nickname;
-        }
+    {
+        $this->nickname = $nickname;
+    }
 
     public function getNickname(): string
-        {
-            return $this->nickname;
-        }
+    {
+        return $this->nickname;
+    }
 
     public function setEmail(string $email)
-        {
-            $this->email = $email;
-        }
+    {
+        $this->email = $email;
+    }
 
     public function getEmail(): string
-        {
-            return $this->email;
-        }
+    {
+        return $this->email;
+    }
 
     public function setAccess(int $access)
-        {
-            $this->access = $access;
-        }
+    {
+        $this->access = $access;
+    }
 
     public function getAccess(): int
-        {
-            return $this->access;
-        }
+    {
+        return $this->access;
+    }
 
     public function setPassword(string $password)
-        {
-            $this->password = $password;
-        }
+    {
+        $this->password = $password;
+    }
 
     public function getPassword(): string
-        {
-            return $this->password;
-        }
+    {
+        return $this->password;
+    }
 
     public function setEnabled(int $enabled)
-        {
-            $this->enabled = $enabled;
-        }
+    {
+        $this->enabled = $enabled;
+    }
 
     public function getEnabled(): int
-        {
-            return $this->enabled;
-        }
+    {
+        return $this->enabled;
+    }
 
     public function hydrate(array $row)
     {
-        if($row['id']!== null){
-        $this->setId($row['id']);
+        if (null !== $row['id']) {
+            $this->setId($row['id']);
         }
         $this->setName($row['name']);
         $this->setFirstName($row['first_name']);

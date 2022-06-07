@@ -1,5 +1,5 @@
 {
-    "name": "mjourdan/blog/App",
+    "name": "mjourdan/blog",
     "type": "project",
     "license":"proprietary",
     "authors": [
@@ -18,5 +18,8 @@
             "App\\Entity\\": "entity/",
             "App\\Manager\\": "manager/"
         }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4"
     }
 }

@@ -1,17 +1,17 @@
 <?php
+
 namespace App\Entity;
 
-class Comment{
-
-    private $id = NULL;
-    private $content = NULL;
-    private $creation_date= NULL;
-    private $id_post = NULL;
-    private $id_user = NULL;
-    private $nickname_user= NULL;
-    private $post=NULL;
-    private $publication=0;
-
+class Comment
+{
+    private $id = null;
+    private $content = null;
+    private $creation_date = null;
+    private $id_post = null;
+    private $id_user = null;
+    private $nickname_user = null;
+    private $post = null;
+    private $publication = 0;
 
     public function setId(int $id)
     {
@@ -23,7 +23,6 @@ class Comment{
         return $this->id;
     }
 
-
     public function setContent(string $content)
     {
         $this->content = $content;
@@ -34,7 +33,6 @@ class Comment{
         return $this->content;
     }
 
-
     public function setIdPost(int $id_post)
     {
         $this->id_post = $id_post;
@@ -44,7 +42,6 @@ class Comment{
     {
         return $this->id_post;
     }
-
 
     public function setCreationDate(string $creation_date)
     {
@@ -96,8 +93,8 @@ class Comment{
         return $this->post;
     }
 
-    public function hydrate(array $row){
-
+    public function hydrate(array $row)
+    {
         $this->setId($row['id']);
         $this->setContent($row['content']);
         $this->setCreationDate($row['creation_date']);
@@ -105,5 +102,4 @@ class Comment{
         $this->setIdUser($row['id_user']);
         $this->setPublication($row['publication']);
     }
-
 }

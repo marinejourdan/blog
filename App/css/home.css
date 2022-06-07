@@ -78,6 +78,11 @@ h2{
 .btn-primary{
 
     background-color: #E9967A !important ;
+    border-color:black;
+    color:black;
+    }
+.btn-primary:hover {
+    border-color: black;
 }
 
 /* LAYOUT*/

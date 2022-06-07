@@ -1,146 +1,139 @@
 <?php
-use App\Controller\HomeController;
-use App\Controller\PostController;
-use App\Controller\UserController;
-use App\Controller\CommentController;
-use App\Controller\PostAdminController;
-use App\Controller\UserAdminController;
-use App\Controller\CommentAdminController;
+
 use App\Controller\AdminController;
 use App\Controller\BaseController;
-
+use App\Controller\CommentAdminController;
+use App\Controller\CommentController;
+use App\Controller\HomeController;
+use App\Controller\PostAdminController;
+use App\Controller\PostController;
+use App\Controller\UserAdminController;
+use App\Controller\UserController;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
-use App\Manager\Db;
 
 require 'vendor/autoload.php';
-
 
 session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$controller='home';
-if (isset($_GET['controller'])){
-    $controller=$_GET['controller'];
+$controller = 'home';
+if (isset($_GET['controller'])) {
+    $controller = $_GET['controller'];
 }
 
-$action='displayHome';
-if (isset($_GET['action'])){
-    $action=$_GET['action'];
+$action = 'displayHome';
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
 }
 
-
-switch($controller){
-
+switch ($controller) {
     case 'home':
-        $postManager= new PostManager();
-        $homeController= new HomeController($postManager);
-        $userManager= new UserManager();
-        $commentManager= new CommentManager($postManager, $userManager);
+        $postManager = new PostManager();
+        $homeController = new HomeController($postManager);
+        $userManager = new UserManager();
+        $commentManager = new CommentManager($postManager, $userManager);
 
-        if ($action == 'displayHome'){
+        if ('displayHome' == $action) {
             $homeController->displayHome();
-        }elseif ($action == 'doSendEmail'){
+        } elseif ('doSendEmail' == $action) {
             $homeController->doSendEmail();
-        }else{
+        } else {
             echo '404 not found';
         }
         break;
 
-    case'post':
+    case 'post':
+        $postManager = new PostManager();
+        $userManager = new UserManager();
+        $commentManager = new CommentManager($postManager, $userManager);
+        $postController = new PostController($postManager, $commentManager);
 
-        $postManager= new PostManager();
-        $userManager= new UserManager();
-        $commentManager= new CommentManager($postManager, $userManager);
-        $postController= new PostController($postManager, $commentManager);
-
-        if ($action == 'displayList'){
+        if ('displayList' == $action) {
             $postController->displayList();
-        }elseif ($action == 'displayOne'){
+        } elseif ('displayOne' == $action) {
             $postController->displayOne();
-        }else{
+        } else {
             echo '404 not found';
         }
         break;
 
-    case'comment':
-        $postManager= new PostManager();
-        $userManager= new UserManager();
-        $commentManager= new CommentManager($postManager, $userManager);
-        $commentController= new commentController($commentManager,$userManager, $postManager);
-        if ($action == 'doComment'){
+    case 'comment':
+        $postManager = new PostManager();
+        $userManager = new UserManager();
+        $commentManager = new CommentManager($postManager, $userManager);
+        $commentController = new commentController($commentManager, $userManager, $postManager);
+        if ('doComment' == $action) {
             $commentController->doComment();
-        }else{
+        } else {
             echo '404 not found';
         }
         break;
 
     case 'user':
+        $userManager = new UserManager();
+        $userController = new UserController($userManager);
 
-        $userManager= new UserManager();
-        $userController=new UserController($userManager);
-
-        if ($action == 'displayLogin'){
+        if ('displayLogin' == $action) {
             $userController->displayLogin();
-        }elseif ($action == 'displayRegister'){
+        } elseif ('displayRegister' == $action) {
             $userController->displayRegister();
-        }elseif ($action == 'doLogin'){
+        } elseif ('doLogin' == $action) {
             $userController->dologin();
-        }elseif ($action == 'doRegister'){
+        } elseif ('doRegister' == $action) {
             $userController->doRegister();
-        }elseif ($action == 'doLogout'){
+        } elseif ('doLogout' == $action) {
             $userController->dologout();
-        }else{
+        } else {
             echo '404 not found';
         }
         break;
 
     case 'admin':
-
-        if (!isset($_SESSION['email'])){
+        if (!isset($_SESSION['email'])) {
             BaseController::redirect('./index.php?controller=user&action=displayLogin');
         }
 
-        $entity=null;
-        if (isset($_GET['entity'])){
-            $entity=$_GET['entity'];
+        $entity = null;
+        if (isset($_GET['entity'])) {
+            $entity = $_GET['entity'];
         }
 
-        $adminController= new AdminController();
-        $userManager= new UserManager();
-        $postManager= new PostManager();
-        $commentManager= new CommentManager($postManager, $userManager);
-        $postAdminController= new PostAdminController($userManager, $postManager, $commentManager);
-        $userAdminController= new UserAdminController($userManager, $postManager, $commentManager);
-        $commentAdminController= new commentAdminController($userManager, $postManager, $commentManager);
+        $adminController = new AdminController();
+        $userManager = new UserManager();
+        $postManager = new PostManager();
+        $commentManager = new CommentManager($postManager, $userManager);
+        $postAdminController = new PostAdminController($userManager, $postManager, $commentManager);
+        $userAdminController = new UserAdminController($userManager, $postManager, $commentManager);
+        $commentAdminController = new commentAdminController($userManager, $postManager, $commentManager);
 
-        $controller=$adminController;
+        $controller = $adminController;
 
-        if ($entity=='post'){
-            $controller=$postAdminController;
-        }elseif ($entity=='user'){
-            $controller=$userAdminController;
-        }elseif ($entity=='comment'){
-            $controller=$commentAdminController;
+        if ('post' == $entity) {
+            $controller = $postAdminController;
+        } elseif ('user' == $entity) {
+            $controller = $userAdminController;
+        } elseif ('comment' == $entity) {
+            $controller = $commentAdminController;
         }
 
-        if ($action == 'displayAdminHome'){
+        if ('displayAdminHome' == $action) {
             $controller->displayAdminHome();
-        }elseif($action == 'displayAdminList'){
+        } elseif ('displayAdminList' == $action) {
             $controller->displayAdminList();
-        }elseif($action == 'displayAdminCreate'){
+        } elseif ('displayAdminCreate' == $action) {
             $controller->displayAdminCreate();
-        }elseif($action == 'doAdminCreate'){
+        } elseif ('doAdminCreate' == $action) {
             $controller->doAdminCreate();
-        }elseif($action == 'displayAdminUpdate'){
+        } elseif ('displayAdminUpdate' == $action) {
             $controller->displayAdminUpdate();
-        }elseif($action == 'doAdminUpdate'){
+        } elseif ('doAdminUpdate' == $action) {
             $controller->doAdminUpdate();
-        }elseif($action == 'displayAdminDelete'){
+        } elseif ('displayAdminDelete' == $action) {
             $controller->displayAdminDelete();
-        }elseif($action == 'doAdminDelete'){
+        } elseif ('doAdminDelete' == $action) {
             $controller->doAdminDelete();
         }
 
