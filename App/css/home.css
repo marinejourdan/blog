@@ -1,0 +1,101 @@
+.body{
+    text-align: left;
+    color: black;
+    background-color:#cococo ;
+}
+
+/* LAYOUT*/
+/*NAV*/
+
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
+  color: black;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link{
+        font-family: Days One;
+        font-size:20px;
+}
+
+.bg-primary{
+    background-color: #E9967A !important ;
+}
+
+.bg-secondary{
+    background-color: #E9967A !important ;
+}
+
+/* LAYOUT*/
+/*MASTHEAD*/
+
+h1{
+    color:#2b3937;
+    text-align: right;
+    margin:5px;
+    font-family: Days One;
+    font-size: 34px;
+}
+.masthead{
+    padding-bottom:6px;
+    padding-top:150px;
+}
+
+
+.masthead .masthead-avatar{
+    width:100%;
+    margin-top:-130px;
+}
+
+header .container{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+/* LAYOUT*/
+/*CONTENT-GLOBAL*/
+
+.content{
+    background-image:url("./../assets/img/portfolio/dame2.jpg" );
+    background-position: top right;
+    background-repeat: no-repeat;
+}
+
+header .container{
+    display:flex;
+    flex-direction: row;
+}
+
+/* LAYOUT*/
+/*FORM-CONTACT*/
+
+#contact-form{
+    background-image:url("./../assets/img/portfolio/mains.jpg" );
+    background-size: cover;
+}
+h2{
+    font-family: Days One;
+    font-size: 60px;
+}
+.btn-primary{
+
+    background-color: #E9967A !important ;
+    border-color:black;
+    color:black;
+    }
+.btn-primary:hover {
+    border-color: black;
+}
+
+/* LAYOUT*/
+/*FOOTER*/
+.footer{
+    background-color: #E9967A !important ;
+}
+
+/* LAYOUT*/
+/*CONTENT*/
+#layout_admin_content{
+    padding-top:300px;
+}
+
+/* CONTENT-public*/
+/*displayOne*/
