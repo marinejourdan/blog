@@ -54,6 +54,7 @@ class CommentController extends BaseController
                 $comment->setCreationDate(date('Y-m-d H:i:s'));
 
                 $result = $this->commentManager->insert($comment);
+
                 $valid[] = 'comment.ok';
 
                 if (count($valid) > 0) {

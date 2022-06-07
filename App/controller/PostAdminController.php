@@ -76,8 +76,6 @@ class PostAdminController extends AdminController
                 $post->setContent($content);
                 $post->setUpdated(date('Y-m-d H:i:s'));
                 $result = $this->postManager->update($post);
-                var_dump($result);
-                exit('you');
 
                 $valid[] = 'updated.post';
 
