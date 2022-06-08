@@ -24,17 +24,11 @@
     <nav id="mainNav" class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
         <div class="container">
             <a class="navbar-brand" href="./index.php">Retour à l'accueil</a>
-            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Retour à l'accueil du site
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link " href="./index.php?controller=admin&entity=post&action=displayAdminList">Posts</a></li>
-                    <li class="nav-item"><a class="nav-link " href="./index.php?controller=admin&entity=user&action=displayAdminList">Utilisateurs</a></li>
+                    <li class="nav-item"><a class="nav-link " href="./index.php?controller=admin&entity=user&action=displayAdminList">utilisateurs</a></li>
                     <li class="nav-item"><a class="nav-link " href="./index.php?controller=admin&entity=comment&action=displayAdminList">Commentaires</a></li>
                 </ul>
-            </div>
         </div>
     </nav>
     <!-- Masthead-->
